@@ -5,3 +5,5 @@ window.addEventListener('blur', () => {
 window.addEventListener('focus', () => {
   window.__IS_ACTIVE = true
 })
+
+export {}
