@@ -3,7 +3,9 @@ import { Switch, Route } from 'react-router'
 import { Home } from './layouts/home'
 
 export const App = () => {
-  return <Switch>
+  return (
+    <Switch>
       <Route exact path="/" component={Home}></Route>
-  </Switch>
+    </Switch>
+  )
 }

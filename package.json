@@ -47,5 +47,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "./"
+  "homepage": "./",
+  "devDependencies": {
+    "http-proxy-middleware": "^1.0.5"
+  }
 }

@@ -1,0 +1,29 @@
+@font-face {font-family: "shippo";
+  src: url('iconfont.eot?t=1601924538743'); /* IE9 */
+  src: url('iconfont.eot?t=1601924538743#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAQkAAsAAAAACGAAAAPWAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDHAqEPIN/ATYCJAMQCwoABCAFhFUHQBtRBxHVm1PJvhhw3JhcRVfgiIpKbTGn3eE1wY+kzMy88+H98z0XeeGHWVDfdsEJUlJP3Dp14uZcD2xUhBrJ2SePvpC0w/S6DJ4ous3+XhFEnEGQQUKBplAABoDPczm9FVDA3w4AGnPb2rwGWZiFYy3qBRZoICXIOYDdLfs4EICMOVfk3LnfBxKcPo4AyJ0YHwlJwohX5BIShFCwdEAeiEhWI32MFdq9z5MfRSQAJSr0qYfjdsRg8zfpNytW8V+IY0blcHYA7CqAAVwBHMhV6IwCC8KuGJmczK0ESAw7haFadL5Z/f9PibeilFB/eQBBMSA79GwFAFhORhh8k1osEPimwwKFb1ZGMNC8kwQgBZw6MzNM8d4UJTosrRUKdYmOtDhuqckxZqHCSc+Xjr5YISeV/Qby3l5A/r2yYP4GxysDZGTs6krZhcumkL1Lxsyvr9Igvr9ZL7a3V9eHVixkP1MRpdLv9WufijcHnAGLzceJSuX/5o1v6FIq4wR+sUepLPblfjndXn/xefPVV/Xdv1Kp3xno06Pr499vEC2LmLlsGNAzKJdHz18zCe4fkvk0LfTTpXJpY+Wlkyd9t8TaT/Lf6L+UYLlC7fHzp4+E/MPBh/OFR9efP1ZbkWq5FLvl95cWXEKwNbWlzbKBxtQ6LZMvP3lym3wZiGVbtDjF6DRgNnZ+e+lBWjw7V0INnsMLZAeT0+cblk//IAO6sQ6xumzi/fsJO8jeq9i01D1BiwzM/fhjk4Dc3ADICMOH3D+SUYOHLrCsYp5//sznwXP4dh6VsOcOF4k4ZHcoPoTUvNAdi9XViztcdi177Pby8TLyMUWToL+j1yZhh6HxC7lguKN2WeAOA+cXigeXNZaZG72RAQD4X97/9bg1VUZP9SU7+g98B8k3yoLCNdb/ksg5AODDZNtFBP6XD5qLXqRIFr1xUcM6rkh0Ex9JagnVTG4rRHAD9ZAZFuA9xwFtn4dQ6zXOBgiBXgRKzASMwJrkHEeIyLnLBUO9BpBxsWm1nI4kMGSkAJyVEiAU5kGpOw9G4QbJOU8gou8dBAo/IeOH31vK2eeITL9GVIIW9B8qwz2Zy+Qy+CoEfqEbWxUlkTPsh3GouIc8yVKxJ/YYu84YJleIEFDkDh69nIZtyxAi12gk8SKhTFMqelFiuFtdcI2oBC3oP1SGe3KS5YLBy78MgV/oxlbFwoLI+cMKZdW9PeRJVkk+lX2DolPzMGtyhQgBsdncwWMxdmwpOwMExYNqNJL4DsFQpkYzaqpMNqXu7qocytDvHbLSTDaHbM/jH3czWzyQWirVr1YAAA==') format('woff2'),
+  url('iconfont.woff?t=1601924538743') format('woff'),
+  url('iconfont.ttf?t=1601924538743') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1601924538743#shippo') format('svg'); /* iOS 4.1- */
+}
+
+.shippo {
+  font-family: "shippo" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.shippo-shouye:before {
+  content: "\e609";
+}
+
+.shippo-wode:before {
+  content: "\e613";
+}
+
+.shippo-faxian:before {
+  content: "\e621";
+}
+

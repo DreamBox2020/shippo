@@ -1,0 +1,30 @@
+{
+  "id": "2114254",
+  "name": "shippo",
+  "font_family": "shippo",
+  "css_prefix_text": "shippo-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2170934",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "4550493",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "7708052",
+      "name": "发现",
+      "font_class": "faxian",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    }
+  ]
+}
