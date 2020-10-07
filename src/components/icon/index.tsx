@@ -7,3 +7,5 @@ export interface IIconProps {
 export const Icon: React.FC<IIconProps> = (props) => {
   return <em className={`shippo shippo-${props.type}`}></em>
 }
+
+export default Icon
