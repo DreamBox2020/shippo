@@ -1,7 +1,13 @@
 import React from 'react'
+import { Container, Header, Main } from '~/components'
 
 export const My = () => {
-  return <h1>My</h1>
+  return (
+    <Container direction="vertical">
+      <Header></Header>
+      <Main></Main>
+    </Container>
+  )
 }
 
 export default My
