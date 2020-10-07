@@ -1,55 +1,86 @@
-import React, { lazy, Suspense, useState } from 'react'
+import React, { lazy, useState } from 'react'
 import { TabBar } from 'antd-mobile'
-import { Icon } from '~/components'
-import styled from 'styled-components'
+import { Container, Footer, Icon, Loading, Main, RouteS, SwitchRoute } from '~/components'
+import { useHistory, useRouteMatch } from 'react-router'
 
-const StyledLoading = styled.div`
-  height: 100%;
-  background: url(${require('~/assets/loading.gif')}) center / 100% no-repeat fixed #fff;
-`
+const createContent = (CurrentComponent: React.ElementType) => () => (
+  <Loading>
+    <CurrentComponent />
+  </Loading>
+)
 
-const tabBarItems = [
-  { key: 'home', title: '首页', icon: 'shouye', component: lazy(() => import('~/pages/home')) },
+type tabBarItem = RouteS & {
+  path: string
+  title: string
+  icon: string
+}
+
+const tabBarItems: Array<tabBarItem> = [
+  {
+    key: 'home',
+    path: '/home',
+    exact: true,
+    title: '首页',
+    icon: 'shouye',
+    component: createContent(lazy(() => import('~/pages/home'))),
+  },
   {
     key: 'discover',
+    path: '/discover',
+    exact: true,
+
     title: '发现',
     icon: 'faxian',
-    component: lazy(() => import('~/pages/discover')),
+    component: createContent(lazy(() => import('~/pages/discover'))),
   },
-  { key: 'my', title: '我', icon: 'wode', component: lazy(() => import('~/pages/my')) },
+  {
+    key: 'my',
+    path: '/my',
+    exact: true,
+    title: '我',
+    icon: 'wode',
+    component: createContent(lazy(() => import('~/pages/my'))),
+  },
 ]
 
 export const Home = () => {
-  const [selectedTab, setSelectedTab] = useState('home')
+  const history = useHistory()
+  const routeMatch = useRouteMatch()
 
-  const onPress = (key: string) => {
-    setSelectedTab(key)
-  }
+  const [selectedTab, setSelectedTab] = useState(
+    tabBarItems.find((item) => item.path === routeMatch.path)!.key
+  )
 
-  const renderContent = (key: string) => {
-    const CurrentComponent = tabBarItems.find((item) => item.key === key)!.component
-    return (
-      <Suspense fallback={<StyledLoading />}>
-        <CurrentComponent />
-      </Suspense>
-    )
+  const onPress = (item: tabBarItem) => {
+    setSelectedTab(item.key)
+    history.push(item.path)
   }
 
   return (
-    <TabBar tintColor="#EA7A99" unselectedTintColor="#767676" prerenderingSiblingsNumber={0}>
-      {tabBarItems.map((item) => (
-        <TabBar.Item
-          selected={item.key === selectedTab}
-          title={item.title}
-          key={item.key}
-          icon={<Icon type={item.icon} />}
-          selectedIcon={<Icon type={item.icon} />}
-          onPress={() => onPress(item.key)}
+    <Container direction="vertical">
+      <Main>
+        <SwitchRoute routes={tabBarItems} />
+      </Main>
+      <Footer height="50px">
+        <TabBar
+          tintColor="#EA7A99"
+          unselectedTintColor="#767676"
+          prerenderingSiblingsNumber={0}
+          noRenderContent={true}
         >
-          {renderContent(item.key)}
-        </TabBar.Item>
-      ))}
-    </TabBar>
+          {tabBarItems.map((item) => (
+            <TabBar.Item
+              selected={item.key === selectedTab}
+              title={item.title}
+              key={item.key}
+              icon={<Icon type={item.icon} />}
+              selectedIcon={<Icon type={item.icon} />}
+              onPress={() => onPress(item)}
+            />
+          ))}
+        </TabBar>
+      </Footer>
+    </Container>
   )
 }
 
