@@ -1,7 +1,9 @@
-import { Card, NavBar } from 'antd-mobile'
 import React from 'react'
-import { Container, Header, Main } from '~/components'
-import UserInfoCard from './components/user-info-card'
+import { Card, NavBar } from 'antd-mobile'
+import { Container } from '~/components/container'
+import { Header } from '~/components/header'
+import { Main } from '~/components/main'
+import { UserInfoCard } from './components/user-info-card'
 
 export const My = () => {
   return (

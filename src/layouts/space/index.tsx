@@ -1,6 +1,8 @@
-import { Icon, List, NavBar } from 'antd-mobile'
 import React from 'react'
-import { Container, Header, Main } from '~/components'
+import { Icon, List, NavBar } from 'antd-mobile'
+import { Container } from '~/components/container'
+import { Header } from '~/components/header'
+import { Main } from '~/components/main'
 
 const { Item } = List
 const { Brief } = Item

@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { createLoadingComponent } from '~/components'
+import { createLoadingComponent } from '~/components/loading'
 import { Home } from '~/layouts/home'
 
 export const Root = () => {

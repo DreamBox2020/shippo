@@ -1,8 +1,8 @@
-import { Card, Icon } from 'antd-mobile'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { Level } from '~/components'
+import { useHistory } from 'react-router-dom'
+import { Card, Icon } from 'antd-mobile'
+import { Level } from '~/components/level'
 
 const StyledUserInfoCard = styled(Card.Header)`
   &.am-card-header {

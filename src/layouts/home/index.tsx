@@ -1,16 +1,13 @@
 import React, { lazy, useState } from 'react'
-import { TabBar } from 'antd-mobile'
-import {
-  createLoadingComponent,
-  Container,
-  Main,
-  Footer,
-  Icon,
-  RouteS,
-  SwitchRoute,
-} from '~/components'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { COLOR_GRAY, COLOR_PINK } from '~/constants/config'
+import { createLoadingComponent } from '~/components/loading'
+import { TabBar } from 'antd-mobile'
+import { Icon } from '~/components/icon'
+import { Container } from '~/components/container'
+import { Main } from '~/components/main'
+import { Footer } from '~/components/footer'
+import { SwitchRoute, RouteS } from '~/components/switch-route'
 
 type tabBarItem = RouteS & {
   path: string
