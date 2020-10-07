@@ -1,22 +1,22 @@
 import React, { lazy, Suspense, useState } from 'react'
 import { TabBar } from 'antd-mobile'
-import { Icon } from '../../components/icon'
+import { Icon } from '~/components'
 import styled from 'styled-components'
 
 const StyledLoading = styled.div`
   height: 100%;
-  background: url(${require('../../assets/loading.gif')}) center / 100% no-repeat fixed #fff;
+  background: url(${require('~/assets/loading.gif')}) center / 100% no-repeat fixed #fff;
 `
 
 const tabBarItems = [
-  { key: 'home', title: '首页', icon: 'shouye', component: lazy(() => import('../../pages/home')) },
+  { key: 'home', title: '首页', icon: 'shouye', component: lazy(() => import('~/pages/home')) },
   {
     key: 'discover',
     title: '发现',
     icon: 'faxian',
-    component: lazy(() => import('../../pages/discover')),
+    component: lazy(() => import('~/pages/discover')),
   },
-  { key: 'my', title: '我', icon: 'wode', component: lazy(() => import('../../pages/my')) },
+  { key: 'my', title: '我', icon: 'wode', component: lazy(() => import('~/pages/my')) },
 ]
 
 export const Home = () => {

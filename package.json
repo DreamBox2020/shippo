@@ -27,10 +27,9 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,6 +48,7 @@
   },
   "homepage": "./",
   "devDependencies": {
+    "@craco/craco": "^5.7.0",
     "http-proxy-middleware": "^1.0.5"
   }
 }
