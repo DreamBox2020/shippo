@@ -1,9 +1,9 @@
 import React, { lazy } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { createLoadingComponent } from './components'
-import { Home } from './layouts/home'
+import { createLoadingComponent } from '~/components'
+import { Home } from '~/layouts/home'
 
-export const App = () => {
+export const Root = () => {
   return (
     <Switch>
       <Route exact path="/" component={() => <Redirect to="/home" />}></Route>
@@ -18,4 +18,4 @@ export const App = () => {
   )
 }
 
-export default App
+export default Root

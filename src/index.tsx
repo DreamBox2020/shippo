@@ -2,13 +2,13 @@ import './utils/bootstrap'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
-import { App } from './App'
 import { GlobalStyle } from './styles/global'
+import { Root } from '~/components'
 
 ReactDOM.render(
   <HashRouter>
     <GlobalStyle></GlobalStyle>
-    <App />
+    <Root />
   </HashRouter>,
   document.getElementById('root')
 )
