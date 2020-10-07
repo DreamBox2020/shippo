@@ -1,7 +1,7 @@
 import React, { lazy, useState } from 'react'
 import { TabBar } from 'antd-mobile'
 import { Container, Footer, Icon, Loading, Main, RouteS, SwitchRoute } from '~/components'
-import { useHistory, useRouteMatch } from 'react-router'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 
 const createContent = (CurrentComponent: React.ElementType) => () => (
   <Loading>
