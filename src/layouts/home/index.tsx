@@ -1,13 +1,16 @@
 import React, { lazy, useState } from 'react'
 import { TabBar } from 'antd-mobile'
-import { Container, Footer, Icon, Loading, Main, RouteS, SwitchRoute } from '~/components'
+import {
+  createLoadingComponent,
+  Container,
+  Main,
+  Footer,
+  Icon,
+  RouteS,
+  SwitchRoute,
+} from '~/components'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-
-const createContent = (CurrentComponent: React.ElementType) => () => (
-  <Loading>
-    <CurrentComponent />
-  </Loading>
-)
+import { COLOR_GRAY, COLOR_PINK } from '~/constants/config'
 
 type tabBarItem = RouteS & {
   path: string
@@ -22,7 +25,7 @@ const tabBarItems: Array<tabBarItem> = [
     exact: true,
     title: '首页',
     icon: 'shouye',
-    component: createContent(lazy(() => import('~/pages/home'))),
+    component: createLoadingComponent(lazy(() => import('~/pages/home'))),
   },
   {
     key: 'discover',
@@ -31,7 +34,7 @@ const tabBarItems: Array<tabBarItem> = [
 
     title: '发现',
     icon: 'faxian',
-    component: createContent(lazy(() => import('~/pages/discover'))),
+    component: createLoadingComponent(lazy(() => import('~/pages/discover'))),
   },
   {
     key: 'my',
@@ -39,7 +42,7 @@ const tabBarItems: Array<tabBarItem> = [
     exact: true,
     title: '我',
     icon: 'wode',
-    component: createContent(lazy(() => import('~/pages/my'))),
+    component: createLoadingComponent(lazy(() => import('~/pages/my'))),
   },
 ]
 
@@ -63,8 +66,8 @@ export const Home = () => {
       </Main>
       <Footer height="50px">
         <TabBar
-          tintColor="#EA7A99"
-          unselectedTintColor="#767676"
+          tintColor={COLOR_PINK}
+          unselectedTintColor={COLOR_GRAY}
           prerenderingSiblingsNumber={0}
           noRenderContent={true}
         >

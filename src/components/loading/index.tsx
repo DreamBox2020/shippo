@@ -11,4 +11,10 @@ export const Loading: React.FC = (props) => {
   return <Suspense fallback={<StyledLoading />}>{props.children}</Suspense>
 }
 
+export const createLoadingComponent = (CurrentComponent: React.ElementType) => () => (
+  <Loading>
+    <CurrentComponent />
+  </Loading>
+)
+
 export default Loading
