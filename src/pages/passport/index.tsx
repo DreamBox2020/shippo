@@ -1,6 +1,7 @@
 import { Button, Flex, InputItem, WhiteSpace, WingBlank } from 'antd-mobile'
 import React, { useState } from 'react'
 import { COLOR_PINK } from '~/constants/config'
+import { v4 as uuidv4 } from 'uuid'
 
 export const Passport = () => {
   const [phone, setPhone] = useState('')
@@ -8,6 +9,24 @@ export const Passport = () => {
 
   const callLogon = () => {
     console.log('callLogon', { phone, code })
+  }
+
+  const callSmsSend = () => {
+    fetch('http://127.0.0.1:8233/sms/send', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify({
+        passport: '8434e93235a9478c957bdb5cabcb9216',
+        session: uuidv4(),
+        resource: JSON.stringify({
+          phone: phone.replace(/ /g, ''),
+        }),
+        sign: '',
+        other: null,
+      }),
+    })
   }
 
   return (
@@ -31,7 +50,9 @@ export const Passport = () => {
         >
           验证码
         </InputItem>
-        <Button style={{ flex: 1 }}>获取验证码</Button>
+        <Button style={{ flex: 1 }} onClick={callSmsSend}>
+          获取验证码
+        </Button>
       </Flex>
 
       <WhiteSpace size="lg" />
