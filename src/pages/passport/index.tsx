@@ -1,32 +1,18 @@
 import { Button, Flex, InputItem, WhiteSpace, WingBlank } from 'antd-mobile'
 import React, { useState } from 'react'
 import { COLOR_PINK } from '~/constants/config'
-import { v4 as uuidv4 } from 'uuid'
+import { services } from '~/services'
 
 export const Passport = () => {
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
 
-  const callLogon = () => {
-    console.log('callLogon', { phone, code })
+  const handleLogon = () => {
+    console.log('handleLogon', { phone, code })
   }
 
-  const callSmsSend = () => {
-    fetch('http://127.0.0.1:8233/sms/send', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-      body: JSON.stringify({
-        passport: '8434e93235a9478c957bdb5cabcb9216',
-        session: uuidv4(),
-        resource: JSON.stringify({
-          phone: phone.replace(/ /g, ''),
-        }),
-        sign: '',
-        other: null,
-      }),
-    })
+  const handleSmsSend = () => {
+    services.sms.send({ phone: phone.replace(/ /g, '') })
   }
 
   return (
@@ -50,7 +36,7 @@ export const Passport = () => {
         >
           验证码
         </InputItem>
-        <Button style={{ flex: 1 }} onClick={callSmsSend}>
+        <Button style={{ flex: 1 }} onClick={handleSmsSend}>
           获取验证码
         </Button>
       </Flex>
@@ -58,7 +44,7 @@ export const Passport = () => {
       <WhiteSpace size="lg" />
 
       <WingBlank>
-        <Button style={{ background: COLOR_PINK, color: '#fff' }} onClick={callLogon}>
+        <Button style={{ background: COLOR_PINK, color: '#fff' }} onClick={handleLogon}>
           登陆
         </Button>
       </WingBlank>
