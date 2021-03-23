@@ -1,7 +1,7 @@
 import React, { lazy, useState } from 'react'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { COLOR_GRAY, COLOR_PINK } from '~/constants/config'
-import { createLoadingComponent } from '~/components/loading'
+import { withLoading } from '~/components/loading-hoc'
 import { TabBar } from 'antd-mobile'
 import { Icon } from '~/components/icon'
 import { Container } from '~/components/container'
@@ -22,7 +22,7 @@ const tabBarItems: Array<tabBarItem> = [
     exact: true,
     title: '首页',
     icon: 'shouye',
-    component: createLoadingComponent(lazy(() => import('~/pages/home'))),
+    component: withLoading(lazy(() => import('~/pages/home'))),
   },
   {
     key: 'discover',
@@ -31,7 +31,7 @@ const tabBarItems: Array<tabBarItem> = [
 
     title: '发现',
     icon: 'faxian',
-    component: createLoadingComponent(lazy(() => import('~/pages/discover'))),
+    component: withLoading(lazy(() => import('~/pages/discover'))),
   },
   {
     key: 'my',
@@ -39,7 +39,7 @@ const tabBarItems: Array<tabBarItem> = [
     exact: true,
     title: '我',
     icon: 'wode',
-    component: createLoadingComponent(lazy(() => import('~/pages/my'))),
+    component: withLoading(lazy(() => import('~/pages/my'))),
   },
 ]
 

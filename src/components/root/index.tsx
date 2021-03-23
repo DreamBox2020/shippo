@@ -1,10 +1,10 @@
 import React, { lazy } from 'react'
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom'
-import { createLoadingComponent } from '~/components/loading'
+import { withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { Provider } from 'react-redux'
-import { rootStore } from '~/modules/stores'
+import { rootStore } from '~/modules'
 import { GlobalStyle } from '~/styles/global'
 
 export const Root = () => {
@@ -20,7 +20,7 @@ export const Root = () => {
           <Route exact path="/my" component={Home}></Route>
           <Route
             path="/space/:uid"
-            component={createLoadingComponent(lazy(() => import('~/layouts/space')))}
+            component={withLoading(lazy(() => import('~/layouts/space')))}
           ></Route>
         </Switch>
       </HashRouter>

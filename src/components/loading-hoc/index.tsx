@@ -7,14 +7,14 @@ const StyledLoading = styled.div`
   background: url(${require('~/assets/loading.gif')}) center / 100% no-repeat fixed #fff;
 `
 
-export const Loading: React.FC = (props) => {
-  return <Suspense fallback={<StyledLoading />}>{props.children}</Suspense>
+export const Loading: React.FC = () => {
+  return <StyledLoading></StyledLoading>
 }
 
-export const createLoadingComponent = (CurrentComponent: React.ElementType) => () => (
-  <Loading>
+export const withLoading = (CurrentComponent: React.ElementType) => () => (
+  <Suspense fallback={<Loading />}>
     <CurrentComponent />
-  </Loading>
+  </Suspense>
 )
 
 export default Loading
