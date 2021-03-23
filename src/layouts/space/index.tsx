@@ -26,7 +26,7 @@ export const Space = () => {
       <Main>
         <List renderHeader={() => '被赞9999+次，被收藏9999+次。'} className="my-list">
           <div>
-            <img width="100%" src={require('~/assets/bg.jpg')} alt="" />
+            <img width="100%" src={require('~/assets/bg.jpg').default} alt="" />
           </div>
           <Item arrow="horizontal" multipleLine onClick={() => {}}>
             Title <Brief>subtitle</Brief>

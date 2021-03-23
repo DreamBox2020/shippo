@@ -43,7 +43,7 @@ export const UserInfoCard = () => {
           </p>
         </div>
       }
-      thumb={require('~/assets/avatar.png')}
+      thumb={require('~/assets/avatar.png').default}
       extra={<Icon type="right" size="md" onClick={() => history.push('/space/100000')} />}
     />
   )
