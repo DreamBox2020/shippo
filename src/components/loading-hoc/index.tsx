@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const StyledLoading = styled.div`
@@ -22,7 +22,11 @@ export const withFetchLoading = (
   requests: () => Promise<any>[]
 ) => () => {
   const [result, setResult] = useState<any[] | null>(null)
-  Promise.all(requests()).then((_) => setResult(_))
+
+  useEffect(() => {
+    Promise.all(requests()).then((_) => setResult(_))
+  }, [])
+
   return result ? <CurrentComponent result={result} /> : <Loading />
 }
 

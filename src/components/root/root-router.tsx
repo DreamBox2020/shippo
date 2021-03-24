@@ -1,13 +1,23 @@
-import React, { lazy, useState } from 'react'
+import React, { lazy, useEffect } from 'react'
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom'
-import Loading, { withLoading } from '~/components/loading-hoc'
+import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
+import { services } from '~/services'
 
-export const RootRoute = () => {
-  const [passport, setPassport] = useState('')
+export interface RootRouteProps {
+  result: {
+    response: Response
+    result: any
+  }[]
+}
+const Component: React.FC<RootRouteProps> = ({ result }) => {
+  console.log(result)
+  useEffect(() => {
+    // localStorage.setItem('__PASSPORT',result[0].result)
+  }, [])
 
-  return passport ? (
+  return (
     <HashRouter>
       <Switch>
         <Route exact path="/" component={() => <Redirect to="/home" />}></Route>
@@ -21,9 +31,9 @@ export const RootRoute = () => {
         ></Route>
       </Switch>
     </HashRouter>
-  ) : (
-    <Loading />
   )
 }
+
+export const RootRoute = withFetchLoading(Component, () => [services.passport.create()])
 
 export default RootRoute

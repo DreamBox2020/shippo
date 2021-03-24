@@ -18,25 +18,36 @@ export class Http {
   }
 
   public send<T = any>(body?: body) {
-    return new Promise<{ response: Response; result: T }>((resolve, reject) => {
-      if (!this.options.url) {
-        throw new Error('fetch: url is undefined')
-      }
-      fetch(this.options.url, {
-        method: this.options.method,
-        headers: this.options.headers,
-        body: body === undefined ? this.options.body : body,
-      }).then((response) => {
-        if (this.options.responseType === 'json') {
-          response.json().then((result: T) => {
-            resolve({
-              result,
-              response,
-            })
-          })
+    return new Promise<{ response: Response; result: IResponsePack; resource: T | '' }>(
+      (resolve, reject) => {
+        if (!this.options.url) {
+          throw new Error('fetch: url is undefined')
         }
-      })
-    })
+        fetch(this.options.url, {
+          method: this.options.method,
+          headers: this.options.headers,
+          body: body === undefined ? this.options.body : body,
+        }).then((response) => {
+          if (this.options.responseType === 'json') {
+            response.json().then((result: IResponsePack) => {
+              let resource: T | '' = ''
+
+              try {
+                resource = JSON.parse(result.resource)
+              } catch (error) {
+                console.error(error)
+              }
+
+              resolve({
+                result,
+                response,
+                resource,
+              })
+            })
+          }
+        })
+      }
+    )
   }
 
   private static globalOptions: IHttpOptions
@@ -89,3 +100,13 @@ export const createRequestPack = (rawResource?: any): string => {
     other: null,
   })
 }
+
+// const res = {
+//   code: 0,
+//   message: 'OK',
+//   success: true,
+//   session: '7ac11034-bc80-4859-882e-5ffe274a67e2',
+//   resource: '{"passport":"c4ca754ac1e74069a7d5f5c7d081cd2a","uid":0}',
+//   sign: '',
+//   other: null,
+// }
