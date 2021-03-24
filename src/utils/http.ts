@@ -80,11 +80,11 @@ export interface IResponsePack {
   other: null
 }
 
-export const createRequestPack = (rawResource: any): string => {
+export const createRequestPack = (rawResource?: any): string => {
   return JSON.stringify({
     passport: localStorage.getItem('__PASSPORT'),
     session: uuidv4(),
-    resource: JSON.stringify(rawResource),
+    resource: rawResource === undefined ? '' : JSON.stringify(rawResource),
     sign: '',
     other: null,
   })
