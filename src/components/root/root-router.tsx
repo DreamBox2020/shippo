@@ -4,18 +4,28 @@ import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { services } from '~/services'
+import { IResponsePack } from '~/utils/http'
 
 export interface RootRouteProps {
   result: {
     response: Response
-    result: any
+    result: IResponsePack
+    resource:
+      | ''
+      | {
+          passport: string
+          uid: number
+        }
   }[]
 }
 const Component: React.FC<RootRouteProps> = ({ result }) => {
   console.log(result)
   useEffect(() => {
-    // localStorage.setItem('__PASSPORT',result[0].result)
-  }, [])
+    const resource = result[0].resource
+    if (resource !== '') {
+      localStorage.setItem('__PASSPORT', resource.passport)
+    }
+  }, [result])
 
   return (
     <HashRouter>
