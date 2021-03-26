@@ -4,27 +4,17 @@ import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { services } from '~/services'
-import { IResponsePack } from '~/utils/http'
+import { ICreateResource } from '~/services/passport'
+import { HttpResult } from '~/utils/http'
 
 export interface RootRouteProps {
-  result: {
-    response: Response
-    result: IResponsePack
-    resource:
-      | ''
-      | {
-          passport: string
-          uid: number
-        }
-  }[]
+  result: HttpResult<ICreateResource>[]
 }
 const Component: React.FC<RootRouteProps> = ({ result }) => {
-  console.log(result)
   useEffect(() => {
+    console.log(result)
     const resource = result[0].resource
-    if (resource !== '') {
-      localStorage.setItem('__PASSPORT', resource.passport)
-    }
+    localStorage.setItem('__PASSPORT', resource.passport)
   }, [result])
 
   return (

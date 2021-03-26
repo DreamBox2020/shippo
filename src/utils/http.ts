@@ -2,6 +2,12 @@ import { v4 as uuidv4 } from 'uuid'
 
 export type body = FormData | string | null
 
+export interface HttpResult<T> {
+  response: Response
+  pack: IResponsePack
+  resource: T
+}
+
 export interface IHttpOptions {
   url?: string
   method?: 'POST' | 'GET'
@@ -17,37 +23,43 @@ export class Http {
     this.options = Http.mergeOptions(Http.globalOptions, options)
   }
 
-  public send<T = any>(body?: body) {
-    return new Promise<{ response: Response; result: IResponsePack; resource: T | '' }>(
-      (resolve, reject) => {
-        if (!this.options.url) {
-          throw new Error('fetch: url is undefined')
-        }
+  public send<T = ''>(body?: body) {
+    return new Promise<HttpResult<T>>((resolve, reject) => {
+      if (!this.options.url) {
+        reject('fetch: URL is not defined')
+        // throw new Error('fetch: URL is not defined')
+      } else {
         fetch(this.options.url, {
           method: this.options.method,
           headers: this.options.headers,
           body: body === undefined ? this.options.body : body,
         }).then((response) => {
           if (this.options.responseType === 'json') {
-            response.json().then((result: IResponsePack) => {
-              let resource: T | '' = ''
-
-              try {
-                resource = JSON.parse(result.resource)
-              } catch (error) {
-                console.error(error)
+            response.json().then((pack: IResponsePack) => {
+              if (pack.resource === '') {
+                resolve({
+                  pack,
+                  response,
+                  resource: (pack.resource as unknown) as T,
+                })
+              } else {
+                try {
+                  const resource = JSON.parse(pack.resource)
+                  resolve({
+                    pack,
+                    response,
+                    resource,
+                  })
+                } catch (error) {
+                  reject('fetch: Resource is not JSON')
+                  // throw new Error('fetch: Resource is not JSON')
+                }
               }
-
-              resolve({
-                result,
-                response,
-                resource,
-              })
             })
           }
         })
       }
-    )
+    })
   }
 
   private static globalOptions: IHttpOptions
