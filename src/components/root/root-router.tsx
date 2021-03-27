@@ -4,11 +4,11 @@ import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { services } from '~/services'
-import { ICreateResource } from '~/services/passport'
+import { IResponseResource } from '~/services/passport'
 import { HttpResult } from '~/utils/http'
 
 export interface RootRouteProps {
-  result: HttpResult<ICreateResource>[]
+  result: HttpResult<IResponseResource>[]
 }
 const Component: React.FC<RootRouteProps> = ({ result }) => {
   useEffect(() => {

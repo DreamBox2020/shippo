@@ -112,13 +112,3 @@ export const createRequestPack = (rawResource?: any): string => {
     other: null,
   })
 }
-
-// const res = {
-//   code: 0,
-//   message: 'OK',
-//   success: true,
-//   session: '7ac11034-bc80-4859-882e-5ffe274a67e2',
-//   resource: '{"passport":"c4ca754ac1e74069a7d5f5c7d081cd2a","uid":0}',
-//   sign: '',
-//   other: null,
-// }
