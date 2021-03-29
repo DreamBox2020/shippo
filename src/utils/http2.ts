@@ -1,9 +1,14 @@
 import { v4 as uuidv4 } from 'uuid'
 
-class InterceptorManager<V> {
-  private handlers: any[] = []
+type InterceptorManagerHandler<V> = {
+  fulfilled: (value: V) => V | Promise<V>
+  rejected: (error: any) => any
+}
 
-  public use(fulfilled?: (value: V) => V | Promise<V>, rejected?: (error: any) => any): number {
+class InterceptorManager<V> {
+  private handlers: (InterceptorManagerHandler<V> | null)[] = []
+
+  public use(fulfilled: (value: V) => V | Promise<V>, rejected: (error: any) => any): number {
     this.handlers.push({
       fulfilled,
       rejected,
@@ -15,6 +20,10 @@ class InterceptorManager<V> {
     if (this.handlers[id]) {
       this.handlers[id] = null
     }
+  }
+
+  public forEach(fn: (handler: InterceptorManagerHandler<V>) => void) {
+    this.handlers.forEach((_) => _ && fn(_))
   }
 }
 
@@ -39,6 +48,9 @@ export interface IHttpResponse<T = any> {
   request: Request
   response: Response
   data: T
+  status: number
+  statusText: string
+  headers: Headers
 }
 
 const defaults: IHttpRequestConfig = {
@@ -67,50 +79,67 @@ export class Http {
     this.defaults = this.mergeConfig(defaults, config)
   }
 
-  public send<T = any>(config: IHttpRequestConfig = {}) {
-    return new Promise<IHttpResponse<T>>((resolve, reject) => {
-      config = this.mergeConfig(this.defaults, config)
-
-      if (config.transformRequest) {
-        config.data = config.transformRequest.reduce(
-          (data, fn) => fn(data, config.headers),
-          config.data
-        )
-      }
-
-      fetch(this.buildURL(config.url, config.params), {
-        method: config.method,
-        headers: config.headers,
-        body: config.data,
-      }).then(
-        (response) => {
-          // if (this.config.responseType === 'json') {
-          //   response.json().then((pack: IResponsePack) => {
-          //     if (pack.resource === '') {
-          //       return resolve({
-          //         pack,
-          //         response,
-          //         resource: (pack.resource as unknown) as T,
-          //       })
-          //     } else {
-          //       try {
-          //         const resource = JSON.parse(pack.resource)
-          //         return resolve({
-          //           pack,
-          //           response,
-          //           resource,
-          //         })
-          //       } catch (error) {
-          //         return reject('fetch: Resource is not JSON')
-          //         // throw new Error('fetch: Resource is not JSON')
-          //       }
-          //     }
-          //   })
-          // }
-        },
-        (reason) => {}
+  public dispatchRequest<T = any>(config: IHttpRequestConfig) {
+    if (config.transformRequest) {
+      config.data = config.transformRequest.reduce(
+        (data, fn) => fn(data, config.headers),
+        config.data
       )
-    })
+    }
+
+    fetch(this.buildURL(config.url, config.params), {
+      method: config.method,
+      headers: config.headers,
+      body: config.data,
+    }).then(
+      (response) => {
+        // if (this.config.responseType === 'json') {
+        //   response.json().then((pack: IResponsePack) => {
+        //     if (pack.resource === '') {
+        //       return resolve({
+        //         pack,
+        //         response,
+        //         resource: (pack.resource as unknown) as T,
+        //       })
+        //     } else {
+        //       try {
+        //         const resource = JSON.parse(pack.resource)
+        //         return resolve({
+        //           pack,
+        //           response,
+        //           resource,
+        //         })
+        //       } catch (error) {
+        //         return reject('fetch: Resource is not JSON')
+        //         // throw new Error('fetch: Resource is not JSON')
+        //       }
+        //     }
+        //   })
+        // }
+      },
+      (reason) => {}
+    )
+  }
+
+  public send<T = any>(config: IHttpRequestConfig = {}) {
+    config = this.mergeConfig(this.defaults, config)
+
+    const chain: any[] = [(_: IHttpRequestConfig) => this.dispatchRequest<T>(_), undefined]
+    let promise: any = Promise.resolve(config)
+
+    this.interceptors.request.forEach((interceptor) =>
+      chain.unshift(interceptor.fulfilled, interceptor.rejected)
+    )
+
+    this.interceptors.response.forEach((interceptor) =>
+      chain.push(interceptor.fulfilled, interceptor.rejected)
+    )
+
+    while (chain.length) {
+      promise = promise.then(chain.shift(), chain.shift())
+    }
+
+    return promise
   }
 
   public buildURL(url: string = '', params: any): string {
