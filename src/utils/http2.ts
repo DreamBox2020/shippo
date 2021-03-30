@@ -40,7 +40,7 @@ export interface IHttpRequestConfig {
   params?: any
   data?: any
   timeout?: number
-  responseType?: 'json'
+  responseType?: 'json' | 'blob' | 'text'
 }
 
 export interface IHttpResponse<T = any> {
@@ -87,12 +87,49 @@ export class Http {
       )
     }
 
-    fetch(this.buildURL(config.url, config.params), {
+    const request = new Request(this.buildURL(config.url, config.params), {
       method: config.method,
       headers: config.headers,
       body: config.data,
-    }).then(
+    })
+
+    return fetch(request).then(
       (response) => {
+        let handle: () => Promise<any>
+
+        switch (config.responseType) {
+          case 'json':
+            handle = response.json
+            break
+          case 'blob':
+            handle = response.blob
+            break
+          case 'text':
+            handle = response.text
+            break
+          default:
+            handle = () => Promise.resolve(response.body)
+            break
+        }
+
+        handle().then((data) => {
+          if (config.transformResponse) {
+            data = config.transformResponse.reduce((data, fn) => fn(data, response.headers), data)
+          }
+
+          const pack: IHttpResponse = {
+            config,
+            request,
+            response,
+            data: data,
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers,
+          }
+
+          return pack
+        })
+
         // if (this.config.responseType === 'json') {
         //   response.json().then((pack: IResponsePack) => {
         //     if (pack.resource === '') {
@@ -121,7 +158,7 @@ export class Http {
     )
   }
 
-  public send<T = any>(config: IHttpRequestConfig = {}) {
+  public request<T = any>(config: IHttpRequestConfig = {}) {
     config = this.mergeConfig(this.defaults, config)
 
     const chain: any[] = [(_: IHttpRequestConfig) => this.dispatchRequest<T>(_), undefined]
