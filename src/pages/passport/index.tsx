@@ -9,10 +9,15 @@ export const Passport = () => {
 
   const handleLogon = () => {
     console.log('handleLogon', { phone, code })
+    services.user.login({
+      phone,
+      code,
+    })
   }
 
   const handleSmsSend = () => {
-    services.sms.send({ phone: phone.replace(/ /g, '') })
+    console.log('handleSmsSend', { phone })
+    services.sms.send({ phone: phone.replace(/\s/g, '') })
   }
 
   return (
