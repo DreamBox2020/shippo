@@ -1,9 +1,12 @@
-import { BASE_API } from '~/settings'
-import { createRequestPack, Http } from '~/utils/http'
+import { request, ResponsePack } from '..'
 
 interface IRequestResource {
   phone: string
 }
 
-export const send = (resource: IRequestResource) =>
-  new Http({ url: BASE_API + '/sms/send' }).send(createRequestPack(resource))
+export const send = (data: IRequestResource) =>
+  request.request<ResponsePack>({
+    url: '/sms/send',
+    method: 'POST',
+    data,
+  })

@@ -1,5 +1,4 @@
-import { BASE_API } from '~/settings'
-import { createRequestPack, Http } from '~/utils/http'
+import { request, ResponsePack } from '..'
 
 export interface IResponseResource {
   passport: string
@@ -7,4 +6,7 @@ export interface IResponseResource {
 }
 
 export const create = () =>
-  new Http({ url: BASE_API + '/passport/create' }).send<IResponseResource>(createRequestPack())
+  request.request<ResponsePack<IResponseResource>>({
+    url: '/passport/create',
+    method: 'POST',
+  })

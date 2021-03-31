@@ -1,19 +1,20 @@
+import { AxiosResponse } from 'axios'
 import React, { lazy, useEffect } from 'react'
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom'
 import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
-import { services } from '~/services'
+import { ResponsePack, services } from '~/services'
 import { IResponseResource } from '~/services/passport'
-import { HttpResult } from '~/utils/http'
 
 export interface RootRouteProps {
-  result: HttpResult<IResponseResource>[]
+  result: AxiosResponse<ResponsePack<IResponseResource>>[]
 }
+
 const Component: React.FC<RootRouteProps> = ({ result }) => {
   useEffect(() => {
     console.log(result)
-    const resource = result[0].resource
+    const resource = result[0].data.resource
     localStorage.setItem('__PASSPORT', resource.passport)
   }, [result])
 
