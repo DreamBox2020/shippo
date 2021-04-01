@@ -9,4 +9,5 @@ export const create = () =>
   request.request<ResponsePack<IResponseResource>>({
     url: '/passport/create',
     method: 'POST',
+    data: {},
   })
