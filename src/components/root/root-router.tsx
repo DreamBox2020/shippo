@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 import React, { lazy, useEffect } from 'react'
-import { Switch, Route, Redirect, HashRouter } from 'react-router-dom'
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom'
 import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
@@ -12,26 +12,29 @@ export interface RootRouteProps {
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
+  const history = useHistory()
+
   useEffect(() => {
     console.log(result)
     const resource = result[0].data.resource
     localStorage.setItem('__PASSPORT', resource.passport)
-  }, [result])
+    if (resource.uid > 0) {
+      history.push('/')
+    }
+  }, [result, history])
 
   return (
-    <HashRouter>
-      <Switch>
-        <Route exact path="/" component={() => <Redirect to="/home" />}></Route>
-        <Route exact path="/passport" component={Passport}></Route>
-        <Route exact path="/home" component={Home}></Route>
-        <Route exact path="/discover" component={Home}></Route>
-        <Route exact path="/my" component={Home}></Route>
-        <Route
-          path="/space/:uid"
-          component={withLoading(lazy(() => import('~/layouts/space')))}
-        ></Route>
-      </Switch>
-    </HashRouter>
+    <Switch>
+      <Route exact path="/" component={() => <Redirect to="/home" />}></Route>
+      <Route exact path="/passport" component={Passport}></Route>
+      <Route exact path="/home" component={Home}></Route>
+      <Route exact path="/discover" component={Home}></Route>
+      <Route exact path="/my" component={Home}></Route>
+      <Route
+        path="/space/:uid"
+        component={withLoading(lazy(() => import('~/layouts/space')))}
+      ></Route>
+    </Switch>
   )
 }
 

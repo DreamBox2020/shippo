@@ -1,23 +1,26 @@
 import { Button, Flex, InputItem, WhiteSpace, WingBlank } from 'antd-mobile'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { COLOR_PINK } from '~/constants/color'
 import { services } from '~/services'
 
 export const Passport = () => {
-  const [phone, setPhone] = useState('')
+  const [_phone, setPhone] = useState('')
   const [code, setCode] = useState('')
 
-  const handleLogon = () => {
+  const phone = useMemo(() => _phone.replace(/\s/g, ''), [_phone])
+
+  const handleLogon = async () => {
     console.log('handleLogon', { phone, code })
-    services.user.login({
+    const { data } = await services.user.login({
       phone,
       code,
     })
+    window.localStorage.setItem('__PASSPORT', data.resource.passport)
   }
 
   const handleSmsSend = () => {
     console.log('handleSmsSend', { phone })
-    services.sms.send({ phone: phone.replace(/\s/g, '') })
+    services.sms.send({ phone })
   }
 
   return (
@@ -26,7 +29,7 @@ export const Passport = () => {
         type="phone"
         placeholder="请输入手机号码"
         onChange={(value) => setPhone(value)}
-        value={phone}
+        value={_phone}
       >
         手机号码
       </InputItem>
