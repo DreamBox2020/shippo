@@ -1,6 +1,6 @@
 import { Button, Flex, InputItem, WhiteSpace, WingBlank } from 'antd-mobile'
 import React, { useMemo, useState } from 'react'
-import { COLOR_PINK } from '~/constants/config'
+import { COLOR_PINK } from '~/constants/color'
 import { services } from '~/services'
 
 export const Passport = () => {

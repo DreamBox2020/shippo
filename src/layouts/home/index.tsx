@@ -1,6 +1,6 @@
 import React, { lazy, useState } from 'react'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { COLOR_GRAY, COLOR_PINK } from '~/constants/config'
+import { COLOR_GRAY, COLOR_PINK } from '~/constants/color'
 import { withLoading } from '~/components/loading-hoc'
 import { TabBar } from 'antd-mobile'
 import { Icon } from '~/components/icon'
