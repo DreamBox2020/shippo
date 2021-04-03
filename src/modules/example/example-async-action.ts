@@ -7,6 +7,6 @@ const fetch = () =>
 export const exampleAsyncAction = {
   exampleAdd: (): AppThunk => async (dispatch) => {
     const res = await fetch()
-    dispatch(exampleAction.exampleAdd(res))
+    dispatch(exampleAction.add(res))
   },
 }

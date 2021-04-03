@@ -1,7 +1,10 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { exampleAction } from '~/modules/example'
 
 export const Home = () => {
-  return <h1>Home</h1>
+  const dispatch = useDispatch()
+  return <h1 onClick={() => dispatch(exampleAction.add(2))}>Home</h1>
 }
 
 export default Home

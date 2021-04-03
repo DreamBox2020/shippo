@@ -1,15 +1,8 @@
-import { ExampleActionTypeEnum } from '.'
+import { createAction } from '../util'
+import { IExampleStore } from './example-store'
 
-export type exampleActionTypes = {
-  type: ExampleActionTypeEnum.EXAMPLE_ADD
-  payload: number
-}
+const action = createAction<IExampleStore>('example')
 
 export const exampleAction = {
-  exampleAdd: (number: number) => {
-    return {
-      type: ExampleActionTypeEnum.EXAMPLE_ADD,
-      payload: number,
-    }
-  },
+  add: action((count: number) => ({ count })),
 }

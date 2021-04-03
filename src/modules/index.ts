@@ -12,15 +12,25 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import { IS_DEV } from '~/settings'
 
-import { exampleReducer } from './example'
-import { userReducer } from './user'
-import { commonReducer } from './common'
+import { userReducer, userStore } from './user'
+import { commonReducer, commonStore } from './common'
+// import { exampleReducer } from './example/example-reducer'
+import { exampleStore } from './example/example-store'
+import { createReducer } from './util'
 
-export const rootReducer = combineReducers({
-  example: exampleReducer,
+export const _rootReducer = combineReducers({
+  // example: exampleReducer,
   user: userReducer,
   common: commonReducer,
 })
+
+export const rootReducer = combineReducers(
+  createReducer({
+    example: exampleStore,
+    user: userStore,
+    common: commonStore,
+  })
+)
 
 export type RootStoreTypes = ReturnType<typeof rootReducer>
 
@@ -50,7 +60,7 @@ export const rootStore = createStore(
 export const asyncDispatch = (asyncAction: AppThunk) =>
   asyncAction(rootStore.dispatch, rootStore.getState, undefined)
 
-export const dispatch: Dispatch = (action) => rootStore.dispatch(action)
+// export const dispatch: Dispatch = (action) => rootStore.dispatch(action)
 
 export const selector = <T>(selector: (store: RootStoreTypes) => T) =>
   selector(rootStore.getState())

@@ -1,16 +1,8 @@
-import { ExampleActionTypeEnum, exampleActionTypes, exampleStore, IExampleStore } from '.'
+// import { createReducer } from '../util'
+// import { exampleStore, IExampleStore } from './example-store'
 
-const exampleReducerHander = {
-  [ExampleActionTypeEnum.EXAMPLE_ADD]: (store: IExampleStore, payload: number): IExampleStore => {
-    return { ...store, count: store.count + payload }
-  },
-}
+// const reducer = createReducer<IExampleStore>('example')
 
-export const exampleReducer = (store = exampleStore, action: exampleActionTypes) => {
-  switch (action.type) {
-    case ExampleActionTypeEnum.EXAMPLE_ADD:
-      return exampleReducerHander[action.type](store, action.payload)
-    default:
-      return store || {}
-  }
-}
+// export const exampleReducer = reducer(exampleStore)
+
+export {}
