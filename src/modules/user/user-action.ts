@@ -1,15 +1,8 @@
-import { UserActionTypeEnum } from '.'
+import { createAction } from '../util'
+import { IUserStore } from './user-store'
 
-export type userActionTypes = {
-  type: UserActionTypeEnum.USER_UPDATE_INFO
-  payload: { uid: number }
-}
+const action = createAction<IUserStore>('example')
 
 export const userAction = {
-  userUpdateInfo: (info: { uid: number }) => {
-    return {
-      type: UserActionTypeEnum.USER_UPDATE_INFO,
-      payload: info,
-    }
-  },
+  userUpdateInfo: action((info: { uid: number }) => ({ info })),
 }

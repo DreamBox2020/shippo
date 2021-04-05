@@ -12,15 +12,15 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import { IS_DEV } from '~/settings'
 
-import { userReducer, userStore } from './user'
 import { commonReducer, commonStore } from './common'
 // import { exampleReducer } from './example/example-reducer'
 import { exampleStore } from './example/example-store'
+import { userStore } from './user/user-store'
 import { createReducer } from './util'
 
 export const _rootReducer = combineReducers({
   // example: exampleReducer,
-  user: userReducer,
+  // user: userReducer,
   common: commonReducer,
 })
 
