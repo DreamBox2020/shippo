@@ -1,23 +1,10 @@
-import { CommonActionTypeEnum } from './common-action-type'
+import { createAction } from '../util'
+import { ICommonStore } from './common-store'
 
-export type CommonActionTypes =
-  | {
-      type: CommonActionTypeEnum.COMMON_OPEN_MESSAGE_DRAWER
-    }
-  | {
-      type: CommonActionTypeEnum.COMMON_CLOSE_MESSAGE_DRAWER
-    }
+const action = createAction<ICommonStore>('example')
 
 export const commonAction = {
-  commonOpenMessageDrawer: () => {
-    return {
-      type: CommonActionTypeEnum.COMMON_OPEN_MESSAGE_DRAWER,
-    }
-  },
+  commonOpenMessageDrawer: action(() => ({ messageDrawerIsShow: true })),
 
-  commonCloseMessageDrawer: () => {
-    return {
-      type: CommonActionTypeEnum.COMMON_CLOSE_MESSAGE_DRAWER,
-    }
-  },
+  commonCloseMessageDrawer: action(() => ({ messageDrawerIsShow: false })),
 }
