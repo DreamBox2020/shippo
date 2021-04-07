@@ -13,17 +13,9 @@ import { createLogger } from 'redux-logger'
 import { IS_DEV } from '~/settings'
 import { createReducer } from './util'
 
-// import { commonReducer, commonStore } from './common'
-// import { exampleReducer } from './example/example-reducer'
 import { exampleStore } from './example/example-store'
 import { userStore } from './user/user-store'
 import { commonStore } from './common/common-store'
-
-export const _rootReducer = combineReducers({
-  // example: exampleReducer,
-  // user: userReducer,
-  // common: commonReducer,
-})
 
 export const rootReducer = combineReducers(
   createReducer({
