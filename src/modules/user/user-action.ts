@@ -1,4 +1,4 @@
-import { createAction } from '../util'
+import { createAction } from '../helpers'
 import { IUserStore } from './user-store'
 
 const action = createAction<IUserStore>('example')

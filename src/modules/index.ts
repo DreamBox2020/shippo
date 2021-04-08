@@ -11,7 +11,7 @@ import thunkMiddleware, { ThunkAction } from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import { IS_DEV } from '~/settings'
-import { createReducer } from './util'
+import { createReducer } from './helpers'
 
 import { exampleStore } from './example/example-store'
 import { userStore } from './user/user-store'

@@ -1,4 +1,4 @@
-import { createAction } from '../util'
+import { createAction } from '../helpers'
 import { ICommonStore } from './common-store'
 
 const action = createAction<ICommonStore>('example')
