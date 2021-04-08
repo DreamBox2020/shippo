@@ -26,12 +26,6 @@ export const reducer = <S extends {}>(namespace: string) => (_store: S) => {
   }
 }
 
-// type ct<M> = M extends {
-//   [P in keyof M]: infer R
-// }
-//   ? { [key in keyof M]: (s: R, a: Action<M>) => R }
-//   : string
-
 type ct<T> = {
   [P in keyof T]: (s: T[P] | undefined, a: Action<T>) => T[P]
 }
