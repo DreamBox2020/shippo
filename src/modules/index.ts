@@ -50,10 +50,8 @@ export const rootStore = createStore(
   composeWithDevTools(applyMiddleware(...middleware))
 )
 
-export const asyncDispatch = (asyncAction: AppThunk) =>
-  asyncAction(rootStore.dispatch, rootStore.getState, undefined)
-
-// export const dispatch: Dispatch = (action) => rootStore.dispatch(action)
+export const thunkDispatch: ThunkDispatch = (action) => rootStore.dispatch<any>(action)
+export const dispatch: Dispatch = (action) => rootStore.dispatch<any>(action)
 
 export const selector = <T>(selector: (store: RootStoreTypes) => T) =>
   selector(rootStore.getState())
