@@ -1,5 +1,3 @@
-import { AppThunk } from '..'
+import { asyncAction } from '..'
 
-export const userAsyncAction = {
-  userUpdateInfo: (): AppThunk => async (dispatch) => {},
-}
+export const userUpdateInfo = asyncAction(() => async (dispatch) => {})

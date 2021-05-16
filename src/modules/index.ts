@@ -11,19 +11,11 @@ import thunkMiddleware, { ThunkAction } from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import { IS_DEV } from '~/settings'
-import { createReducer } from './helpers'
 
-import { exampleStore } from './example/example-store'
-import { userStore } from './user/user-store'
-import { commonStore } from './common/common-store'
+import { userReducer } from './user/user-store'
+import { createAsyncAction } from '@kazura/react-store'
 
-export const rootReducer = combineReducers(
-  createReducer({
-    example: exampleStore,
-    user: userStore,
-    common: commonStore,
-  })
-)
+export const rootReducer = combineReducers({ user: userReducer })
 
 export type RootStoreTypes = ReturnType<typeof rootReducer>
 
@@ -55,3 +47,5 @@ export const dispatch: Dispatch = (action) => rootStore.dispatch<any>(action)
 
 export const selector = <T>(selector: (store: RootStoreTypes) => T) =>
   selector(rootStore.getState())
+
+export const asyncAction = createAsyncAction<RootStoreTypes, undefined, Action<string>>()

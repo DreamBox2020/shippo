@@ -1,8 +1,6 @@
-import { createAction } from '../helpers'
+import { createAction } from '@kazura/react-store'
 import { IUserStore } from './user-store'
 
 const action = createAction<IUserStore>('example')
 
-export const userAction = {
-  userUpdateInfo: action((info: { uid: number }) => ({ info })),
-}
+export const userUpdateInfo = action((info: { uid: number }) => ({ info }))
