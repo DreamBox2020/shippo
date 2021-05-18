@@ -12,7 +12,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import { IS_DEV } from '~/settings'
 
-import { userReducer } from './user/user-store'
+import { userReducer } from './user/user-reducer'
 import { createAsyncAction } from '@kazura/react-store'
 
 export const rootReducer = combineReducers({ user: userReducer })

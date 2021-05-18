@@ -1,5 +1,5 @@
 import { createAction } from '@kazura/react-store'
-import { IUserStore } from './user-store'
+import { IUserStore } from './user-reducer'
 
 const action = createAction<IUserStore>('example')
 
