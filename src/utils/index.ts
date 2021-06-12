@@ -79,3 +79,12 @@ export const checkPhone = (phone: string) => {
 
   return false
 }
+
+/**
+ * 检查短信验证码是否合规
+ * @param code
+ * @returns
+ */
+export const checkSmsCode = (code: string) => {
+  return /^[1-9][0-9]{5}$/.test(code)
+}

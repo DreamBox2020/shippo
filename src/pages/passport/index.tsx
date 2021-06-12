@@ -1,7 +1,8 @@
-import { Button, Flex, InputItem, WhiteSpace, WingBlank } from 'antd-mobile'
+import { Button, Flex, InputItem, Toast, WhiteSpace, WingBlank } from 'antd-mobile'
 import React, { useMemo, useState } from 'react'
 import { COLOR_PINK } from '~/constants/color'
 import { services } from '~/services'
+import { checkPhone, checkSmsCode } from '~/utils'
 
 export const Passport = () => {
   const [_phone, setPhone] = useState('')
@@ -11,6 +12,12 @@ export const Passport = () => {
 
   const handleLogon = async () => {
     console.log('handleLogon', { phone, code })
+    if (!checkPhone(phone)) {
+      return Toast.info('手机号格式错误')
+    }
+    if (!checkSmsCode(code)) {
+      return Toast.info('短信验证码格式错误')
+    }
     const { data } = await services.user.login({
       phone,
       code,
@@ -20,6 +27,9 @@ export const Passport = () => {
 
   const handleSmsSend = () => {
     console.log('handleSmsSend', { phone })
+    if (!checkPhone(phone)) {
+      return Toast.info('手机号格式错误')
+    }
     services.sms.send({ phone })
   }
 
