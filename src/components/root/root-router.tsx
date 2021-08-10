@@ -1,3 +1,4 @@
+import { Toast } from 'antd-mobile'
 import { AxiosResponse } from 'axios'
 import React, { lazy, useEffect } from 'react'
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom'
@@ -19,7 +20,11 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
     const resource = result[0].data.resource
     localStorage.setItem('__PASSPORT', resource.passport)
     if (resource.uid > 0) {
+      Toast.success(`已经登录，UID为${resource.uid}`)
       history.push('/')
+    } else {
+      Toast.fail('没有登录')
+      history.push('/passport')
     }
   }, [result, history])
 

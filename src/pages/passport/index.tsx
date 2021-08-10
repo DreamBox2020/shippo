@@ -23,6 +23,7 @@ export const Passport = () => {
       code,
     })
     window.localStorage.setItem('__PASSPORT', data.resource.passport)
+    window.location.reload()
   }
 
   const handleSmsSend = () => {
@@ -31,6 +32,7 @@ export const Passport = () => {
       return Toast.info('手机号格式错误')
     }
     services.sms.send({ phone })
+    Toast.success('验证码已经发送')
   }
 
   return (

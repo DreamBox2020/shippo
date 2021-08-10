@@ -3,18 +3,23 @@ import { Icon, List, NavBar } from 'antd-mobile'
 import { Container } from '~/components/container'
 import { Header } from '~/components/header'
 import { Main } from '~/components/main'
+import { useHistory } from 'react-router'
 
 const { Item } = List
 const { Brief } = Item
 
 export const Space = () => {
+  const history = useHistory()
   return (
     <Container direction="vertical">
       <Header height="45px">
         <NavBar
           mode="light"
           icon={<Icon type="left" />}
-          onLeftClick={() => console.log('onLeftClick')}
+          onLeftClick={() => {
+            console.log('onLeftClick')
+            history.push('/my')
+          }}
           rightContent={[
             <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
             <Icon key="1" type="ellipsis" />,
