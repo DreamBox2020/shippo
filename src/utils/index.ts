@@ -68,7 +68,7 @@ export const checkPhone = (phone: string) => {
   }
 
   // 如果是134开头，且第四位在0～8之间
-  if (/^134[0-8]$/) {
+  if (/^134[0-8]$/.test(phone)) {
     return true
   }
 
