@@ -1,6 +1,8 @@
+import { useMount } from 'ahooks'
 import { Toast } from 'antd-mobile'
 import { AxiosResponse } from 'axios'
-import React, { lazy, useEffect } from 'react'
+import React, { lazy } from 'react'
+import { useLocation } from 'react-router'
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom'
 import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
@@ -14,19 +16,22 @@ export interface RootRouteProps {
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
   const history = useHistory()
+  const location = useLocation()
 
-  useEffect(() => {
+  useMount(() => {
     console.log(result)
     const resource = result[0].data.resource
     localStorage.setItem('__PASSPORT', resource.passport)
     if (resource.uid > 0) {
       Toast.success(`已经登录，UID为${resource.uid}`)
-      history.push('/')
+      if (location.pathname.startsWith('/passport')) {
+        history.push('/')
+      }
     } else {
       Toast.fail('没有登录')
       history.push('/passport')
     }
-  }, [result, history])
+  })
 
   return (
     <Switch>

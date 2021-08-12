@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.7",
     "@types/uuid": "^8.3.0",
+    "ahooks": "^2.10.9",
     "antd-mobile": "^2.3.4",
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
