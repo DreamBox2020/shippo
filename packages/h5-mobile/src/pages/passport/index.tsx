@@ -1,7 +1,7 @@
 import { Button, Flex, InputItem, Toast, WhiteSpace, WingBlank } from 'antd-mobile'
 import React, { useMemo, useState } from 'react'
 import { COLOR_PINK } from '~/constants/color'
-import { services } from '~/services'
+import { services } from '@shippo/sdk-services'
 import { checkPhone, checkSmsCode } from '~/utils'
 
 export const Passport = () => {

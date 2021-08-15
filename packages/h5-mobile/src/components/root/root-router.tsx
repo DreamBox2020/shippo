@@ -7,8 +7,9 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom'
 import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
-import { ResponsePack, services } from '~/services'
-import { IResponseResource } from '~/services/passport'
+import { ResponsePack } from '@shippo/sdk-services/types/helpers'
+import { services } from '@shippo/sdk-services'
+import { IResponseResource } from '@shippo/sdk-services/types/passport'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<IResponseResource>>[]
