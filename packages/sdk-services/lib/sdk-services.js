@@ -52,10 +52,13 @@ var user = /*#__PURE__*/Object.freeze({
   login: login
 });
 
-var services = { passport: passport, sms: sms, user: user };
-var use = function (http) {
-    request.http = http;
+var services = {
+    passport: passport,
+    sms: sms,
+    user: user,
+    use: function (config) {
+        request.http = request.create(config);
+    },
 };
 
 exports.services = services;
-exports.use = use;

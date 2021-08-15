@@ -9,5 +9,3 @@ export const request = new Request({
     'Content-Type': 'application/json',
   },
 })
-
-console.log(process.env)
