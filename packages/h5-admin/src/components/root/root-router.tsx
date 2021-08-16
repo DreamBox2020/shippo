@@ -20,18 +20,18 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
   const location = useLocation()
 
   useMount(() => {
-    // console.log(result)
-    // const resource = result[0].data.resource
-    // localStorage.setItem('__PASSPORT', resource.passport)
-    // if (resource.uid > 0) {
-    //   message.success(`已经登录，UID为${resource.uid}`)
-    //   if (location.pathname.startsWith('/passport')) {
-    //     history.push('/')
-    //   }
-    // } else {
-    //   message.error('没有登录')
-    //   history.push('/passport')
-    // }
+    console.log(result)
+    const resource = result[0].data.resource
+    localStorage.setItem('__PASSPORT', resource.passport)
+    if (resource.uid > 0) {
+      message.success(`已经登录，UID为${resource.uid}`)
+      if (location.pathname.startsWith('/passport')) {
+        history.push('/')
+      }
+    } else {
+      message.error('没有登录')
+      history.push('/passport')
+    }
   })
 
   return (

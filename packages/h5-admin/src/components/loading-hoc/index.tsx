@@ -25,8 +25,7 @@ export const withFetchLoading =
     const [result, setResult] = useState<any[] | null>(null)
 
     useEffect(() => {
-      setResult({} as any)
-      // Promise.all(requests()).then((_) => setResult(_))
+      Promise.all(requests()).then((_) => setResult(_))
     }, [])
 
     return result ? <CurrentComponent result={result} /> : <Loading />
