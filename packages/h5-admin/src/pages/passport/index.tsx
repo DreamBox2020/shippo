@@ -3,6 +3,7 @@ import { COLOR_PINK } from '~/constants/color'
 import { services } from '@shippo/sdk-services'
 import { checkPhone, checkSmsCode } from '~/utils'
 import { Form, Input, Row, Col, Button, message } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
 
 const formItemLayout = {
   labelCol: {
@@ -58,16 +59,15 @@ export const Passport = () => {
   }
 
   return (
-    <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
-      <Form.Item
-        name="phone"
-        label="手机号"
-        rules={[{ required: true, message: '请输入你的手机号！' }]}
-      >
-        <Input style={{ width: '100%' }} />
+    <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
+      <Form.Item name="phone" rules={[{ required: true, message: '请输入你的手机号！' }]}>
+        <Input
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          style={{ width: '100%' }}
+        />
       </Form.Item>
 
-      <Form.Item label="验证码" extra="我们需要确认是你本人在操作！">
+      <Form.Item>
         <Row gutter={8}>
           <Col span={12}>
             <Form.Item
@@ -75,7 +75,7 @@ export const Passport = () => {
               noStyle
               rules={[{ required: true, message: '请输入验证码！' }]}
             >
-              <Input />
+              <Input prefix={<UserOutlined className="site-form-item-icon" />} />
             </Form.Item>
           </Col>
           <Col span={12}>
