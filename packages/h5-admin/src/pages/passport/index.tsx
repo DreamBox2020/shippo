@@ -1,32 +1,9 @@
 import React, { useMemo, useState } from 'react'
-import { COLOR_PINK } from '~/constants/color'
 import { services } from '@shippo/sdk-services'
 import { checkPhone, checkSmsCode } from '~/utils'
-import { Form, Input, Row, Col, Button, message } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-}
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-}
+import { Form, Input, Button, message, Layout } from 'antd'
+import { UserOutlined, LockOutlined, CopyrightOutlined } from '@ant-design/icons'
+const { Header, Footer, Content } = Layout
 
 export const Passport = () => {
   const handleSmsSend = (phone: string) => {
@@ -59,37 +36,91 @@ export const Passport = () => {
   }
 
   return (
-    <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
-      <Form.Item name="phone" rules={[{ required: true, message: '请输入你的手机号！' }]}>
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          style={{ width: '100%' }}
-        />
-      </Form.Item>
-
-      <Form.Item>
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item
-              name="captcha"
-              noStyle
-              rules={[{ required: true, message: '请输入验证码！' }]}
-            >
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} />
+    <Layout>
+      <Header
+        style={{
+          background: 'transparent',
+          textAlign: 'center',
+          height: '200px',
+          lineHeight: '200px',
+        }}
+      >
+        <span
+          style={{
+            color: 'rgba(0,0,0,.85)',
+            fontWeight: 600,
+            fontSize: '33px',
+          }}
+        >
+          Shippo Admin
+        </span>
+      </Header>
+      <Content>
+        <div style={{ width: '328px', margin: '0 auto' }}>
+          <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
+            <Form.Item name="phone" rules={[{ required: true, message: '请输入你的手机号！' }]}>
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                placeholder="请输入你的手机号！"
+                style={{ width: '100%' }}
+                allowClear
+                size="large"
+              />
             </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Button onClick={() => handleSmsSend(form.getFieldValue('phone'))}>获取验证码</Button>
-          </Col>
-        </Row>
-      </Form.Item>
 
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          登录
-        </Button>
-      </Form.Item>
-    </Form>
+            <Form.Item>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Form.Item
+                  name="captcha"
+                  noStyle
+                  rules={[{ required: true, message: '请输入验证码！' }]}
+                >
+                  <Input
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    placeholder="请输入验证码！"
+                    style={{
+                      flex: 1,
+                      marginRight: 8,
+                    }}
+                    size="large"
+                  />
+                </Form.Item>
+                <Button
+                  style={{
+                    display: 'block',
+                  }}
+                  onClick={() => handleSmsSend(form.getFieldValue('phone'))}
+                  size="large"
+                >
+                  获取验证码
+                </Button>
+              </div>
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" style={{ width: '100%' }} size="large">
+                登录
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </Content>
+      <Footer
+        style={{
+          textAlign: 'center',
+          marginBottom: '25px',
+          color: 'rgba(0,0,0,.45)',
+          fontSize: '14px',
+        }}
+      >
+        <CopyrightOutlined /> 2021 Shippo
+      </Footer>
+    </Layout>
   )
 }
 
