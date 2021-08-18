@@ -26,6 +26,21 @@ const style = css`
       padding: 0;
     }
   }
+
+  @keyframes layout-title-hide {
+    0% {
+      display: none;
+      opacity: 0;
+    }
+    80% {
+      display: none;
+      opacity: 0;
+    }
+    100% {
+      display: unset;
+      opacity: 1;
+    }
+  }
 `
 
 export const GlobalStyle = createGlobalStyle`

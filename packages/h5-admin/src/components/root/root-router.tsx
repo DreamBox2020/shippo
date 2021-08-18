@@ -36,9 +36,10 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
 
   return (
     <Switch>
-      <Route exact path="/" component={() => <Redirect to="/home" />}></Route>
+      <Route exact path="/" component={() => <Redirect to="/dashboard" />}></Route>
       <Route exact path="/passport" component={Passport}></Route>
-      <Route exact path="/home" component={Home}></Route>
+      <Route exact path="/dashboard" component={Home}></Route>
+      <Route exact path="/users" component={Home}></Route>
     </Switch>
   )
 }
