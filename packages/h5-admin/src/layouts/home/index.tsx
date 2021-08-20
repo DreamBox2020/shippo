@@ -5,6 +5,7 @@ import { Layout, Menu } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
 import { useState } from 'react'
+import { Dropdown } from 'antd'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -152,7 +153,29 @@ export const Home = () => {
             backgroundColor: '#fff',
           }}
         >
-          Header
+          <Dropdown
+            overlay={
+              <Menu selectedKeys={[]}>
+                <Menu.Item key="center">
+                  <UserOutlined />
+                  个人中心
+                </Menu.Item>
+
+                <Menu.Item key="settings">
+                  <UserOutlined />
+                  个人设置
+                </Menu.Item>
+
+                <Menu.Divider />
+                <Menu.Item key="logout">
+                  <UserOutlined />
+                  退出登录
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <div>name</div>
+          </Dropdown>
         </Header>
         <Content>
           <SwitchRoute routes={tabBarItems} />
