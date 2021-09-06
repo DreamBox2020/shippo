@@ -113,28 +113,19 @@ export const Home = () => {
             }}
           >
             <Menu.Item key="1" icon={<UserOutlined />}>
-              nav 1
+              仪表盘
             </Menu.Item>
             <Menu.Item key="2" icon={<UserOutlined />}>
-              nav 2
+              用户管理
             </Menu.Item>
             <Menu.Item key="3" icon={<UserOutlined />}>
-              nav 3
+              权限管理
             </Menu.Item>
             <Menu.Item key="4" icon={<UserOutlined />}>
-              nav 4
+              个人设置
             </Menu.Item>
             <Menu.Item key="5" icon={<UserOutlined />}>
-              nav 5
-            </Menu.Item>
-            <Menu.Item key="6" icon={<UserOutlined />}>
-              nav 6
-            </Menu.Item>
-            <Menu.Item key="7" icon={<UserOutlined />}>
-              nav 7
-            </Menu.Item>
-            <Menu.Item key="8" icon={<UserOutlined />}>
-              nav 8
+              文章管理
             </Menu.Item>
           </Menu>
         </div>
