@@ -24,12 +24,18 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
     const resource = result[0].data.resource
     localStorage.setItem('__PASSPORT', resource.passport)
     if (resource.uid > 0) {
-      Toast.success(`已经登录，UID为${resource.uid}`)
+      Toast.show({
+        icon: 'success',
+        content: `已经登录，UID为${resource.uid}`,
+      })
       if (location.pathname.startsWith('/passport')) {
         history.push('/')
       }
     } else {
-      Toast.fail('没有登录')
+      Toast.show({
+        icon: 'fail',
+        content: '没有登录',
+      })
       history.push('/passport')
     }
   })

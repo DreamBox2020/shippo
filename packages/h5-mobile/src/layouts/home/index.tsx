@@ -8,6 +8,16 @@ import { Container } from '~/components/container'
 import { Main } from '~/components/main'
 import { Footer } from '~/components/footer'
 import { SwitchRoute, RouteS } from '~/components/switch-route'
+import styled from 'styled-components'
+
+const StyledTabBar = styled(TabBar)`
+  .adm-tab-bar-item {
+    color: ${COLOR_GRAY};
+  }
+  .adm-tab-bar-item-active {
+    color: ${COLOR_PINK};
+  }
+`
 
 type tabBarItem = RouteS & {
   path: string
@@ -51,9 +61,10 @@ export const Home = () => {
     tabBarItems.find((item) => item.path === routeMatch.path)!.key
   )
 
-  const onPress = (item: tabBarItem) => {
-    setSelectedTab(item.key)
-    history.push(item.path)
+  const onPress = (activeKey: string) => {
+    setSelectedTab(activeKey)
+    const path = tabBarItems.find((item) => item.key === activeKey)?.path
+    path && history.push(path)
   }
 
   return (
@@ -61,24 +72,12 @@ export const Home = () => {
       <Main>
         <SwitchRoute routes={tabBarItems} />
       </Main>
-      <Footer height="50px">
-        <TabBar
-          tintColor={COLOR_PINK}
-          unselectedTintColor={COLOR_GRAY}
-          prerenderingSiblingsNumber={0}
-          noRenderContent={true}
-        >
+      <Footer height="50px" style={{ backgroundColor: '#fff' }}>
+        <StyledTabBar activeKey={selectedTab} onChange={(activeKey) => onPress(activeKey)}>
           {tabBarItems.map((item) => (
-            <TabBar.Item
-              selected={item.key === selectedTab}
-              title={item.title}
-              key={item.key}
-              icon={<Icon type={item.icon} />}
-              selectedIcon={<Icon type={item.icon} />}
-              onPress={() => onPress(item)}
-            />
+            <TabBar.Item title={item.title} key={item.key} icon={<Icon type={item.icon} />} />
           ))}
-        </TabBar>
+        </StyledTabBar>
       </Footer>
     </Container>
   )

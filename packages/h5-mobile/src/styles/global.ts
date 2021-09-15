@@ -1,5 +1,5 @@
 import { css, createGlobalStyle } from 'styled-components'
-import 'antd-mobile/dist/antd-mobile.min.css'
+// import 'antd-mobile/dist/antd-mobile.min.css'
 
 const style = css`
   * {
@@ -13,6 +13,7 @@ const style = css`
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+    background-color: #f5f5f9;
   }
 
   ul {

@@ -1,8 +1,18 @@
-import { Button, Flex, InputItem, Toast, WhiteSpace, WingBlank } from 'antd-mobile'
+import { Button, Input, List, Toast } from 'antd-mobile'
 import React, { useMemo, useState } from 'react'
 import { COLOR_PINK } from '~/constants/color'
 import { services } from '@shippo/sdk-services'
 import { checkPhone, checkSmsCode } from '~/utils'
+import Container from '~/components/container'
+import Header from '~/components/header'
+import Main from '~/components/main'
+import styled from 'styled-components'
+
+const StyledList = styled(List)`
+  > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
+    border-bottom: unset;
+  }
+`
 
 export const Passport = () => {
   const [_phone, setPhone] = useState('')
@@ -13,10 +23,16 @@ export const Passport = () => {
   const handleLogon = async () => {
     console.log('handleLogon', { phone, code })
     if (!checkPhone(phone)) {
-      return Toast.info('手机号格式错误')
+      return Toast.show({
+        icon: 'fail',
+        content: '手机号格式错误',
+      })
     }
     if (!checkSmsCode(code)) {
-      return Toast.info('短信验证码格式错误')
+      return Toast.show({
+        icon: 'fail',
+        content: '短信验证码格式错误',
+      })
     }
     const { data } = await services.user.login({
       phone,
@@ -29,46 +45,70 @@ export const Passport = () => {
   const handleSmsSend = () => {
     console.log('handleSmsSend', { phone })
     if (!checkPhone(phone)) {
-      return Toast.info('手机号格式错误')
+      return Toast.show({
+        icon: 'fail',
+        content: '手机号格式错误',
+      })
     }
     services.sms.send({ phone })
-    Toast.success('验证码已经发送')
+    Toast.show({
+      icon: 'success',
+      content: '验证码已经发送',
+    })
   }
 
   return (
-    <div>
-      <InputItem
-        type="phone"
-        placeholder="请输入手机号码"
-        onChange={(value) => setPhone(value)}
-        value={_phone}
+    <Container direction="vertical">
+      <Header
+        style={{
+          height: '80px',
+          textAlign: 'center',
+          lineHeight: '80px',
+          fontSize: '30px',
+        }}
       >
-        手机号码
-      </InputItem>
-
-      <Flex>
-        <InputItem
-          style={{ flex: 3 }}
-          type="number"
-          placeholder="请输入验证码"
-          onChange={(value) => setCode(value)}
-          value={code}
+        Shippo
+      </Header>
+      <Main>
+        <StyledList
+          style={{
+            '--prefix-width': '6em',
+            border: 'unset',
+          }}
         >
-          验证码
-        </InputItem>
-        <Button style={{ flex: 1 }} onClick={handleSmsSend}>
-          获取验证码
-        </Button>
-      </Flex>
-
-      <WhiteSpace size="lg" />
-
-      <WingBlank>
-        <Button style={{ background: COLOR_PINK, color: '#fff' }} onClick={handleLogon}>
-          登陆
-        </Button>
-      </WingBlank>
-    </div>
+          <List.Item prefix="手机号">
+            <Input
+              placeholder="请输入手机号"
+              clearable
+              value={_phone}
+              onChange={(value) => setPhone(value)}
+            />
+          </List.Item>
+          <List.Item prefix="短信验证码" extra={<span onClick={handleSmsSend}>发送验证码</span>}>
+            <Input
+              placeholder="请输入验证码"
+              clearable
+              value={code}
+              onChange={(value) => setCode(value)}
+            />
+          </List.Item>
+          <List.Item
+            style={{
+              backgroundColor: '#f5f5f9',
+            }}
+          >
+            <Button
+              block
+              style={{ background: COLOR_PINK, color: '#fff' }}
+              size="large"
+              onClick={handleLogon}
+            >
+              登陆
+            </Button>
+          </List.Item>
+        </StyledList>
+      </Main>
+    </Container>
   )
 }
 
