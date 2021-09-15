@@ -8,11 +8,12 @@ const StyledFooter = styled.footer`
 
 export interface IFooterProps {
   height?: string
+  style?: React.CSSProperties
 }
 
 export const Footer: React.FC<IFooterProps> = (props) => {
-  const { height = '60px', children } = props
-  return <StyledFooter style={{ height }}>{children}</StyledFooter>
+  const { height = '60px', children, style } = props
+  return <StyledFooter style={{ height, ...style }}>{children}</StyledFooter>
 }
 
 export default Footer
