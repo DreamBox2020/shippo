@@ -10,6 +10,7 @@ import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 import { IResponseResource } from '@shippo/sdk-services/types/passport'
+import { Setting } from '~/layouts/setting'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<IResponseResource>>[]
@@ -47,6 +48,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
       <Route exact path="/home" component={Home}></Route>
       <Route exact path="/discover" component={Home}></Route>
       <Route exact path="/my" component={Home}></Route>
+      <Route exact path="/setting" component={Setting}></Route>
       <Route
         path="/space/:uid"
         component={withLoading(lazy(() => import('~/layouts/space')))}
