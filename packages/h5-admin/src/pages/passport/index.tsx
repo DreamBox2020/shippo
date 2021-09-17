@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { services } from '@shippo/sdk-services'
-import { checkPhone, checkSmsCode } from '~/utils'
+import { checkPhone, checkSmsCode } from '@shippo/sdk-utils'
 import { Form, Input, Button, message, Layout } from 'antd'
 import { UserOutlined, LockOutlined, CopyrightOutlined } from '@ant-design/icons'
 const { Header, Footer, Content } = Layout
