@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
-import { rootStore } from '~/modules'
+import { stores } from '~/modules'
 import { GlobalStyle } from '~/styles/global'
 import RootRoute from './root-router'
 import VConsole from 'vconsole'
@@ -12,7 +12,7 @@ export const Root = () => {
   }, [])
 
   return (
-    <Provider store={rootStore}>
+    <Provider store={stores}>
       <GlobalStyle></GlobalStyle>
       <HashRouter>
         <RootRoute></RootRoute>
