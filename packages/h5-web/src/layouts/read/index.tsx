@@ -1,11 +1,12 @@
 import React from 'react'
-import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix } from 'antd'
+import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix, Button, Space } from 'antd'
 import {
   MailOutlined,
   AppstoreOutlined,
   SettingOutlined,
   FormOutlined,
   QuestionCircleOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
 import { useState } from 'react'
 import type { MenuClickEventHandler } from 'rc-menu/es/interface'
@@ -41,23 +42,45 @@ export const ReadLayout: React.FC = () => {
   return (
     <Layout>
       <Header>
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-          <Menu.Item key="app1" icon={<MailOutlined />}>
-            导航1
-          </Menu.Item>
-          <Menu.Item key="app2" icon={<AppstoreOutlined />}>
-            导航2
-          </Menu.Item>
-          <Menu.Item key="app3" icon={<AppstoreOutlined />}>
-            导航3
-          </Menu.Item>
-          <Menu.Item key="app4" icon={<AppstoreOutlined />}>
-            导航4
-          </Menu.Item>
-        </Menu>
+        <div style={{ display: 'flex' }}>
+          <div style={{ width: '600px' }}>
+            <Menu
+              onClick={handleClick}
+              selectedKeys={[current]}
+              mode="horizontal"
+              style={{ borderBottom: '1px solid #fff' }}
+            >
+              <Menu.Item
+                key="index"
+                icon={<img width="40px" src={require('~/assets/avatar.png').default} alt="" />}
+              >
+                Shippo
+              </Menu.Item>
+              <Menu.Item key="app1">导航1</Menu.Item>
+              <Menu.Item key="app2">导航2</Menu.Item>
+              <Menu.Item key="app3">导航3</Menu.Item>
+              <Menu.Item key="app4">导航4</Menu.Item>
+            </Menu>
+          </div>
+          <div style={{ flex: '1 1 0%', backgroundColor: '#fff' }}>
+            <Search
+              placeholder=""
+              allowClear
+              onSearch={onSearch}
+              style={{ width: '100%', maxWidth: '500px', padding: '12px 10px' }}
+              size="large"
+            />
+          </div>
+          <div style={{ backgroundColor: '#fff', padding: '0 20px' }}>
+            <Space size={30}>
+              <Avatar size={40} icon={<UserOutlined />} />
+              <Button type="primary">投稿</Button>
+            </Space>
+          </div>
+        </div>
       </Header>
       <Layout>
-        <Sider width="250px" theme="light">
+        <Sider width="250px" theme="light" style={{ paddingTop: '20px' }}>
           <Affix offsetTop={20} onChange={(affixed) => console.log(affixed)}>
             <Menu
               // onClick={handleClick}
@@ -114,11 +137,12 @@ export const ReadLayout: React.FC = () => {
           <p style={{ height: '200px', padding: '30px' }}>内容</p>
           <p style={{ height: '200px', padding: '30px' }}>内容</p>
         </Content>
-        <Sider theme="light" width="300px">
+        <Sider theme="light" width="300px" style={{ paddingTop: '20px' }}>
           <Affix offsetTop={20} onChange={(affixed) => console.log(affixed)}>
             <div style={{ overflow: 'scroll', maxHeight: '100vh' }}>
               <Search
                 placeholder="input search text"
+                allowClear
                 onSearch={onSearch}
                 style={{ width: '300px' }}
               />
