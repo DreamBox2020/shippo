@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix, Button, Space } from 'antd'
+import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix, Button, Space, Dropdown } from 'antd'
 import {
   MailOutlined,
   AppstoreOutlined,
@@ -73,7 +73,20 @@ export const ReadLayout: React.FC = () => {
           </div>
           <div style={{ backgroundColor: '#fff', padding: '0 20px' }}>
             <Space size={30}>
-              <Avatar size={40} icon={<UserOutlined />} />
+              <Dropdown
+                placement="bottomCenter"
+                overlay={
+                  <Menu>
+                    <Menu.Item>个人中心</Menu.Item>
+                    <Menu.Item>投稿管理</Menu.Item>
+                    <Menu.Divider />
+                    <Menu.Item>退出登录</Menu.Item>
+                  </Menu>
+                }
+              >
+                <Avatar size={40} icon={<UserOutlined />} />
+              </Dropdown>
+
               <Button type="primary">投稿</Button>
             </Space>
           </div>
