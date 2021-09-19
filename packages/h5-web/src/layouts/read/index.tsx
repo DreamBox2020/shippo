@@ -43,7 +43,7 @@ export const ReadLayout: React.FC = () => {
     <Layout>
       <Header>
         <div style={{ display: 'flex' }}>
-          <div style={{ width: '600px' }}>
+          <div>
             <Menu
               onClick={handleClick}
               selectedKeys={[current]}
@@ -67,7 +67,7 @@ export const ReadLayout: React.FC = () => {
               placeholder=""
               allowClear
               onSearch={onSearch}
-              style={{ width: '100%', maxWidth: '500px', padding: '12px 10px' }}
+              style={{ width: '100%', maxWidth: '500px', padding: '12px 10px 0 50px' }}
               size="large"
             />
           </div>
