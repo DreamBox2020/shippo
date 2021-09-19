@@ -10,8 +10,8 @@ const style = css`
   html,
   body,
   #root {
-    min-height: 100%;
-    min-width: 100%;
+    height: 100%;
+    width: 100%;
     box-sizing: border-box;
   }
 
@@ -20,7 +20,7 @@ const style = css`
   }
 
   .ant-layout {
-    min-height: 100%;
+    min-height: 100vh;
     .ant-layout-header,
     .ant-layout-footer {
       padding: 0;
