@@ -12,6 +12,7 @@ import { IResponseResource } from '@shippo/sdk-services/types/passport'
 import { message } from 'antd'
 import { Transform } from '~/pages/transform'
 import ReadLayout from '~/layouts/read'
+import CreationLayout from '~/layouts/creation'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<IResponseResource>>[]
@@ -42,6 +43,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
       <Route exact path="/passport" component={Passport}></Route>
       <Route exact path="/dashboard" component={Home}></Route>
       <Route exact path="/read" component={ReadLayout}></Route>
+      <Route exact path="/creation" component={CreationLayout}></Route>
       <Route exact path="/users" component={Home}></Route>
       <Route exact path="/transform" component={Transform}></Route>
     </Switch>

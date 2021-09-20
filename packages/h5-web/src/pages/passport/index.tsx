@@ -52,7 +52,7 @@ export const Passport = () => {
             fontSize: '33px',
           }}
         >
-          Shippo Admin
+          Shippo
         </span>
       </Header>
       <Content>

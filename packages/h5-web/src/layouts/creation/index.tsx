@@ -1,0 +1,158 @@
+import React from 'react'
+import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix, Button, Space, Dropdown } from 'antd'
+import {
+  MailOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+  FormOutlined,
+  QuestionCircleOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
+import { useState } from 'react'
+import type { MenuClickEventHandler } from 'rc-menu/es/interface'
+
+const { Header, Footer, Content, Sider } = Layout
+const { SubMenu } = Menu
+const { Search } = Input
+const { TabPane } = Tabs
+
+export const CreationLayout: React.FC = () => {
+  const [current, setCurrent] = useState('app1')
+
+  const handleClick: MenuClickEventHandler = (event) => {
+    console.log('click ', event)
+    setCurrent(event.key)
+  }
+  const onSearch = (value: string) => console.log(value)
+  const callback = (key: string) => {
+    console.log(key)
+  }
+
+  const data = [
+    {
+      icon: <FormOutlined />,
+      title: '投稿',
+    },
+    {
+      icon: <QuestionCircleOutlined />,
+      title: '帮助',
+    },
+  ]
+
+  return (
+    <Layout>
+      <Header>
+        <div style={{ display: 'flex' }}>
+          <div>
+            <Menu
+              onClick={handleClick}
+              selectedKeys={[current]}
+              mode="horizontal"
+              style={{ borderBottom: '1px solid #fff' }}
+            >
+              <Menu.Item
+                key="index"
+                icon={<img width="40px" src={require('~/assets/avatar.png').default} alt="" />}
+              >
+                Shippo
+              </Menu.Item>
+              <Menu.Item key="app1">导航1</Menu.Item>
+              <Menu.Item key="app2">导航2</Menu.Item>
+              <Menu.Item key="app3">导航3</Menu.Item>
+              <Menu.Item key="app4">导航4</Menu.Item>
+            </Menu>
+          </div>
+          <div style={{ flex: '1 1 0%', backgroundColor: '#fff' }}>
+            <Search
+              placeholder=""
+              allowClear
+              onSearch={onSearch}
+              style={{ width: '100%', maxWidth: '500px', padding: '12px 10px 0 50px' }}
+              size="large"
+            />
+          </div>
+          <div style={{ backgroundColor: '#fff', padding: '0 20px' }}>
+            <Space size={30}>
+              <Dropdown
+                placement="bottomCenter"
+                overlay={
+                  <Menu>
+                    <Menu.Item>个人中心</Menu.Item>
+                    <Menu.Item>投稿管理</Menu.Item>
+                    <Menu.Divider />
+                    <Menu.Item>退出登录</Menu.Item>
+                  </Menu>
+                }
+              >
+                <Avatar size={40} icon={<UserOutlined />} />
+              </Dropdown>
+
+              <Button type="primary">投稿</Button>
+            </Space>
+          </div>
+        </div>
+      </Header>
+      <Layout>
+        <Sider width="250px" theme="light" style={{ paddingTop: '20px' }}>
+          <Affix offsetTop={20} onChange={(affixed) => console.log(affixed)}>
+            <Menu
+              // onClick={handleClick}
+              style={{ width: '250px' }}
+              defaultSelectedKeys={['home']}
+              mode="inline"
+            >
+              <Menu.Item key="home" icon={<MailOutlined />}>
+                推荐
+              </Menu.Item>
+              <Menu.Item key="a" icon={<MailOutlined />}>
+                动画
+              </Menu.Item>
+              <Menu.Item key="c" icon={<MailOutlined />}>
+                漫画
+              </Menu.Item>
+              <Menu.Item key="g" icon={<MailOutlined />}>
+                游戏
+              </Menu.Item>
+              <Menu.Item key="n" icon={<MailOutlined />}>
+                轻小说
+              </Menu.Item>
+            </Menu>
+          </Affix>
+        </Sider>
+        <Content>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+        </Content>
+      </Layout>
+    </Layout>
+  )
+}
+
+export default CreationLayout
