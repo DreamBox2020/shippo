@@ -7,14 +7,45 @@ import {
   FormOutlined,
   QuestionCircleOutlined,
   UserOutlined,
+  HomeOutlined,
+  FileTextOutlined,
+  TeamOutlined,
+  MessageOutlined,
+  CrownOutlined,
 } from '@ant-design/icons'
 import { useState } from 'react'
 import type { MenuClickEventHandler } from 'rc-menu/es/interface'
+import styled from 'styled-components'
 
 const { Header, Footer, Content, Sider } = Layout
 const { SubMenu } = Menu
 const { Search } = Input
 const { TabPane } = Tabs
+
+const StyledMenu = styled(Menu)`
+  &.ant-menu {
+    .ant-menu-sub.ant-menu-inline {
+      background-color: #fff;
+    }
+    .ant-menu-item-selected {
+      background-color: #fff;
+    }
+    .ant-menu-item::after {
+      border: 0;
+    }
+    .ant-menu-item:active,
+    .ant-menu-submenu-title:active {
+      background-color: #fff;
+    }
+  }
+`
+
+const StyledTabs = styled(Tabs)`
+  .ant-tabs-tab {
+    margin-left: 40px;
+    padding: 20px 0;
+  }
+`
 
 export const CreationLayout: React.FC = () => {
   const [current, setCurrent] = useState('app1')
@@ -42,113 +73,82 @@ export const CreationLayout: React.FC = () => {
   return (
     <Layout>
       <Header>
-        <div style={{ display: 'flex' }}>
-          <div>
-            <Menu
-              onClick={handleClick}
-              selectedKeys={[current]}
-              mode="horizontal"
-              style={{ borderBottom: '1px solid #fff' }}
+        <div style={{ display: 'flex', backgroundColor: '#fff' }}>
+          <div style={{ width: '250px', fontSize: '25px', color: '#1890ff', textAlign: 'center' }}>
+            Shippo 创作中心
+          </div>
+          <div style={{ flex: '1 1 0%' }}>
+            <span style={{ fontSize: '16px', margin: '0 30px', color: '#757575' }}>
+              <CrownOutlined style={{ marginRight: '5px' }} />
+              主页
+            </span>
+          </div>
+          <div style={{ padding: '0 50px' }}>
+            <Dropdown
+              placement="bottomCenter"
+              overlay={
+                <Menu>
+                  <Menu.Item>个人中心</Menu.Item>
+                  <Menu.Item>投稿管理</Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item>退出登录</Menu.Item>
+                </Menu>
+              }
             >
-              <Menu.Item
-                key="index"
-                icon={<img width="40px" src={require('~/assets/avatar.png').default} alt="" />}
-              >
-                Shippo
-              </Menu.Item>
-              <Menu.Item key="app1">导航1</Menu.Item>
-              <Menu.Item key="app2">导航2</Menu.Item>
-              <Menu.Item key="app3">导航3</Menu.Item>
-              <Menu.Item key="app4">导航4</Menu.Item>
-            </Menu>
-          </div>
-          <div style={{ flex: '1 1 0%', backgroundColor: '#fff' }}>
-            <Search
-              placeholder=""
-              allowClear
-              onSearch={onSearch}
-              style={{ width: '100%', maxWidth: '500px', padding: '12px 10px 0 50px' }}
-              size="large"
-            />
-          </div>
-          <div style={{ backgroundColor: '#fff', padding: '0 20px' }}>
-            <Space size={30}>
-              <Dropdown
-                placement="bottomCenter"
-                overlay={
-                  <Menu>
-                    <Menu.Item>个人中心</Menu.Item>
-                    <Menu.Item>投稿管理</Menu.Item>
-                    <Menu.Divider />
-                    <Menu.Item>退出登录</Menu.Item>
-                  </Menu>
-                }
-              >
-                <Avatar size={40} icon={<UserOutlined />} />
-              </Dropdown>
-
-              <Button type="primary">投稿</Button>
-            </Space>
+              <Avatar size={40} icon={<UserOutlined />} />
+            </Dropdown>
           </div>
         </div>
       </Header>
       <Layout>
         <Sider width="250px" theme="light" style={{ paddingTop: '20px' }}>
           <Affix offsetTop={20} onChange={(affixed) => console.log(affixed)}>
-            <Menu
-              // onClick={handleClick}
-              style={{ width: '250px' }}
-              defaultSelectedKeys={['home']}
-              mode="inline"
-            >
-              <Menu.Item key="home" icon={<MailOutlined />}>
-                推荐
-              </Menu.Item>
-              <Menu.Item key="a" icon={<MailOutlined />}>
-                动画
-              </Menu.Item>
-              <Menu.Item key="c" icon={<MailOutlined />}>
-                漫画
-              </Menu.Item>
-              <Menu.Item key="g" icon={<MailOutlined />}>
-                游戏
-              </Menu.Item>
-              <Menu.Item key="n" icon={<MailOutlined />}>
-                轻小说
-              </Menu.Item>
-            </Menu>
+            <div style={{ overflow: 'scroll', maxHeight: '100vh' }}>
+              <div style={{ padding: '10px 25px', textAlign: 'center' }}>
+                <Button type="primary" size="large" style={{ width: '120px' }}>
+                  投稿
+                </Button>
+              </div>
+              <div style={{ padding: '0 25px' }}>
+                <StyledMenu
+                  style={{ width: '200px', border: 0, backgroundColor: '#fff' }}
+                  defaultSelectedKeys={['1']}
+                  mode="inline"
+                >
+                  <Menu.Item key="1" icon={<HomeOutlined />}>
+                    首页
+                  </Menu.Item>
+                  <SubMenu key="sub1" icon={<FileTextOutlined />} title="内容管理">
+                    <Menu.Item key="2">稿件管理</Menu.Item>
+                  </SubMenu>
+                  <Menu.Item key="5" icon={<TeamOutlined />}>
+                    粉丝管理
+                  </Menu.Item>
+                  <SubMenu key="sub2" icon={<MessageOutlined />} title="互动管理">
+                    <Menu.Item key="6">评论管理</Menu.Item>
+                  </SubMenu>
+                  <Menu.Item key="7" icon={<SettingOutlined />}>
+                    创作设置
+                  </Menu.Item>
+                </StyledMenu>
+              </div>
+            </div>
           </Affix>
         </Sider>
         <Content>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
-          <p style={{ height: '200px', padding: '30px' }}>内容</p>
+          <div style={{ padding: '30px 50px' }}>
+            <StyledTabs defaultActiveKey="1" style={{ backgroundColor: '#fff' }}>
+              <TabPane tab="文章管理" key="1">
+                Content of Tab Pane 1
+              </TabPane>
+              <TabPane tab="文章管理" key="2">
+                Content of Tab Pane 2
+              </TabPane>
+              <TabPane tab="文章管理" key="3">
+                Content of Tab Pane 3
+              </TabPane>
+            </StyledTabs>
+          </div>
         </Content>
       </Layout>
     </Layout>
