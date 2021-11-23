@@ -152,7 +152,7 @@ export const ReadLayout: React.FC = () => {
         </Content>
         <Sider theme="light" width="300px" style={{ paddingTop: '20px' }}>
           <Affix offsetTop={20} onChange={(affixed) => console.log(affixed)}>
-            <div style={{ overflow: 'scroll', maxHeight: '100vh' }}>
+            <div style={{ overflow: 'auto', maxHeight: '100vh' }}>
               <Search
                 placeholder="input search text"
                 allowClear

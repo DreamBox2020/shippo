@@ -45,6 +45,9 @@ const StyledTabs = styled(Tabs)`
     margin-left: 40px;
     padding: 20px 0;
   }
+  .ant-tabs-tabpane {
+    padding: 4px 20px 20px 20px;
+  }
 `
 
 export const CreationLayout: React.FC = () => {
@@ -103,7 +106,7 @@ export const CreationLayout: React.FC = () => {
       <Layout>
         <Sider width="250px" theme="light" style={{ paddingTop: '20px' }}>
           <Affix offsetTop={20} onChange={(affixed) => console.log(affixed)}>
-            <div style={{ overflow: 'scroll', maxHeight: '100vh' }}>
+            <div style={{ overflow: 'auto', maxHeight: '100vh' }}>
               <div style={{ padding: '10px 25px', textAlign: 'center' }}>
                 <Button type="primary" size="large" style={{ width: '120px' }}>
                   投稿
