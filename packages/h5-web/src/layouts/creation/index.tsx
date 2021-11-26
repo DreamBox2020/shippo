@@ -16,6 +16,7 @@ import {
 import { useState } from 'react'
 import type { MenuClickEventHandler } from 'rc-menu/es/interface'
 import styled from 'styled-components'
+import { Tinymce } from '~/components/tinymce'
 
 const { Header, Footer, Content, Sider } = Layout
 const { SubMenu } = Menu
@@ -142,7 +143,7 @@ export const CreationLayout: React.FC = () => {
           <div style={{ padding: '30px 50px' }}>
             <StyledTabs defaultActiveKey="1" style={{ backgroundColor: '#fff' }}>
               <TabPane tab="文章管理" key="1">
-                Content of Tab Pane 1
+                <Tinymce></Tinymce>
               </TabPane>
               <TabPane tab="文章管理" key="2">
                 Content of Tab Pane 2
