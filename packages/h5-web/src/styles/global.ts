@@ -20,7 +20,7 @@ const style = css`
   }
 
   .ant-layout {
-    min-height: 100vh;
+    min-height: 100%;
     .ant-layout-header,
     .ant-layout-footer {
       padding: 0;
