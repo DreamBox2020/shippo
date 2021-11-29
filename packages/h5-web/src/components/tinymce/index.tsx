@@ -18,7 +18,7 @@ export const Tinymce = () => {
         fontsize_formats: '12px 14px 15px 16px 17px 18px 20px 24px',
         plugins: ['lists advlist hr codesample wordcount code help'],
         toolbar: [
-          'undo redo | removeformat | formatselect fontsizeselect | bold italic underline strikethrough superscript subscript | forecolor backcolor' +
+          'undo redo | removeformat | formatselect fontsizeselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | ' +
             'alignleft aligncenter alignright alignjustify | lineheight bullist numlist | blockquote hr codesample | wordcount code help',
         ],
       }}
