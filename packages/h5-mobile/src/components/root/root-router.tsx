@@ -11,6 +11,7 @@ import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 import { IResponseResource } from '@shippo/sdk-services/types/passport'
 import { Setting } from '~/layouts/setting'
+import { TempLayout } from '~/layouts/temp'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<IResponseResource>>[]
@@ -37,7 +38,10 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         icon: 'fail',
         content: '没有登录',
       })
-      history.push('/passport')
+
+      if (!location.pathname.startsWith('/temp')) {
+        history.push('/passport')
+      }
     }
   })
 
@@ -53,6 +57,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         path="/space/:uid"
         component={withLoading(lazy(() => import('~/layouts/space')))}
       ></Route>
+      <Route path="/temp" component={TempLayout}></Route>
     </Switch>
   )
 }

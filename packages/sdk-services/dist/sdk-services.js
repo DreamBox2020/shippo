@@ -2,7 +2,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@shippo/sdk-utils')) :
   typeof define === 'function' && define.amd ? define(['exports', '@shippo/sdk-utils'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.SdkServices = {}, global.sdkUtils));
-}(this, (function (exports, sdkUtils) { 'use strict';
+})(this, (function (exports, sdkUtils) { 'use strict';
 
   var request = new sdkUtils.Request({
       baseURL: '',
@@ -11,7 +11,6 @@
           'Content-Type': 'application/json',
       },
   });
-  console.log(process.env);
 
   var create = function () {
       return request.request({
@@ -52,10 +51,33 @@
     login: login
   });
 
+  var temp_trade_20220108__add = function (data) {
+      return request.request({
+          url: '/temp/temp_trade_20220108/add',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var temp_trade_20220108__find = function (data) {
+      return request.request({
+          url: '/temp/temp_trade_20220108/find',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var temp = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    temp_trade_20220108__add: temp_trade_20220108__add,
+    temp_trade_20220108__find: temp_trade_20220108__find
+  });
+
   var services = {
       passport: passport,
       sms: sms,
       user: user,
+      temp: temp,
       use: function (config) {
           request.http = request.create(config);
       },
@@ -65,4 +87,4 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));

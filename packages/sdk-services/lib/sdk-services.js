@@ -11,7 +11,6 @@ var request = new sdkUtils.Request({
         'Content-Type': 'application/json',
     },
 });
-console.log(process.env);
 
 var create = function () {
     return request.request({
@@ -52,10 +51,33 @@ var user = /*#__PURE__*/Object.freeze({
   login: login
 });
 
+var temp_trade_20220108__add = function (data) {
+    return request.request({
+        url: '/temp/temp_trade_20220108/add',
+        method: 'POST',
+        data: data,
+    });
+};
+
+var temp_trade_20220108__find = function (data) {
+    return request.request({
+        url: '/temp/temp_trade_20220108/find',
+        method: 'POST',
+        data: data,
+    });
+};
+
+var temp = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  temp_trade_20220108__add: temp_trade_20220108__add,
+  temp_trade_20220108__find: temp_trade_20220108__find
+});
+
 var services = {
     passport: passport,
     sms: sms,
     user: user,
+    temp: temp,
     use: function (config) {
         request.http = request.create(config);
     },
