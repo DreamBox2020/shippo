@@ -86,3 +86,21 @@ export const checkPhone = (phone: string) => {
 export const checkSmsCode = (code: string) => {
   return /^[1-9][0-9]{5}$/.test(code)
 }
+
+/**
+ * 检查QQ号是否合规
+ * @param code
+ * @returns
+ */
+export const checkQQ = (qq: string) => {
+  return /^[1-9][0-9]{4,9}$/.test(qq)
+}
+
+/**
+ * 检查QQ邮箱是否合规
+ * @param code
+ * @returns
+ */
+export const checkQQEmail = (email: string) => {
+  return /^[1-9][0-9]{4,9}@qq\.com$/.test(email)
+}

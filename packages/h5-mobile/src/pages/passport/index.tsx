@@ -2,7 +2,7 @@ import { Button, Input, List, Toast } from 'antd-mobile'
 import React, { useMemo, useState } from 'react'
 import { COLOR_PINK } from '~/constants/color'
 import { services } from '@shippo/sdk-services'
-import { checkPhone, checkSmsCode } from '@shippo/sdk-utils'
+import { checkPhone, checkQQEmail, checkSmsCode } from '@shippo/sdk-utils'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
@@ -22,18 +22,32 @@ export const Passport = () => {
 
   const handleLogon = async () => {
     console.log('handleLogon', { phone, code })
-    if (!checkPhone(phone)) {
-      return Toast.show({
-        icon: 'fail',
-        content: '手机号格式错误',
-      })
-    }
+
     if (!checkSmsCode(code)) {
       return Toast.show({
         icon: 'fail',
         content: '短信验证码格式错误',
       })
     }
+
+    // 如果是qq邮箱
+    if (checkQQEmail(phone)) {
+      const { data } = await services.user.login({
+        email: phone,
+        code,
+      })
+      window.localStorage.setItem('__PASSPORT', data.resource.passport)
+      window.location.reload()
+      return
+    }
+
+    if (!checkPhone(phone)) {
+      return Toast.show({
+        icon: 'fail',
+        content: '手机号格式错误',
+      })
+    }
+
     const { data } = await services.user.login({
       phone,
       code,
@@ -44,13 +58,20 @@ export const Passport = () => {
 
   const handleSmsSend = () => {
     console.log('handleSmsSend', { phone })
-    if (!checkPhone(phone)) {
-      return Toast.show({
-        icon: 'fail',
-        content: '手机号格式错误',
-      })
+
+    // 如果是qq邮箱
+    if (checkQQEmail(phone)) {
+      services.captcha.send({ email: phone })
+    } else {
+      if (!checkPhone(phone)) {
+        return Toast.show({
+          icon: 'fail',
+          content: '手机号格式错误',
+        })
+      }
+      services.captcha.send({ phone })
     }
-    services.sms.send({ phone })
+
     Toast.show({
       icon: 'success',
       content: '验证码已经发送',

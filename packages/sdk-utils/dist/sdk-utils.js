@@ -2,7 +2,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('uuid')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', 'uuid'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.SdkUtils = {}, global.axios, global.uuid));
-}(this, (function (exports, axios, uuid) { 'use strict';
+})(this, (function (exports, axios, uuid) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -13,7 +13,7 @@
           this.http = this.create(config);
       }
       Request.prototype.create = function (config) {
-          var http = axios__default['default'].create(config);
+          var http = axios__default["default"].create(config);
           this.init(http);
           return http;
       };
@@ -72,12 +72,12 @@
           '137',
           '138',
           '139',
-          // '147', // 数据卡
+          '147',
           // '148', // 数据卡
           '150',
           '151',
           '152',
-          // '157', // 固话卡
+          '157',
           '158',
           '159',
           // '172', // 数据卡
@@ -143,11 +143,29 @@
   var checkSmsCode = function (code) {
       return /^[1-9][0-9]{5}$/.test(code);
   };
+  /**
+   * 检查QQ号是否合规
+   * @param code
+   * @returns
+   */
+  var checkQQ = function (qq) {
+      return /^[1-9][0-9]{4,9}$/.test(qq);
+  };
+  /**
+   * 检查QQ邮箱是否合规
+   * @param code
+   * @returns
+   */
+  var checkQQEmail = function (email) {
+      return /^[1-9][0-9]{4,9}@qq\.com$/.test(email);
+  };
 
   exports.Request = Request;
   exports.checkPhone = checkPhone;
+  exports.checkQQ = checkQQ;
+  exports.checkQQEmail = checkQQEmail;
   exports.checkSmsCode = checkSmsCode;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));

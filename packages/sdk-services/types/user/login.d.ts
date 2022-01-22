@@ -1,6 +1,7 @@
 import { ResponsePack } from '../helpers';
 interface IRequestResource {
-    phone: string;
+    phone?: string;
+    email?: string;
     code: string;
 }
 interface IResponseResource {

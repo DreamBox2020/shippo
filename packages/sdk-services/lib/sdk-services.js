@@ -25,7 +25,7 @@ var passport = /*#__PURE__*/Object.freeze({
   create: create
 });
 
-var send = function (data) {
+var send$1 = function (data) {
     return request.request({
         url: '/sms/send',
         method: 'POST',
@@ -35,7 +35,7 @@ var send = function (data) {
 
 var sms = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  send: send
+  send: send$1
 });
 
 var login = function (data) {
@@ -73,11 +73,25 @@ var temp = /*#__PURE__*/Object.freeze({
   temp_trade_20220108__find: temp_trade_20220108__find
 });
 
+var send = function (data) {
+    return request.request({
+        url: '/captcha/send',
+        method: 'POST',
+        data: data,
+    });
+};
+
+var captcha = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  send: send
+});
+
 var services = {
     passport: passport,
     sms: sms,
     user: user,
     temp: temp,
+    captcha: captcha,
     use: function (config) {
         request.http = request.create(config);
     },

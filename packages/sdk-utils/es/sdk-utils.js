@@ -65,12 +65,12 @@ var checkPhone = function (phone) {
         '137',
         '138',
         '139',
-        // '147', // 数据卡
+        '147',
         // '148', // 数据卡
         '150',
         '151',
         '152',
-        // '157', // 固话卡
+        '157',
         '158',
         '159',
         // '172', // 数据卡
@@ -136,5 +136,21 @@ var checkPhone = function (phone) {
 var checkSmsCode = function (code) {
     return /^[1-9][0-9]{5}$/.test(code);
 };
+/**
+ * 检查QQ号是否合规
+ * @param code
+ * @returns
+ */
+var checkQQ = function (qq) {
+    return /^[1-9][0-9]{4,9}$/.test(qq);
+};
+/**
+ * 检查QQ邮箱是否合规
+ * @param code
+ * @returns
+ */
+var checkQQEmail = function (email) {
+    return /^[1-9][0-9]{4,9}@qq\.com$/.test(email);
+};
 
-export { Request, checkPhone, checkSmsCode };
+export { Request, checkPhone, checkQQ, checkQQEmail, checkSmsCode };
