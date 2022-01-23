@@ -6,6 +6,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Dropdown } from 'antd'
+import { useHistory, useLocation } from 'react-router'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -69,6 +70,9 @@ const tabBarItems: Array<tabBarItem> = [
 
 export const Home = () => {
   const [collapsed, setCollapsed] = useState(false)
+  const location = useLocation()
+  const history = useHistory()
+
   return (
     <Layout>
       <div
@@ -107,15 +111,20 @@ export const Home = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={['4']}
+            defaultSelectedKeys={[location.pathname]}
             style={{
               minHeight: '100%',
             }}
+            onSelect={({ key }) => {
+              if (key[0] !== '/') return
+              console.log(key)
+              history.push(key)
+            }}
           >
-            <Menu.Item key="1" icon={<UserOutlined />}>
+            <Menu.Item key="/dashboard" icon={<UserOutlined />}>
               仪表盘
             </Menu.Item>
-            <Menu.Item key="2" icon={<UserOutlined />}>
+            <Menu.Item key="/users" icon={<UserOutlined />}>
               用户管理
             </Menu.Item>
             <Menu.Item key="3" icon={<UserOutlined />}>

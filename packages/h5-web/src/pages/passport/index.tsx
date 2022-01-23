@@ -11,7 +11,7 @@ export const Passport = () => {
     if (!checkPhone(phone)) {
       return message.info('手机号格式错误')
     }
-    services.sms.send({ phone })
+    services.captcha.send({ phone })
     message.success('验证码已经发送')
   }
 

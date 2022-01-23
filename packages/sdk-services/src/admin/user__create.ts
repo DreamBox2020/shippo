@@ -1,12 +1,12 @@
 import { request, ResponsePack } from '../helpers'
 
 interface IRequestResource {
-  phone: string
+  email?: string
 }
 
-export const send = (data: IRequestResource) =>
+export const user__create = (data: IRequestResource) =>
   request.request<ResponsePack>({
-    url: '/sms/send',
+    url: '/admin/user/create',
     method: 'POST',
     data,
   })
