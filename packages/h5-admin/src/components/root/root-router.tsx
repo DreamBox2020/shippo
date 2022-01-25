@@ -41,6 +41,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
       <Route exact path="/passport" component={Passport}></Route>
       <Route exact path="/dashboard" component={Home}></Route>
       <Route exact path="/users" component={Home}></Route>
+      <Route path="/temp" component={Home}></Route>
       <Route exact path="/transform" component={Transform}></Route>
     </Switch>
   )

@@ -50,10 +50,19 @@ var temp_trade_20220108__find = function (data) {
     });
 };
 
+var temp_trade_20220108__find_no_exist = function (data) {
+    return request.request({
+        url: '/temp/temp_trade_20220108/findNoExist',
+        method: 'POST',
+        data: data,
+    });
+};
+
 var temp = /*#__PURE__*/Object.freeze({
   __proto__: null,
   temp_trade_20220108__add: temp_trade_20220108__add,
-  temp_trade_20220108__find: temp_trade_20220108__find
+  temp_trade_20220108__find: temp_trade_20220108__find,
+  temp_trade_20220108__find_no_exist: temp_trade_20220108__find_no_exist
 });
 
 var send = function (data) {

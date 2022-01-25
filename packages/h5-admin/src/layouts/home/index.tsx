@@ -9,6 +9,7 @@ import { Dropdown } from 'antd'
 import { useHistory, useLocation } from 'react-router'
 
 const { Header, Footer, Sider, Content } = Layout
+const { SubMenu } = Menu
 
 const StyledLogo = styled.div`
   position: relative;
@@ -65,6 +66,12 @@ const tabBarItems: Array<tabBarItem> = [
     path: '/users',
     exact: true,
     component: withLoading(lazy(() => import('~/pages/users'))),
+  },
+  {
+    key: 'temp/temp_trade_20220108',
+    path: '/temp/temp_trade_20220108',
+    exact: true,
+    component: withLoading(lazy(() => import('~/pages/temp/temp_trade_20220108'))),
   },
 ]
 
@@ -136,6 +143,10 @@ export const Home = () => {
             <Menu.Item key="5" icon={<UserOutlined />}>
               文章管理
             </Menu.Item>
+            <SubMenu key="sub1" icon={<UserOutlined />} title="临时页面">
+              <Menu.Item key="/temp/temp_trade_20220108">手办活动</Menu.Item>
+              <Menu.Item key="2">Option 2</Menu.Item>
+            </SubMenu>
           </Menu>
         </div>
         <div>
