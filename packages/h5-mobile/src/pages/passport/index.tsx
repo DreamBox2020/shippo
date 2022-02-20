@@ -7,6 +7,7 @@ import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import styled from 'styled-components'
+import { useHistory } from 'react-router'
 
 const StyledList = styled(List)`
   > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
@@ -15,6 +16,8 @@ const StyledList = styled(List)`
 `
 
 export const Passport = () => {
+  const history = useHistory()
+
   const [_phone, setPhone] = useState('')
   const [code, setCode] = useState('')
 
@@ -37,7 +40,7 @@ export const Passport = () => {
         code,
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
-      window.location.reload()
+      history.push('/')
       return
     }
 
@@ -53,7 +56,7 @@ export const Passport = () => {
       code,
     })
     window.localStorage.setItem('__PASSPORT', data.resource.passport)
-    window.location.reload()
+    history.push('/')
   }
 
   const handleSmsSend = () => {

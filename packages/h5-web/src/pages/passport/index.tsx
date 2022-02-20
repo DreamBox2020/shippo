@@ -3,9 +3,12 @@ import { services } from '@shippo/sdk-services'
 import { checkPhone, checkSmsCode } from '@shippo/sdk-utils'
 import { Form, Input, Button, message, Layout } from 'antd'
 import { UserOutlined, LockOutlined, CopyrightOutlined } from '@ant-design/icons'
+import { useHistory } from 'react-router-dom'
 const { Header, Footer, Content } = Layout
 
 export const Passport = () => {
+  const history = useHistory()
+
   const handleSmsSend = (phone: string) => {
     console.log('handleSmsSend', { phone })
     if (!checkPhone(phone)) {
@@ -32,7 +35,7 @@ export const Passport = () => {
       code,
     })
     window.localStorage.setItem('__PASSPORT', data.resource.passport)
-    window.location.reload()
+    history.push('/')
   }
 
   return (

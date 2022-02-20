@@ -36,7 +36,7 @@ export const Setting = () => {
           style={{ '--border-radius': '0px' }}
           onClick={() => {
             localStorage.removeItem('__PASSPORT')
-            window.location.reload()
+            history.push('/')
           }}
         >
           退出登录
