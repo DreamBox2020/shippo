@@ -56,22 +56,40 @@ type tabBarItem = RouteS & {
 
 const tabBarItems: Array<tabBarItem> = [
   {
-    key: 'dashboard',
+    key: '/dashboard',
     path: '/dashboard',
     exact: true,
     component: withLoading(lazy(() => import('~/pages/dashboard'))),
   },
   {
-    key: 'users',
+    key: '/users',
     path: '/users',
     exact: true,
     component: withLoading(lazy(() => import('~/pages/users'))),
   },
   {
-    key: 'temp/temp_trade_20220108',
+    key: '/temp/temp_trade_20220108',
     path: '/temp/temp_trade_20220108',
     exact: true,
     component: withLoading(lazy(() => import('~/pages/temp/temp_trade_20220108'))),
+  },
+  {
+    key: '/permission/role',
+    path: '/permission/role',
+    exact: true,
+    component: withLoading(lazy(() => import('~/pages/permission/role'))),
+  },
+  {
+    key: '/permission/access',
+    path: '/permission/access',
+    exact: true,
+    component: withLoading(lazy(() => import('~/pages/permission/access'))),
+  },
+  {
+    key: '/permission/policy',
+    path: '/permission/policy',
+    exact: true,
+    component: withLoading(lazy(() => import('~/pages/permission/policy'))),
   },
 ]
 
@@ -134,18 +152,20 @@ export const Home = () => {
             <Menu.Item key="/users" icon={<UserOutlined />}>
               用户管理
             </Menu.Item>
-            <Menu.Item key="3" icon={<UserOutlined />}>
-              权限管理
-            </Menu.Item>
+            <SubMenu key="/permission" icon={<UserOutlined />} title="权限管理">
+              <Menu.Item key="/permission/role">角色管理</Menu.Item>
+              <Menu.Item key="/permission/access">访问规则设置</Menu.Item>
+              <Menu.Item key="/permission/policy">权限策略设置</Menu.Item>
+            </SubMenu>
             <Menu.Item key="4" icon={<UserOutlined />}>
               个人设置
             </Menu.Item>
             <Menu.Item key="5" icon={<UserOutlined />}>
               文章管理
             </Menu.Item>
-            <SubMenu key="sub1" icon={<UserOutlined />} title="临时页面">
+            <SubMenu key="/temp" icon={<UserOutlined />} title="临时页面">
               <Menu.Item key="/temp/temp_trade_20220108">手办活动</Menu.Item>
-              <Menu.Item key="2">Option 2</Menu.Item>
+              <Menu.Item key="3">Option 2</Menu.Item>
             </SubMenu>
           </Menu>
         </div>
