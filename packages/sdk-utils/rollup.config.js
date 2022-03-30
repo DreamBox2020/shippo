@@ -32,6 +32,7 @@ export default {
       globals: {
         axios: 'axios',
         uuid: 'uuid',
+        moment: 'moment',
       },
     },
   ],

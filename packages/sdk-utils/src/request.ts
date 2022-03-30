@@ -36,6 +36,9 @@ export class Request {
   public init(http: Http) {
     http.interceptors.request.use(
       (request) => {
+        if (request.data === undefined) {
+          request.data = {}
+        }
         if (request.data && Object.prototype.toString.call(request.data) === '[object Object]') {
           request.data = {
             passport: localStorage.getItem('__PASSPORT'),

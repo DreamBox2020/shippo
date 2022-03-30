@@ -2,11 +2,13 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var moment = require('moment');
 var axios = require('axios');
 var uuid = require('uuid');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
 var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
 
 var Request = /** @class */ (function () {
@@ -20,6 +22,9 @@ var Request = /** @class */ (function () {
     };
     Request.prototype.init = function (http) {
         http.interceptors.request.use(function (request) {
+            if (request.data === undefined) {
+                request.data = {};
+            }
             if (request.data && Object.prototype.toString.call(request.data) === '[object Object]') {
                 request.data = {
                     passport: localStorage.getItem('__PASSPORT'),
@@ -161,8 +166,13 @@ var checkQQEmail = function (email) {
     return /^[1-9][0-9]{4,9}@qq\.com$/.test(email);
 };
 
+var formatTimeStr = function (t) {
+    return moment__default["default"](t).format('YYYY-MM-DD HH:mm:ss');
+};
+
 exports.Request = Request;
 exports.checkPhone = checkPhone;
 exports.checkQQ = checkQQ;
 exports.checkQQEmail = checkQQEmail;
 exports.checkSmsCode = checkSmsCode;
+exports.formatTimeStr = formatTimeStr;

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import axios from 'axios';
 import { v4 } from 'uuid';
 
@@ -12,6 +13,9 @@ var Request = /** @class */ (function () {
     };
     Request.prototype.init = function (http) {
         http.interceptors.request.use(function (request) {
+            if (request.data === undefined) {
+                request.data = {};
+            }
             if (request.data && Object.prototype.toString.call(request.data) === '[object Object]') {
                 request.data = {
                     passport: localStorage.getItem('__PASSPORT'),
@@ -153,4 +157,8 @@ var checkQQEmail = function (email) {
     return /^[1-9][0-9]{4,9}@qq\.com$/.test(email);
 };
 
-export { Request, checkPhone, checkQQ, checkQQEmail, checkSmsCode };
+var formatTimeStr = function (t) {
+    return moment(t).format('YYYY-MM-DD HH:mm:ss');
+};
+
+export { Request, checkPhone, checkQQ, checkQQEmail, checkSmsCode, formatTimeStr };
