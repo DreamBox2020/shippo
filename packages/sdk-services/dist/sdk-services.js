@@ -12,7 +12,7 @@
       },
   });
 
-  var create = function () {
+  var create$1 = function () {
       return request.request({
           url: '/passport/create',
           method: 'POST',
@@ -22,7 +22,7 @@
 
   var passport = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    create: create
+    create: create$1
   });
 
   var login = function (data) {
@@ -95,17 +95,86 @@
     user__create: user__create
   });
 
+  var find_all = function () {
+      return request.request({
+          url: '/role/findAll',
+          method: 'POST',
+      });
+  };
+
+  var create = function (data) {
+      return request.request({
+          url: '/role/create',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var update = function (data) {
+      return request.request({
+          url: '/role/update',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var del = function (data) {
+      return request.request({
+          url: '/role/del',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var role = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    find_all: find_all,
+    create: create,
+    update: update,
+    del: del
+  });
+
+  var find_all_ext_status = function (data) {
+      return request.request({
+          url: '/permissionPolicy/findAllExtStatus',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var permissionPolicy = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    find_all_ext_status: find_all_ext_status
+  });
+
+  var __role = function () { return ({
+      id: 0,
+      createdAt: '',
+      roleName: '',
+      remark: '',
+  }); };
+  var __permissionPolicy = function () { return ({
+      id: 0,
+      createdAt: '',
+      policyName: '',
+      remark: '',
+  }); };
+
   var services = {
       passport: passport,
       user: user,
       temp: temp,
       captcha: captcha,
       admin: admin,
+      role: role,
+      permissionPolicy: permissionPolicy,
       use: function (config) {
           request.http = request.create(config);
       },
   };
 
+  exports.__permissionPolicy = __permissionPolicy;
+  exports.__role = __role;
   exports.services = services;
 
   Object.defineProperty(exports, '__esModule', { value: true });
