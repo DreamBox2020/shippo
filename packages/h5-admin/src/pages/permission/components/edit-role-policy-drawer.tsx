@@ -71,8 +71,9 @@ const Component: React.ForwardRefRenderFunction<
 
   const handleSave = useCallback(async () => {
     console.log(role)
+    services.role.update_policies({ id: role.id, policies: selectedRowKeys })
     closeDrawer()
-  }, [role, closeDrawer])
+  }, [role, selectedRowKeys, closeDrawer])
 
   return (
     <Drawer

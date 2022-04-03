@@ -154,8 +154,8 @@ export const Home = () => {
             </Menu.Item>
             <SubMenu key="/permission" icon={<UserOutlined />} title="权限管理">
               <Menu.Item key="/permission/role">角色管理</Menu.Item>
-              <Menu.Item key="/permission/access">访问规则设置</Menu.Item>
               <Menu.Item key="/permission/policy">权限策略设置</Menu.Item>
+              <Menu.Item key="/permission/access">访问规则设置</Menu.Item>
             </SubMenu>
             <Menu.Item key="4" icon={<UserOutlined />}>
               个人设置
@@ -184,7 +184,7 @@ export const Home = () => {
             backgroundColor: '#fff',
           }}
         >
-          <Dropdown
+          {/* <Dropdown
             overlay={
               <Menu selectedKeys={[]}>
                 <Menu.Item key="center">
@@ -206,7 +206,7 @@ export const Home = () => {
             }
           >
             <div>name</div>
-          </Dropdown>
+          </Dropdown> */}
         </Header>
         <Content>
           <SwitchRoute routes={tabBarItems} />

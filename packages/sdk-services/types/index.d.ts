@@ -5,6 +5,7 @@ import * as captcha from './captcha';
 import * as admin from './admin';
 import * as role from './role';
 import * as permissionPolicy from './permission_policy';
+import * as permissionAccess from './permission_access';
 export * from './types';
 export declare const services: {
     passport: typeof passport;
@@ -14,5 +15,6 @@ export declare const services: {
     admin: typeof admin;
     role: typeof role;
     permissionPolicy: typeof permissionPolicy;
+    permissionAccess: typeof permissionAccess;
     use: (config?: import("axios").AxiosRequestConfig | undefined) => void;
 };

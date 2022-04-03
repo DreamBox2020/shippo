@@ -25,3 +25,19 @@ export const __permissionPolicy = (): IPermissionPolicy => ({
   policyName: '',
   remark: '',
 })
+
+export interface IPermissionAccess {
+  id: number
+  createdAt: string
+  accessRule: string
+  remark: string
+  accessType: string
+}
+
+export const __permissionAccess = (): IPermissionAccess => ({
+  id: 0,
+  createdAt: '',
+  accessRule: '',
+  remark: '',
+  accessType: '',
+})

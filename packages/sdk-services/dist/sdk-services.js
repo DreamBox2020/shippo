@@ -12,7 +12,7 @@
       },
   });
 
-  var create$1 = function () {
+  var create$3 = function () {
       return request.request({
           url: '/passport/create',
           method: 'POST',
@@ -22,7 +22,7 @@
 
   var passport = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    create: create$1
+    create: create$3
   });
 
   var login = function (data) {
@@ -95,14 +95,14 @@
     user__create: user__create
   });
 
-  var find_all = function () {
+  var find_all$2 = function () {
       return request.request({
           url: '/role/findAll',
           method: 'POST',
       });
   };
 
-  var create = function (data) {
+  var create$2 = function (data) {
       return request.request({
           url: '/role/create',
           method: 'POST',
@@ -110,7 +110,7 @@
       });
   };
 
-  var update = function (data) {
+  var update$2 = function (data) {
       return request.request({
           url: '/role/update',
           method: 'POST',
@@ -118,7 +118,7 @@
       });
   };
 
-  var del = function (data) {
+  var del$2 = function (data) {
       return request.request({
           url: '/role/del',
           method: 'POST',
@@ -126,15 +126,55 @@
       });
   };
 
+  var update_policies = function (data) {
+      return request.request({
+          url: '/role/updatePolicies',
+          method: 'POST',
+          data: data,
+      });
+  };
+
   var role = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    find_all: find_all,
-    create: create,
-    update: update,
-    del: del
+    find_all: find_all$2,
+    create: create$2,
+    update: update$2,
+    del: del$2,
+    update_policies: update_policies
   });
 
-  var find_all_ext_status = function (data) {
+  var find_all$1 = function () {
+      return request.request({
+          url: '/permissionPolicy/findAll',
+          method: 'POST',
+      });
+  };
+
+  var create$1 = function (data) {
+      return request.request({
+          url: '/permissionPolicy/create',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var update$1 = function (data) {
+      return request.request({
+          url: '/permissionPolicy/update',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var del$1 = function (data) {
+      return request.request({
+          url: '/permissionPolicy/del',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var find_all_ext_status$1 = function (data) {
       return request.request({
           url: '/permissionPolicy/findAllExtStatus',
           method: 'POST',
@@ -142,8 +182,69 @@
       });
   };
 
+  var update_access = function (data) {
+      return request.request({
+          url: '/permissionPolicy/updateAccess',
+          method: 'POST',
+          data: data,
+      });
+  };
+
   var permissionPolicy = /*#__PURE__*/Object.freeze({
     __proto__: null,
+    find_all: find_all$1,
+    create: create$1,
+    update: update$1,
+    del: del$1,
+    find_all_ext_status: find_all_ext_status$1,
+    update_access: update_access
+  });
+
+  var find_all = function () {
+      return request.request({
+          url: '/permissionAccess/findAll',
+          method: 'POST',
+      });
+  };
+
+  var create = function (data) {
+      return request.request({
+          url: '/permissionAccess/create',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var update = function (data) {
+      return request.request({
+          url: '/permissionAccess/update',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var del = function (data) {
+      return request.request({
+          url: '/permissionAccess/del',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var find_all_ext_status = function (data) {
+      return request.request({
+          url: '/permissionAccess/findAllExtStatus',
+          method: 'POST',
+          data: data,
+      });
+  };
+
+  var permissionAccess = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    find_all: find_all,
+    create: create,
+    update: update,
+    del: del,
     find_all_ext_status: find_all_ext_status
   });
 
@@ -159,6 +260,13 @@
       policyName: '',
       remark: '',
   }); };
+  var __permissionAccess = function () { return ({
+      id: 0,
+      createdAt: '',
+      accessRule: '',
+      remark: '',
+      accessType: '',
+  }); };
 
   var services = {
       passport: passport,
@@ -168,11 +276,13 @@
       admin: admin,
       role: role,
       permissionPolicy: permissionPolicy,
+      permissionAccess: permissionAccess,
       use: function (config) {
           request.http = request.create(config);
       },
   };
 
+  exports.__permissionAccess = __permissionAccess;
   exports.__permissionPolicy = __permissionPolicy;
   exports.__role = __role;
   exports.services = services;

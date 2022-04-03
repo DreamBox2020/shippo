@@ -12,3 +12,11 @@ export interface IPermissionPolicy {
     remark: string;
 }
 export declare const __permissionPolicy: () => IPermissionPolicy;
+export interface IPermissionAccess {
+    id: number;
+    createdAt: string;
+    accessRule: string;
+    remark: string;
+    accessType: string;
+}
+export declare const __permissionAccess: () => IPermissionAccess;

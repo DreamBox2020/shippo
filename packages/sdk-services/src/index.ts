@@ -7,6 +7,7 @@ import * as captcha from './captcha'
 import * as admin from './admin'
 import * as role from './role'
 import * as permissionPolicy from './permission_policy'
+import * as permissionAccess from './permission_access'
 
 export * from './types'
 export const services = {
@@ -17,6 +18,7 @@ export const services = {
   admin,
   role,
   permissionPolicy,
+  permissionAccess,
   use: (config?: HttpRequestConfig) => {
     request.http = request.create(config)
   },
