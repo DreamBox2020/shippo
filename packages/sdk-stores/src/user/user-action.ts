@@ -3,4 +3,4 @@ import { IUserStore } from './user-reducer'
 
 const action = createAction<IUserStore>('user')
 
-export const userUpdateInfo = action((info: { uid: number }) => ({ info }))
+export const userUpdateInfo = action((info: IUserStore['info']) => ({ info }))

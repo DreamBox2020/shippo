@@ -12,7 +12,8 @@ var thunkMiddleware__default = /*#__PURE__*/_interopDefaultLegacy(thunkMiddlewar
 
 var userReducer = reactStore.createReducer('user', {
   info: {
-    uid: 0
+    uid: 0,
+    access: []
   }
 });
 
@@ -115,7 +116,7 @@ var reducers = redux.combineReducers({
 });
 var createStore = function createStore(compose) {
   compose = compose || redux.applyMiddleware;
-  var middleware = [thunkMiddleware__default['default']];
+  var middleware = [thunkMiddleware__default["default"]];
   var stores = redux.createStore(reducers, compose.apply(void 0, middleware));
 
   var thunkDispatch = function thunkDispatch(action) {

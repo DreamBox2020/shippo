@@ -4,7 +4,8 @@ import { createReducer, createAction, createAsyncAction } from '@kazura/react-st
 
 var userReducer = createReducer('user', {
   info: {
-    uid: 0
+    uid: 0,
+    access: []
   }
 });
 
