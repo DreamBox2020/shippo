@@ -267,6 +267,17 @@
       remark: '',
       accessType: '',
   }); };
+  var __user = function () { return ({
+      id: 0,
+      createdAt: '',
+      phone: '',
+      email: '',
+      nickname: '',
+      avatar: '',
+      exp: 0,
+      coin: 0,
+      role: 0,
+  }); };
 
   var services = {
       passport: passport,
@@ -285,6 +296,7 @@
   exports.__permissionAccess = __permissionAccess;
   exports.__permissionPolicy = __permissionPolicy;
   exports.__role = __role;
+  exports.__user = __user;
   exports.services = services;
 
   Object.defineProperty(exports, '__esModule', { value: true });

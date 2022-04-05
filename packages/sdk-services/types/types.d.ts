@@ -20,3 +20,15 @@ export interface IPermissionAccess {
     accessType: string;
 }
 export declare const __permissionAccess: () => IPermissionAccess;
+export interface IUser {
+    id: number;
+    createdAt: string;
+    phone: string;
+    email: string;
+    nickname: string;
+    avatar: string;
+    exp: number;
+    coin: number;
+    role: number;
+}
+export declare const __user: () => IUser;

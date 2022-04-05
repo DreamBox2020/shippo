@@ -267,6 +267,17 @@ var __permissionAccess = function () { return ({
     remark: '',
     accessType: '',
 }); };
+var __user = function () { return ({
+    id: 0,
+    createdAt: '',
+    phone: '',
+    email: '',
+    nickname: '',
+    avatar: '',
+    exp: 0,
+    coin: 0,
+    role: 0,
+}); };
 
 var services = {
     passport: passport,
@@ -285,4 +296,5 @@ var services = {
 exports.__permissionAccess = __permissionAccess;
 exports.__permissionPolicy = __permissionPolicy;
 exports.__role = __role;
+exports.__user = __user;
 exports.services = services;

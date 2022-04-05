@@ -41,3 +41,27 @@ export const __permissionAccess = (): IPermissionAccess => ({
   remark: '',
   accessType: '',
 })
+
+export interface IUser {
+  id: number
+  createdAt: string
+  phone: string
+  email: string
+  nickname: string
+  avatar: string
+  exp: number
+  coin: number
+  role: number
+}
+
+export const __user = (): IUser => ({
+  id: 0,
+  createdAt: '',
+  phone: '',
+  email: '',
+  nickname: '',
+  avatar: '',
+  exp: 0,
+  coin: 0,
+  role: 0,
+})
