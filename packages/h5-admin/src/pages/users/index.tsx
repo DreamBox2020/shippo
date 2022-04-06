@@ -1,28 +1,31 @@
-import { PlusOutlined } from '@ant-design/icons'
-import { Alert, Button, Drawer, Input, message, Modal, Space, Table } from 'antd'
-import React, { useState } from 'react'
+import { PlusOutlined, UserOutlined } from '@ant-design/icons'
+import { Alert, Avatar, Button, Input, message, Modal, Space, Table } from 'antd'
+import React, { useRef, useState } from 'react'
 import { useCallback } from 'react'
 import { checkQQ } from '@shippo/sdk-utils'
-import { services } from '@shippo/sdk-services'
+import { IUser, services } from '@shippo/sdk-services'
+import { EditUserDrawer, EditUserDrawerRef } from './components/edit-user-drawer'
+import { ColumnsType } from 'antd/lib/table'
 
-const data = [
+const data: (IUser & { roleName: string })[] = [
   {
-    key: 1,
     id: 1,
     phone: '111******11',
     email: '88*******@qq.com',
     nickname: '测试帐号',
+    avatar: '',
     exp: 99999,
     coin: 666,
-    role: 'admin',
+    role: 0,
+    roleName: 'admin',
     createdAt: '2022-01-01 22:22:22',
   },
 ]
 
 export const Users = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [isModalVisible2, setIsModalVisible2] = useState(false)
-  const [isDrawerVisible, setDrawerVisible] = useState(false)
+
+  const editUserDrawerRef = useRef<EditUserDrawerRef>(null)
 
   const [qq, setQQ] = useState('')
 
@@ -42,7 +45,7 @@ export const Users = () => {
     }
   }, [])
 
-  const columns = [
+  const columns: ColumnsType<IUser & { roleName: string }> = [
     {
       title: 'UID',
       dataIndex: 'id',
@@ -62,6 +65,14 @@ export const Users = () => {
       title: '昵称',
       dataIndex: 'nickname',
       key: 'nickname',
+    },
+    {
+      title: '头像',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      render: (value) => {
+        return <Avatar shape="square" size="small" icon={<UserOutlined />} />
+      },
     },
     {
       title: '经验',
@@ -86,9 +97,9 @@ export const Users = () => {
     {
       title: '操作',
       key: 'action',
-      render: (_: any, data: any) => (
+      render: (_: any, record: any) => (
         <Space size="middle">
-          <Button type="link" onClick={() => setDrawerVisible(true)}>
+          <Button type="link" onClick={() => editUserDrawerRef.current?.open(record)}>
             编辑用户
           </Button>
         </Space>
@@ -98,6 +109,7 @@ export const Users = () => {
 
   return (
     <div>
+      <EditUserDrawer ref={editUserDrawerRef} />
       <Space size="middle">
         <Button
           type="primary"
@@ -108,7 +120,13 @@ export const Users = () => {
           新增邮箱用户
         </Button>
       </Space>
-      <Table columns={columns} dataSource={data} pagination={{ position: ['bottomCenter'] }} />
+      <Table
+        rowKey="id"
+        columns={columns}
+        dataSource={data}
+        pagination={{ position: ['bottomCenter'] }}
+        size="small"
+      />
 
       <Modal
         title="新增邮箱用户"
@@ -121,65 +139,6 @@ export const Users = () => {
       >
         <Alert message="只需要输入QQ号即可，不需要后戳。（@qq.com）" type="warning" />
         <Input placeholder="QQ号" value={qq} onChange={(event) => setQQ(event.target.value)} />
-      </Modal>
-
-      <Drawer
-        title="编辑用户"
-        placement="right"
-        onClose={() => setDrawerVisible(false)}
-        visible={isDrawerVisible}
-      >
-        <p>UID：</p>
-        <p>昵称：</p>
-        <p>
-          角色：{' '}
-          <Button type="link" onClick={() => setIsModalVisible2(true)}>
-            修改角色
-          </Button>
-        </p>
-      </Drawer>
-
-      <Modal
-        title="修改角色"
-        visible={isModalVisible2}
-        onOk={() => {
-          setIsModalVisible2(false)
-        }}
-        onCancel={() => setIsModalVisible2(false)}
-      >
-        <Table
-          rowSelection={{}}
-          columns={[
-            {
-              title: '角色名称',
-              dataIndex: 'roleName',
-              key: 'roleName',
-            },
-            {
-              title: '描述',
-              dataIndex: 'remark',
-              key: 'remark',
-            },
-          ]}
-          dataSource={[
-            {
-              key: 1,
-              roleName: 'admin',
-              remark: '管理员',
-            },
-            {
-              key: 2,
-              roleName: 'user',
-              remark: '用户',
-            },
-            {
-              key: 3,
-              roleName: 'root',
-              remark: '系统超级用户',
-            },
-          ]}
-          size="small"
-        />
       </Modal>
     </div>
   )
