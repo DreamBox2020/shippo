@@ -18,7 +18,7 @@ const __defaultRole = __role()
 
 const columns = [
   {
-    title: '策略名称',
+    title: '权限策略名称',
     dataIndex: 'policyName',
     key: 'policyName',
   },
@@ -93,6 +93,7 @@ const Component: React.ForwardRefRenderFunction<
             }}
             columns={columns}
             dataSource={dataSource}
+            size="small"
           />
         </Form.Item>
         <Form.Item>

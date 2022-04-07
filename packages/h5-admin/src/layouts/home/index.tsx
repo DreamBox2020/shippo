@@ -153,7 +153,7 @@ export const Home = () => {
               用户管理
             </Menu.Item>
             <SubMenu key="/permission" icon={<UserOutlined />} title="权限管理">
-              <Menu.Item key="/permission/role">角色管理</Menu.Item>
+              <Menu.Item key="/permission/role">角色设置</Menu.Item>
               <Menu.Item key="/permission/policy">权限策略设置</Menu.Item>
               <Menu.Item key="/permission/access">访问规则设置</Menu.Item>
             </SubMenu>

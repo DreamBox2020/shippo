@@ -2,15 +2,15 @@ import { useState, useRef, useCallback } from 'react'
 import { useMount } from 'ahooks'
 import { Button, Space, Table, Modal, message } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { services, IRole } from '@shippo/sdk-services'
 import { EditRoleDrawer, EditRoleDrawerRef } from './components/edit-role-drawer'
 import { EditRolePolicyDrawer, EditRolePolicyDrawerRef } from './components/edit-role-policy-drawer'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 const { confirm } = Modal
 
 export const Page_permission_role: React.FC = () => {
-  const [data, setData] = useState<(IRole & { key: string })[]>()
+  const [data, setData] = useState<IRole[]>()
   const editRoleDrawerRef = useRef<EditRoleDrawerRef>(null)
   const editRolePolicyDrawerRef = useRef<EditRolePolicyDrawerRef>(null)
 
@@ -95,8 +95,8 @@ export const Page_permission_role: React.FC = () => {
   useMount(async () => {
     const hr = await services.role.find_all()
     setData(
-      hr.data.resource.map((role) => {
-        return { ...role, createdAt: formatTimeStr(role.createdAt), key: String(role.id) }
+      hr.data.resource.map((item) => {
+        return { ...item, createdAt: formatTimeStr(item.createdAt) }
       })
     )
   })
@@ -110,7 +110,13 @@ export const Page_permission_role: React.FC = () => {
           新增角色
         </Button>
       </Space>
-      <Table columns={columns} dataSource={data} pagination={{ position: ['bottomCenter'] }} />
+      <Table
+        rowKey="id"
+        columns={columns}
+        dataSource={data}
+        pagination={{ position: ['bottomCenter'] }}
+        size="small"
+      />
     </div>
   )
 }
