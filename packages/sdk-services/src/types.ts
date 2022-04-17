@@ -65,3 +65,18 @@ export const __user = (): IUser => ({
   coin: 0,
   role: 0,
 })
+
+export interface IPagination {
+  current: number
+  pageSize: number
+  total: number
+}
+
+export interface IUserExtRoleName extends IUser {
+  roleName: string
+}
+
+export const __userExtRoleName = (): IUserExtRoleName => ({
+  ...__user(),
+  roleName: '',
+})

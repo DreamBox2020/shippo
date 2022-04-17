@@ -32,3 +32,12 @@ export interface IUser {
     role: number;
 }
 export declare const __user: () => IUser;
+export interface IPagination {
+    current: number;
+    pageSize: number;
+    total: number;
+}
+export interface IUserExtRoleName extends IUser {
+    roleName: string;
+}
+export declare const __userExtRoleName: () => IUserExtRoleName;

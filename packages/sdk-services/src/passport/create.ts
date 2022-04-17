@@ -1,6 +1,6 @@
 import { request, ResponsePack } from '../helpers'
 
-export interface IResponseResource {
+interface IResponseResource {
   passport: string
   uid: number
 }
