@@ -8,12 +8,16 @@ import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
-import { IResponseResource } from '@shippo/sdk-services/types/passport'
 import { message } from 'antd'
 import { Transform } from '~/pages/transform'
 
 export interface RootRouteProps {
-  result: AxiosResponse<ResponsePack<IResponseResource>>[]
+  result: AxiosResponse<
+    ResponsePack<{
+      passport: string
+      uid: number
+    }>
+  >[]
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
