@@ -90,18 +90,22 @@ export const Page_permission_access: React.FC = () => {
     },
   ])
 
-  useMount(async () => {
+  const updateTable = useCallback(async () => {
     const hr = await services.permissionAccess.find_all()
     setData(
       hr.data.resource.map((item) => {
         return { ...item, createdAt: formatTimeStr(item.createdAt) }
       })
     )
+  }, [])
+
+  useMount(() => {
+    updateTable()
   })
 
   return (
     <div>
-      <EditAccessDrawer ref={editAccessDrawerRef} />
+      <EditAccessDrawer ref={editAccessDrawerRef} onClose={() => updateTable()} />
       <Space size="middle">
         <Button type="primary" onClick={() => editAccessDrawerRef.current?.open()}>
           新增访问规则
