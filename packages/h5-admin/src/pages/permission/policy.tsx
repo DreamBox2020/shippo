@@ -88,18 +88,22 @@ export const Page_permission_policy: React.FC = () => {
     },
   ])
 
-  useMount(async () => {
+  const updateTable = useCallback(async () => {
     const hr = await services.permissionPolicy.find_all()
     setData(
       hr.data.resource.map((item) => {
         return { ...item, createdAt: formatTimeStr(item.createdAt) }
       })
     )
+  }, [])
+
+  useMount(() => {
+    updateTable()
   })
 
   return (
     <div>
-      <EditPolicyDrawer ref={editPolicyDrawerRef} />
+      <EditPolicyDrawer ref={editPolicyDrawerRef} onClose={() => updateTable()} />
       <EditPolicyAccessDrawer ref={editPolicyAccessDrawerRef} />
       <Space size="middle">
         <Button type="primary" onClick={() => editPolicyDrawerRef.current?.open()}>
