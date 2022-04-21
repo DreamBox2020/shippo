@@ -92,18 +92,22 @@ export const Page_permission_role: React.FC = () => {
     },
   ])
 
-  useMount(async () => {
+  const updateTable = useCallback(async () => {
     const hr = await services.role.find_all()
     setData(
       hr.data.resource.map((item) => {
         return { ...item, createdAt: formatTimeStr(item.createdAt) }
       })
     )
+  }, [])
+
+  useMount(() => {
+    updateTable()
   })
 
   return (
     <div>
-      <EditRoleDrawer ref={editRoleDrawerRef} />
+      <EditRoleDrawer ref={editRoleDrawerRef} onClose={() => updateTable()} />
       <EditRolePolicyDrawer ref={editRolePolicyDrawerRef} />
       <Space size="middle">
         <Button type="primary" onClick={() => editRoleDrawerRef.current?.open()}>
