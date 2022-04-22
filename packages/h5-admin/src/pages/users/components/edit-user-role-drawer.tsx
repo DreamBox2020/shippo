@@ -1,4 +1,10 @@
-import { IPermissionPolicy, IRole, IUser, services, __user } from '@shippo/sdk-services'
+import {
+  IPermissionPolicy,
+  IRole,
+  IUserExtRoleName,
+  services,
+  __userExtRoleName,
+} from '@shippo/sdk-services'
 import {
   Drawer,
   Space,
@@ -14,7 +20,7 @@ import {
 } from 'antd'
 import React, { useEffect, useImperativeHandle, useState, useCallback, useMemo } from 'react'
 
-const __defaultUser = __user()
+const __defaultUserExtRoleName = __userExtRoleName()
 
 const columns = [
   {
@@ -30,11 +36,11 @@ const columns = [
 ]
 
 export interface EditUserRoleDrawerRef {
-  open: (user: IUser) => void
+  open: (user: IUserExtRoleName) => void
 }
 
 export interface EditUserRoleDrawerProps {
-  onClose?: () => void
+  onClose?: (user: IUserExtRoleName) => void
 }
 
 const Component: React.ForwardRefRenderFunction<EditUserRoleDrawerRef, EditUserRoleDrawerProps> = (
@@ -42,7 +48,7 @@ const Component: React.ForwardRefRenderFunction<EditUserRoleDrawerRef, EditUserR
   ref
 ) => {
   const { onClose } = props
-  const [user, setUser] = useState<IUser>(__defaultUser)
+  const [user, setUser] = useState<IUserExtRoleName>(__defaultUserExtRoleName)
   const [dataSource, setDataSource] = useState<IRole[]>([])
 
   const [visible, setVisible] = useState(false)
@@ -52,7 +58,7 @@ const Component: React.ForwardRefRenderFunction<EditUserRoleDrawerRef, EditUserR
   useImperativeHandle(ref, () => {
     return {
       // 打开抽屉
-      open: (user: IUser) => {
+      open: (user: IUserExtRoleName) => {
         services.role.find_all().then((hr) => {
           setDataSource(hr.data.resource)
           setSelectedRowKeys([user.role])
@@ -65,15 +71,20 @@ const Component: React.ForwardRefRenderFunction<EditUserRoleDrawerRef, EditUserR
 
   // 关闭抽屉
   const closeDrawer = useCallback(() => {
-    onClose && onClose()
+    onClose && onClose(user)
     setVisible(false)
-  }, [onClose])
+  }, [onClose, user])
+
+  // 更改user
+  const changeUser = useCallback((user: Partial<IUserExtRoleName>) => {
+    setUser((old) => ({ ...old, ...user }))
+  }, [])
 
   const handleSave = useCallback(async () => {
     console.log(user)
-    // services.user.update_policies({ id: user.id, policies: selectedRowKeys })
+    services.user.update_user_role({ id: user.id, role: user.role })
     closeDrawer()
-  }, [user, selectedRowKeys, closeDrawer])
+  }, [user, closeDrawer])
 
   return (
     <Drawer
@@ -90,7 +101,14 @@ const Component: React.ForwardRefRenderFunction<EditUserRoleDrawerRef, EditUserR
             rowSelection={{
               type: 'radio',
               selectedRowKeys,
-              onChange: (keys) => setSelectedRowKeys(keys as number[]),
+              onChange: (keys, rows) => {
+                console.log(keys, rows)
+                setSelectedRowKeys(keys as number[])
+                changeUser({
+                  role: rows[0].id,
+                  roleName: rows[0].roleName,
+                })
+              },
             }}
             columns={columns}
             dataSource={dataSource}
