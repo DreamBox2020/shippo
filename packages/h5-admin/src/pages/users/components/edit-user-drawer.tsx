@@ -1,13 +1,13 @@
 import React, { useImperativeHandle, useState, useCallback, useMemo, useRef } from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message, Avatar } from 'antd'
-import { IUser, services, __user } from '@shippo/sdk-services'
+import { IUserExtRoleName, services, __userExtRoleName } from '@shippo/sdk-services'
 import { UserOutlined } from '@ant-design/icons'
 import { EditUserRoleDrawer, EditUserRoleDrawerRef } from './edit-user-role-drawer'
 
-const __defaultUser = __user()
+const __defaultUserExtRoleName = __userExtRoleName()
 
 export interface EditUserDrawerRef {
-  open: (user?: IUser) => void
+  open: (user?: IUserExtRoleName) => void
 }
 
 export interface EditUserDrawerProps {
@@ -19,7 +19,7 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
   ref
 ) => {
   const { onClose } = props
-  const [user, setUser] = useState<IUser>(__defaultUser)
+  const [user, setUser] = useState<IUserExtRoleName>(__defaultUserExtRoleName)
 
   const [visible, setVisible] = useState(false)
   const editUserRoleDrawerRef = useRef<EditUserRoleDrawerRef>(null)
@@ -32,11 +32,11 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
   useImperativeHandle(ref, () => {
     return {
       // 打开抽屉
-      open: (user?: IUser) => {
+      open: (user?: IUserExtRoleName) => {
         if (user) {
           setUser({ ...user })
         } else {
-          setUser(__user())
+          setUser(__userExtRoleName())
         }
         setVisible(true)
       },
@@ -50,7 +50,7 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
   }, [onClose])
 
   // 更改user
-  const changeUser = useCallback((user: Partial<IUser>) => {
+  const changeUser = useCallback((user: Partial<IUserExtRoleName>) => {
     setUser((old) => ({ ...old, ...user }))
   }, [])
 
@@ -87,7 +87,7 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
       visible={visible}
       bodyStyle={{ paddingBottom: 80 }}
     >
-      <EditUserRoleDrawer ref={editUserRoleDrawerRef} />
+      <EditUserRoleDrawer ref={editUserRoleDrawerRef} onClose={(u) => setUser(u)} />
       <Form layout="vertical" requiredMark={false}>
         <Row gutter={16}>
           <Col span={12}>
@@ -127,7 +127,7 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="头像" rules={[{ required: true, message: '请输入头像' }]}>
+            <Form.Item label="头像">
               <Avatar shape="square" size={64} icon={<UserOutlined />} />
             </Form.Item>
           </Col>
@@ -156,15 +156,8 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="角色" rules={[{ required: true, message: '请输入角色' }]}>
-              <Input
-                placeholder="请输入角色"
-                value={user.role}
-                onChange={(event) => {
-                  changeUser({ role: Number(event.currentTarget.value) })
-                }}
-                disabled
-              />
+            <Form.Item label="角色名称">
+              <span style={{ padding: '0 10px' }}>{user.roleName}</span>
               <Button type="link" onClick={() => editUserRoleDrawerRef.current?.open(user)}>
                 编辑用户角色
               </Button>
