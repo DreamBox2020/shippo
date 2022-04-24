@@ -1,28 +1,18 @@
 import { PlusOutlined, UserOutlined } from '@ant-design/icons'
 import { Alert, Avatar, Button, Input, message, Modal, Space, Table } from 'antd'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useCallback } from 'react'
-import { checkQQ } from '@shippo/sdk-utils'
-import { IUser, services } from '@shippo/sdk-services'
+import { checkQQ, formatTimeStr } from '@shippo/sdk-utils'
+import { IUserExtRoleName, services } from '@shippo/sdk-services'
 import { EditUserDrawer, EditUserDrawerRef } from './components/edit-user-drawer'
 import { ColumnsType } from 'antd/lib/table'
-
-const data: (IUser & { roleName: string })[] = [
-  {
-    id: 1,
-    phone: '111******11',
-    email: '88*******@qq.com',
-    nickname: '测试帐号',
-    avatar: '',
-    exp: 99999,
-    coin: 666,
-    role: 0,
-    roleName: 'admin',
-    createdAt: '2022-01-01 22:22:22',
-  },
-]
+import { useMount } from 'ahooks'
 
 export const Users = () => {
+  const [data, setData] = useState<IUserExtRoleName[]>()
+  const [total, setTotal] = useState(0)
+  const [current, setCurrent] = useState(1)
+
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const editUserDrawerRef = useRef<EditUserDrawerRef>(null)
@@ -45,7 +35,7 @@ export const Users = () => {
     }
   }, [])
 
-  const columns: ColumnsType<IUser & { roleName: string }> = [
+  const columns: ColumnsType<IUserExtRoleName> = [
     {
       title: 'UID',
       dataIndex: 'id',
@@ -85,9 +75,9 @@ export const Users = () => {
       key: 'coin',
     },
     {
-      title: '角色',
-      dataIndex: 'role',
-      key: 'role',
+      title: '角色名称',
+      dataIndex: 'roleName',
+      key: 'roleName',
     },
     {
       title: '注册时间',
@@ -97,19 +87,41 @@ export const Users = () => {
     {
       title: '操作',
       key: 'action',
-      render: (_: any, record: any) => (
-        <Space size="middle">
-          <Button type="link" onClick={() => editUserDrawerRef.current?.open(record)}>
-            编辑用户
-          </Button>
-        </Space>
-      ),
+      render: (_, record) => {
+        return (
+          <Space size="middle">
+            <Button type="link" onClick={() => editUserDrawerRef.current?.open(record)}>
+              编辑用户
+            </Button>
+          </Space>
+        )
+      },
     },
   ]
 
+  const updateTable = useCallback(() => {
+    services.user
+      .find_all({
+        pageSize: 20,
+        current,
+      })
+      .then((hr) => {
+        setData(
+          hr.data.resource.items.map((item) => {
+            return { ...item, createdAt: formatTimeStr(item.createdAt) }
+          })
+        )
+        setTotal(hr.data.resource.total)
+      })
+  }, [current])
+
+  useEffect(() => {
+    updateTable()
+  }, [updateTable])
+
   return (
     <div>
-      <EditUserDrawer ref={editUserDrawerRef} />
+      <EditUserDrawer ref={editUserDrawerRef} onClose={() => updateTable()} />
       <Space size="middle">
         <Button
           type="primary"
@@ -124,7 +136,17 @@ export const Users = () => {
         rowKey="id"
         columns={columns}
         dataSource={data}
-        pagination={{ position: ['bottomCenter'] }}
+        pagination={{
+          position: ['bottomCenter'],
+          pageSize: 20,
+          total,
+          current,
+          showSizeChanger: false,
+          size: 'default',
+          onChange: (page: number, pageSize: number) => {
+            setCurrent(page)
+          },
+        }}
         size="small"
       />
 
