@@ -1,15 +1,18 @@
 import { useMount } from 'ahooks'
 import { AxiosResponse } from 'axios'
-import React from 'react'
+import React, { lazy } from 'react'
 import { useLocation } from 'react-router'
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom'
-import { withFetchLoading } from '~/components/loading-hoc'
-import { Home } from '~/layouts/home'
-import { Passport } from '~/layouts/passport'
+import { Routes, Route, Navigate, useNavigate, Outlet } from 'react-router-dom'
+import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 import { message } from 'antd'
+
+import { Home } from '~/layouts/home'
+import { Passport } from '~/layouts/passport'
+
 import { Transform } from '~/pages/transform'
+import { Page_passport } from '~/pages/passport'
 
 export interface RootRouteProps {
   result: AxiosResponse<
@@ -21,7 +24,7 @@ export interface RootRouteProps {
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const location = useLocation()
 
   useMount(() => {
@@ -31,24 +34,48 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
     if (resource.uid > 0) {
       message.success(`已经登录，UID为${resource.uid}`)
       if (location.pathname.startsWith('/passport')) {
-        history.push('/')
+        history('/')
       }
     } else {
       message.error('没有登录')
-      history.push('/passport')
+      history('/passport')
     }
   })
 
   return (
-    <Switch>
-      <Route exact path="/" component={() => <Redirect to="/dashboard" />}></Route>
-      <Route exact path="/passport" component={Passport}></Route>
-      <Route exact path="/dashboard" component={Home}></Route>
-      <Route exact path="/users" component={Home}></Route>
-      <Route path="/permission" component={Home}></Route>
-      <Route path="/temp" component={Home}></Route>
-      <Route exact path="/transform" component={Transform}></Route>
-    </Switch>
+    <Routes>
+      <Route path="/passport" element={<Passport />}>
+        <Route path="" element={<Page_passport />}></Route>
+      </Route>
+      <Route path="/transform" element={<Transform />}></Route>
+      <Route path="/dashboard" element={<Home />}>
+        <Route path="" element={withLoading(lazy(() => import('~/pages/dashboard')))}></Route>
+      </Route>
+      <Route path="/users" element={<Home />}>
+        <Route path="" element={withLoading(lazy(() => import('~/pages/users')))}></Route>
+      </Route>
+      <Route path="/temp/*" element={<Home />}>
+        <Route
+          path="temp_trade_20220108"
+          element={withLoading(lazy(() => import('~/pages/temp/temp_trade_20220108')))}
+        ></Route>
+      </Route>
+      <Route path="/permission/*" element={<Home />}>
+        <Route
+          path="role"
+          element={withLoading(lazy(() => import('~/pages/permission/role')))}
+        ></Route>
+        <Route
+          path="access"
+          element={withLoading(lazy(() => import('~/pages/permission/access')))}
+        ></Route>
+        <Route
+          path="policy"
+          element={withLoading(lazy(() => import('~/pages/permission/policy')))}
+        ></Route>
+      </Route>
+      <Route path="*" element={<Navigate to="/dashboard" replace />}></Route>
+    </Routes>
   )
 }
 

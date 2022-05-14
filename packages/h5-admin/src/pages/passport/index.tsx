@@ -3,11 +3,11 @@ import { services } from '@shippo/sdk-services'
 import { checkPhone, checkSmsCode } from '@shippo/sdk-utils'
 import { Form, Input, Button, message, Layout } from 'antd'
 import { UserOutlined, LockOutlined, CopyrightOutlined } from '@ant-design/icons'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 const { Header, Footer, Content } = Layout
 
-export const Passport = () => {
-  const history = useHistory()
+export const Page_passport = () => {
+  const history = useNavigate()
 
   const handleSmsSend = (phone: string) => {
     console.log('handleSmsSend', { phone })
@@ -35,7 +35,7 @@ export const Passport = () => {
       code,
     })
     window.localStorage.setItem('__PASSPORT', data.resource.passport)
-    history.push('/')
+    history('/')
   }
 
   return (
@@ -127,4 +127,4 @@ export const Passport = () => {
   )
 }
 
-export default Passport
+export default Page_passport

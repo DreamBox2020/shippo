@@ -1,12 +1,11 @@
-import React, { lazy } from 'react'
-import { withLoading } from '~/components/loading-hoc'
-import { SwitchRoute, RouteS } from '~/components/switch-route'
 import { Layout, Menu } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Dropdown } from 'antd'
-import { useHistory, useLocation } from 'react-router'
+import { useNavigate, useLocation, Outlet } from 'react-router'
+
+import avatar from '~/assets/avatar.png'
 
 const { Header, Footer, Sider, Content } = Layout
 const { SubMenu } = Menu
@@ -50,53 +49,10 @@ const StyledSider = styled(Sider)`
 const defaultRenderCollapsedButton = (collapsed?: boolean) =>
   collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
 
-type tabBarItem = RouteS & {
-  path: string
-}
-
-const tabBarItems: Array<tabBarItem> = [
-  {
-    key: '/dashboard',
-    path: '/dashboard',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/dashboard'))),
-  },
-  {
-    key: '/users',
-    path: '/users',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/users'))),
-  },
-  {
-    key: '/temp/temp_trade_20220108',
-    path: '/temp/temp_trade_20220108',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/temp/temp_trade_20220108'))),
-  },
-  {
-    key: '/permission/role',
-    path: '/permission/role',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/permission/role'))),
-  },
-  {
-    key: '/permission/access',
-    path: '/permission/access',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/permission/access'))),
-  },
-  {
-    key: '/permission/policy',
-    path: '/permission/policy',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/permission/policy'))),
-  },
-]
-
 export const Home = () => {
   const [collapsed, setCollapsed] = useState(false)
   const location = useLocation()
-  const history = useHistory()
+  const history = useNavigate()
 
   return (
     <Layout>
@@ -124,7 +80,7 @@ export const Home = () => {
             padding: collapsed ? '16px 8px' : '16px',
           }}
         >
-          <img src={require('~/assets/avatar.png').default} alt="" />
+          <img src={avatar} alt="" />
           {collapsed ? null : <h1>Shippo Admin</h1>}
         </StyledLogo>
         <div
@@ -143,7 +99,7 @@ export const Home = () => {
             onSelect={({ key }) => {
               if (key[0] !== '/') return
               console.log(key)
-              history.push(key)
+              history(key)
             }}
           >
             <Menu.Item key="/dashboard" icon={<UserOutlined />}>
@@ -209,7 +165,7 @@ export const Home = () => {
           </Dropdown> */}
         </Header>
         <Content>
-          <SwitchRoute routes={tabBarItems} />
+          <Outlet />
         </Content>
         <Footer>Footer</Footer>
       </Layout>
