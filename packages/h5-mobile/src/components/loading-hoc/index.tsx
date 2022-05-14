@@ -11,12 +11,11 @@ export const Loading: React.FC = () => {
 }
 
 export const withLoading = (CurrentComponent: React.ComponentType) => {
-  const Component = () => (
+  return (
     <Suspense fallback={<Loading />}>
       <CurrentComponent />
     </Suspense>
   )
-  return <Component />
 }
 
 export const withFetchLoading =
