@@ -1,18 +1,18 @@
 import { useMount } from 'ahooks'
 import { AxiosResponse } from 'axios'
-import React from 'react'
+import React, { lazy } from 'react'
 import { useLocation } from 'react-router'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
-import { withFetchLoading } from '~/components/loading-hoc'
+import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 // import { IResponseResource } from '@shippo/sdk-services/types/passport'
 import { message } from 'antd'
-import { Transform } from '~/pages/transform'
 import ReadLayout from '~/layouts/read'
 import CreationLayout from '~/layouts/creation'
+import { Page_passport } from '~/pages/passport'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<any>>[]
@@ -39,13 +39,15 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />}></Route>
-      <Route path="/passport" element={<Passport />}></Route>
-      <Route path="/dashboard" element={<Home />}></Route>
+      <Route path="/passport" element={<Passport />}>
+        <Route path="" element={<Page_passport />}></Route>
+      </Route>
+      <Route path="/dashboard" element={<Home />}>
+        <Route path="" element={withLoading(lazy(() => import('~/pages/dashboard')))}></Route>
+      </Route>
       <Route path="/read" element={<ReadLayout />}></Route>
       <Route path="/creation" element={<CreationLayout />}></Route>
-      <Route path="/users" element={<Home />}></Route>
-      <Route path="/transform" element={<Transform />}></Route>
+      <Route path="*" element={<Navigate to="/dashboard" replace />}></Route>
     </Routes>
   )
 }

@@ -7,7 +7,7 @@ import { WhiteSpace } from '~/components/white-space'
 import { BellOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
 
-export const Setting = () => {
+export const Page_setting = () => {
   const history = useNavigate()
 
   return (
@@ -46,4 +46,4 @@ export const Setting = () => {
   )
 }
 
-export default Setting
+export default Page_setting

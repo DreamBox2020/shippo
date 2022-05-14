@@ -15,7 +15,7 @@ const StyledList = styled(List)`
   }
 `
 
-export const Passport = () => {
+export const Page_passport = () => {
   const history = useNavigate()
 
   const [_phone, setPhone] = useState('')
@@ -139,4 +139,4 @@ export const Passport = () => {
   )
 }
 
-export default Passport
+export default Page_passport

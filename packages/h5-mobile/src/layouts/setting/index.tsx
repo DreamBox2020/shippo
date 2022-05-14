@@ -1,11 +1,6 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import { Setting as Page } from '~/pages/setting'
+import { Outlet } from 'react-router-dom'
 
 export const Setting = () => {
-  return (
-    <Routes>
-      <Route key="setting" path="" element={<Page />}></Route>
-    </Routes>
-  )
+  return <Outlet />
 }

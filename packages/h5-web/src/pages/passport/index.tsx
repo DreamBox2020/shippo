@@ -6,7 +6,7 @@ import { UserOutlined, LockOutlined, CopyrightOutlined } from '@ant-design/icons
 import { useNavigate } from 'react-router-dom'
 const { Header, Footer, Content } = Layout
 
-export const Passport = () => {
+export const Page_passport = () => {
   const history = useNavigate()
 
   const handleSmsSend = (phone: string) => {
@@ -127,4 +127,4 @@ export const Passport = () => {
   )
 }
 
-export default Passport
+export default Page_passport

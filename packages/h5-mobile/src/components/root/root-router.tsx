@@ -11,6 +11,8 @@ import { services } from '@shippo/sdk-services'
 // import { IResponseResource } from '@shippo/sdk-services/types/passport'
 import { Setting } from '~/layouts/setting'
 import { TempLayout } from '~/layouts/temp'
+import { Page_passport } from '~/pages/passport'
+import { Page_setting } from '~/pages/setting'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<any>>[]
@@ -46,16 +48,32 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/home" replace />}></Route>
-      <Route path="/passport" element={<Passport />}></Route>
-      <Route path="/setting/*" element={<Setting />}></Route>
+      <Route path="/passport" element={<Passport />}>
+        <Route path="" element={<Page_passport />}></Route>
+      </Route>
+      <Route path="/home" element={<Home />}>
+        <Route path="" element={withLoading(lazy(() => import('~/pages/home')))}></Route>
+      </Route>
+      <Route path="/discover" element={<Home />}>
+        <Route path="" element={withLoading(lazy(() => import('~/pages/discover')))}></Route>
+      </Route>
+      <Route path="/my" element={<Home />}>
+        <Route path="" element={withLoading(lazy(() => import('~/pages/my')))}></Route>
+      </Route>
+      <Route path="/setting/*" element={<Setting />}>
+        <Route path="" element={<Page_setting />}></Route>
+      </Route>
       <Route
         path="/space/:uid"
         element={withLoading(lazy(() => import('~/layouts/space')))}
       ></Route>
-      <Route path="/temp" element={<TempLayout />}></Route>
-      <Route path="/*" element={<Home />}></Route>
-      <Route path="/aa" element={<Home />}></Route>
+      <Route path="/temp/*" element={<TempLayout />}>
+        <Route
+          path="temp_trade_20220108"
+          element={withLoading(lazy(() => import('~/pages/temp/temp_trade_20220108')))}
+        ></Route>
+      </Route>
+      <Route path="*" element={<Navigate to="/home" replace />}></Route>
     </Routes>
   )
 }

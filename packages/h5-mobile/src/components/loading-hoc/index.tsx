@@ -10,7 +10,7 @@ export const Loading: React.FC = () => {
   return <StyledLoading></StyledLoading>
 }
 
-export const withLoading = (CurrentComponent: React.FC) => {
+export const withLoading = (CurrentComponent: React.ComponentType) => {
   const Component = () => (
     <Suspense fallback={<Loading />}>
       <CurrentComponent />
@@ -20,7 +20,7 @@ export const withLoading = (CurrentComponent: React.FC) => {
 }
 
 export const withFetchLoading =
-  (CurrentComponent: React.FC<any>, requests: () => Promise<any>[]) => () => {
+  (CurrentComponent: React.ComponentType<any>, requests: () => Promise<any>[]) => () => {
     const [result, setResult] = useState<any[] | null>(null)
 
     useEffect(() => {

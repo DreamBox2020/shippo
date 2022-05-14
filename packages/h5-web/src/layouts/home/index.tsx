@@ -1,6 +1,3 @@
-import React, { lazy } from 'react'
-import { withLoading } from '~/components/loading-hoc'
-import { SwitchRoute, RouteS } from '~/components/switch-route'
 import { Layout, Menu } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
@@ -8,6 +5,7 @@ import { useState } from 'react'
 import { Dropdown } from 'antd'
 
 import avatar from '~/assets/avatar.png'
+import { Outlet } from 'react-router'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -49,23 +47,6 @@ const StyledSider = styled(Sider)`
 
 const defaultRenderCollapsedButton = (collapsed?: boolean) =>
   collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
-
-type tabBarItem = RouteS & {
-  path: string
-}
-
-const tabBarItems: Array<tabBarItem> = [
-  {
-    key: 'dashboard',
-    path: '/dashboard',
-    element: withLoading(lazy(() => import('~/pages/dashboard'))),
-  },
-  {
-    key: 'users',
-    path: '/users',
-    element: withLoading(lazy(() => import('~/pages/users'))),
-  },
-]
 
 export const Home = () => {
   const [collapsed, setCollapsed] = useState(false)
@@ -169,7 +150,7 @@ export const Home = () => {
           </Dropdown>
         </Header>
         <Content>
-          <SwitchRoute routes={tabBarItems} />
+          <Outlet />
         </Content>
         <Footer>Footer</Footer>
       </Layout>
