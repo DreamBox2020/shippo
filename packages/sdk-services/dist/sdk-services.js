@@ -266,7 +266,7 @@ del: del,
 find_all_ext_status: find_all_ext_status
 });
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
