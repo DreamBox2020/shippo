@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import jsonp from '@alicloud/fetcher-jsonp'
 import { useDebounceFn } from 'ahooks'
 
+import background from '~/assets/background.jpg'
+
 const StyledSearch = styled(Input.Search)`
   &.ant-input-search .ant-input-wrapper .ant-input-affix-wrapper {
     border: 2px solid #4569ff !important;
@@ -110,7 +112,7 @@ export const NavigatorPage = () => {
         backgroundPosition: 'center center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        backgroundImage: 'url(' + require('~/assets/background.jpg').default + ')',
+        backgroundImage: 'url(' + background + ')',
       }}
     >
       <Complete />
