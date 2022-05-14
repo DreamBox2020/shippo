@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
 
 type direction = 'vertical' | 'horizontal'
@@ -18,7 +18,7 @@ export interface IContainerProps {
   direction: direction
 }
 
-export const Container: React.FC<IContainerProps> = (props) => {
+export const Container: React.FC<PropsWithChildren<IContainerProps>> = (props) => {
   const { direction, children } = props
   return <StyledContainer isColumn={direction === 'vertical'}>{children}</StyledContainer>
 }

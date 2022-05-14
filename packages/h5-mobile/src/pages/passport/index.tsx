@@ -7,7 +7,7 @@ import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import styled from 'styled-components'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 
 const StyledList = styled(List)`
   > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
@@ -16,7 +16,7 @@ const StyledList = styled(List)`
 `
 
 export const Passport = () => {
-  const history = useHistory()
+  const history = useNavigate()
 
   const [_phone, setPhone] = useState('')
   const [code, setCode] = useState('')
@@ -27,10 +27,11 @@ export const Passport = () => {
     console.log('handleLogon', { phone, code })
 
     if (!checkSmsCode(code)) {
-      return Toast.show({
+      Toast.show({
         icon: 'fail',
         content: '短信验证码格式错误',
       })
+      return
     }
 
     // 如果是qq邮箱
@@ -40,15 +41,16 @@ export const Passport = () => {
         code,
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
-      history.push('/')
+      history('/')
       return
     }
 
     if (!checkPhone(phone)) {
-      return Toast.show({
+      Toast.show({
         icon: 'fail',
         content: '手机号格式错误',
       })
+      return
     }
 
     const { data } = await services.user.login({
@@ -56,7 +58,7 @@ export const Passport = () => {
       code,
     })
     window.localStorage.setItem('__PASSPORT', data.resource.passport)
-    history.push('/')
+    history('/')
   }
 
   const handleSmsSend = () => {
@@ -67,10 +69,11 @@ export const Passport = () => {
       services.captcha.send({ email: phone })
     } else {
       if (!checkPhone(phone)) {
-        return Toast.show({
+        Toast.show({
           icon: 'fail',
           content: '手机号格式错误',
         })
+        return
       }
       services.captcha.send({ phone })
     }

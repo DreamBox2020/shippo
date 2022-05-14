@@ -6,10 +6,10 @@ import { Main } from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
 import { UserInfoCard } from './components/user-info-card'
 import { BellOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 
 export const My = () => {
-  const history = useHistory()
+  const history = useNavigate()
 
   return (
     <Container direction="vertical">
@@ -35,7 +35,7 @@ export const My = () => {
           <List.Item prefix={<ProfileOutlined />} onClick={() => {}}>
             我的作品
           </List.Item>
-          <List.Item prefix={<SettingOutlined />} onClick={() => history.push('/setting')}>
+          <List.Item prefix={<SettingOutlined />} onClick={() => history('/setting')}>
             设置
           </List.Item>
         </List>

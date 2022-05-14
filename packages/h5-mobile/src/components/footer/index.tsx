@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
@@ -11,7 +11,7 @@ export interface IFooterProps {
   style?: React.CSSProperties
 }
 
-export const Footer: React.FC<IFooterProps> = (props) => {
+export const Footer: React.FC<PropsWithChildren<IFooterProps>> = (props) => {
   const { height = '60px', children, style } = props
   return <StyledFooter style={{ height, ...style }}>{children}</StyledFooter>
 }

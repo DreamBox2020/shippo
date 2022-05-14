@@ -5,10 +5,10 @@ import { Header } from '~/components/header'
 import { Main } from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
 import { BellOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 
 export const Setting = () => {
-  const history = useHistory()
+  const history = useNavigate()
 
   return (
     <Container direction="vertical">
@@ -36,7 +36,7 @@ export const Setting = () => {
           style={{ '--border-radius': '0px' }}
           onClick={() => {
             localStorage.removeItem('__PASSPORT')
-            history.push('/')
+            history('/')
           }}
         >
           退出登录

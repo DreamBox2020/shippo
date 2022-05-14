@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
 
 const StyledAside = styled.aside`
@@ -11,7 +11,7 @@ export interface IAsideProps {
   width?: string
 }
 
-export const Aside: React.FC<IAsideProps> = (props) => {
+export const Aside: React.FC<PropsWithChildren<IAsideProps>> = (props) => {
   const { width = '300px', children } = props
   return <StyledAside style={{ width }}>{children}</StyledAside>
 }

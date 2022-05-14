@@ -1,16 +1,15 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Page_temp_trade_20220108 } from '~/pages/temp/temp_trade_20220108'
 
 export const TempLayout = () => {
   return (
-    <Switch>
+    <Routes>
       <Route
         key="Page_temp_trade_20220108"
-        path="/temp/temp_trade_20220108"
-        exact={true}
-        component={Page_temp_trade_20220108}
+        path="/temp_trade_20220108"
+        element={<Page_temp_trade_20220108 />}
       ></Route>
-    </Switch>
+    </Routes>
   )
 }

@@ -1,7 +1,7 @@
 import { Badge } from 'antd-mobile'
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 
-export const Level: React.FC = (props) => {
+export const Level: React.FC<PropsWithChildren<{}>> = (props) => {
   return (
     <Badge
       content={`LV${props.children}`}

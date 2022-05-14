@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
 
 const StyledHeader = styled.header`
@@ -11,7 +11,7 @@ export interface IHeaderProps {
   style?: React.CSSProperties
 }
 
-export const Header: React.FC<IHeaderProps> = (props) => {
+export const Header: React.FC<PropsWithChildren<IHeaderProps>> = (props) => {
   const { height = '60px', children, style } = props
   return <StyledHeader style={{ height, ...style }}>{children}</StyledHeader>
 }

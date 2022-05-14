@@ -1,5 +1,5 @@
 import React, { lazy, useState } from 'react'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useNavigate, useMatch } from 'react-router-dom'
 import { COLOR_GRAY, COLOR_PINK } from '~/constants/color'
 import { withLoading } from '~/components/loading-hoc'
 import { TabBar } from 'antd-mobile'
@@ -9,6 +9,7 @@ import { Main } from '~/components/main'
 import { Footer } from '~/components/footer'
 import { SwitchRoute, RouteS } from '~/components/switch-route'
 import styled from 'styled-components'
+import { useLocation } from 'react-router'
 
 const StyledTabBar = styled(TabBar)`
   .adm-tab-bar-item {
@@ -29,42 +30,39 @@ const tabBarItems: Array<tabBarItem> = [
   {
     key: 'home',
     path: '/home',
-    exact: true,
     title: '首页',
     icon: 'shouye',
-    component: withLoading(lazy(() => import('~/pages/home'))),
+    element: withLoading(lazy(() => import('~/pages/home'))),
   },
   {
     key: 'discover',
     path: '/discover',
-    exact: true,
-
     title: '发现',
     icon: 'faxian',
-    component: withLoading(lazy(() => import('~/pages/discover'))),
+    element: withLoading(lazy(() => import('~/pages/discover'))),
   },
   {
     key: 'my',
     path: '/my',
-    exact: true,
     title: '我',
     icon: 'wode',
-    component: withLoading(lazy(() => import('~/pages/my'))),
+    element: withLoading(lazy(() => import('~/pages/my'))),
   },
 ]
 
 export const Home = () => {
-  const history = useHistory()
-  const routeMatch = useRouteMatch()
+  const history = useNavigate()
+  const location = useLocation()
+  console.log(location)
 
   const [selectedTab, setSelectedTab] = useState(
-    tabBarItems.find((item) => item.path === routeMatch.path)!.key
+    tabBarItems.find((item) => item.path === location.pathname)!.key
   )
 
   const onPress = (activeKey: string) => {
     setSelectedTab(activeKey)
     const path = tabBarItems.find((item) => item.key === activeKey)?.path
-    path && history.push(path)
+    path && history(path)
   }
 
   return (

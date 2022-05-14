@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { List, Image } from 'antd-mobile'
 import { Level } from '~/components/level'
+
+import avatar from '~/assets/avatar.png'
 
 const StyledInfoBlock = styled.span`
   font-size: 12px;
@@ -11,14 +13,14 @@ const StyledInfoBlock = styled.span`
 `
 
 export const UserInfoCard = () => {
-  const history = useHistory()
+  const history = useNavigate()
 
   return (
     <List>
       <List.Item
         prefix={
           <Image
-            src={require('~/assets/avatar.png').default}
+            src={avatar}
             style={{ borderRadius: '25px' }}
             fit="cover"
             width="50px"
@@ -31,7 +33,7 @@ export const UserInfoCard = () => {
             <StyledInfoBlock>积分：99999</StyledInfoBlock>
           </p>
         }
-        onClick={() => history.push('/space/100000')}
+        onClick={() => history('/space/100000')}
       >
         内测账号001<Level>9</Level>
       </List.Item>

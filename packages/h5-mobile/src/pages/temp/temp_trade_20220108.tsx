@@ -4,15 +4,15 @@ import { Container } from '~/components/container'
 import { Header } from '~/components/header'
 import { Main } from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
-import { BellOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import { COLOR_PINK } from '~/constants/color'
 import { useState } from 'react'
 import { useCallback } from 'react'
 import { services } from '@shippo/sdk-services'
+import { checkPhone, checkQQ } from '@shippo/sdk-utils'
 
 export const Page_temp_trade_20220108 = () => {
-  const history = useHistory()
+  const history = useNavigate()
 
   const [trade1, setTrade1] = useState('')
   const [trade2, setTrade2] = useState('')
@@ -21,12 +21,37 @@ export const Page_temp_trade_20220108 = () => {
 
   const add = useCallback(async () => {
     try {
+      if (!checkQQ(qq)) {
+        Toast.show({
+          icon: 'fail',
+          content: 'QQ格式不正确',
+        })
+        return
+      }
+
+      if (!checkPhone(phone)) {
+        Toast.show({
+          icon: 'fail',
+          content: '手机号格式不正确',
+        })
+        return
+      }
+
+      if (trade1 === '') {
+        Toast.show({
+          icon: 'fail',
+          content: '定金单号不能为空',
+        })
+        return
+      }
+
       const { data } = await services.temp.temp_trade_20220108__add({
         trade1,
         trade2,
         qq,
         phone,
       })
+
       if (data.success) {
         Toast.show({
           icon: 'success',
@@ -42,16 +67,23 @@ export const Page_temp_trade_20220108 = () => {
   }, [phone, qq, trade1, trade2])
 
   const find = useCallback(async () => {
+    if (!checkQQ(qq)) {
+      Toast.show({
+        icon: 'fail',
+        content: 'QQ格式不正确',
+      })
+      return
+    }
+
     const { data } = await services.temp.temp_trade_20220108__find({
       qq,
     })
 
+    const count = data.resource.reduce((count, item) => count + item.amount, 0)
+
     Toast.show({
       icon: 'success',
-      content: `该账号下，有${data.resource.length}笔订单，金额共${data.resource.reduce(
-        (count, item) => count + item.amount,
-        0
-      )}元。`,
+      content: `该账号下，有${data.resource.length}笔订单，金额共${count}元。`,
     })
   }, [qq])
 

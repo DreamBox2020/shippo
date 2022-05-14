@@ -2,23 +2,22 @@ import { useMount } from 'ahooks'
 import { Toast } from 'antd-mobile'
 import { AxiosResponse } from 'axios'
 import React, { lazy } from 'react'
-import { useLocation } from 'react-router'
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom'
+import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom'
 import { withFetchLoading, withLoading } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
-import { IResponseResource } from '@shippo/sdk-services/types/passport'
+// import { IResponseResource } from '@shippo/sdk-services/types/passport'
 import { Setting } from '~/layouts/setting'
 import { TempLayout } from '~/layouts/temp'
 
 export interface RootRouteProps {
-  result: AxiosResponse<ResponsePack<IResponseResource>>[]
+  result: AxiosResponse<ResponsePack<any>>[]
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const location = useLocation()
 
   useMount(() => {
@@ -31,7 +30,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         content: `已经登录，UID为${resource.uid}`,
       })
       if (location.pathname.startsWith('/passport')) {
-        history.push('/')
+        history('/')
       }
     } else {
       Toast.show({
@@ -40,25 +39,24 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
       })
 
       if (!location.pathname.startsWith('/temp')) {
-        history.push('/passport')
+        history('/passport')
       }
     }
   })
 
   return (
-    <Switch>
-      <Route exact path="/" component={() => <Redirect to="/home" />}></Route>
-      <Route exact path="/passport" component={Passport}></Route>
-      <Route exact path="/home" component={Home}></Route>
-      <Route exact path="/discover" component={Home}></Route>
-      <Route exact path="/my" component={Home}></Route>
-      <Route exact path="/setting" component={Setting}></Route>
+    <Routes>
+      <Route path="/" element={<Navigate to="/home" replace />}></Route>
+      <Route path="/passport" element={<Passport />}></Route>
+      <Route path="/setting/*" element={<Setting />}></Route>
       <Route
         path="/space/:uid"
-        component={withLoading(lazy(() => import('~/layouts/space')))}
+        element={withLoading(lazy(() => import('~/layouts/space')))}
       ></Route>
-      <Route path="/temp" component={TempLayout}></Route>
-    </Switch>
+      <Route path="/temp" element={<TempLayout />}></Route>
+      <Route path="/*" element={<Home />}></Route>
+      <Route path="/aa" element={<Home />}></Route>
+    </Routes>
   )
 }
 

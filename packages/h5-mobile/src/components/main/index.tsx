@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
 
 const StyledMain = styled.main`
@@ -10,7 +10,7 @@ const StyledMain = styled.main`
   height: 100%;
 `
 
-export const Main: React.FC = (props) => {
+export const Main: React.FC<PropsWithChildren<{}>> = (props) => {
   return <StyledMain>{props.children}</StyledMain>
 }
 
