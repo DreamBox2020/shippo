@@ -11,6 +11,8 @@ import {
 import { useState } from 'react'
 import type { MenuClickEventHandler } from 'rc-menu/es/interface'
 
+import avatar from '~/assets/avatar.png'
+
 const { Header, Footer, Content, Sider } = Layout
 const { SubMenu } = Menu
 const { Search } = Input
@@ -50,10 +52,7 @@ export const ReadLayout: React.FC = () => {
               mode="horizontal"
               style={{ borderBottom: '1px solid #fff' }}
             >
-              <Menu.Item
-                key="index"
-                icon={<img width="40px" src={require('~/assets/avatar.png').default} alt="" />}
-              >
+              <Menu.Item key="index" icon={<img width="40px" src={avatar} alt="" />}>
                 Shippo
               </Menu.Item>
               <Menu.Item key="app1">导航1</Menu.Item>

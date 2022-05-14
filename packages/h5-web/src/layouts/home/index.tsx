@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { Dropdown } from 'antd'
 
+import avatar from '~/assets/avatar.png'
+
 const { Header, Footer, Sider, Content } = Layout
 
 const StyledLogo = styled.div`
@@ -56,14 +58,12 @@ const tabBarItems: Array<tabBarItem> = [
   {
     key: 'dashboard',
     path: '/dashboard',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/dashboard'))),
+    element: withLoading(lazy(() => import('~/pages/dashboard'))),
   },
   {
     key: 'users',
     path: '/users',
-    exact: true,
-    component: withLoading(lazy(() => import('~/pages/users'))),
+    element: withLoading(lazy(() => import('~/pages/users'))),
   },
 ]
 
@@ -95,7 +95,7 @@ export const Home = () => {
             padding: collapsed ? '16px 8px' : '16px',
           }}
         >
-          <img src={require('~/assets/avatar.png').default} alt="" />
+          <img src={avatar} alt="" />
           {collapsed ? null : <h1>Shippo Admin</h1>}
         </StyledLogo>
         <div

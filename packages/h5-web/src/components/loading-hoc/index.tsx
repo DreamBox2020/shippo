@@ -13,12 +13,14 @@ export const Loading: React.FC = () => {
   return <StyledSpin size="large" />
 }
 
-export const withLoading = (CurrentComponent: React.ComponentType) => () =>
-  (
+export const withLoading = (CurrentComponent: React.ComponentType) => {
+  const Component = () => (
     <Suspense fallback={<Loading />}>
       <CurrentComponent />
     </Suspense>
   )
+  return <Component />
+}
 
 export const withFetchLoading =
   (CurrentComponent: React.ComponentType<any>, requests: () => Promise<any>[]) => () => {
