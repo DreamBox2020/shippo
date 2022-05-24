@@ -1,9 +1,14 @@
 {
   "name": "shippo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "wxamp-comments/**"
+    ]
+  },
   "scripts": {
     "lerna": "lerna"
   },
