@@ -53,19 +53,39 @@ export const Page_passport = () => {
       return
     }
 
-    const { data } = await services.user.login({
-      phone,
-      code,
-    })
-    window.localStorage.setItem('__PASSPORT', data.resource.passport)
-    history('/')
+    try {
+      const { data } = await services.user.login({
+        phone,
+        code,
+      })
+      window.localStorage.setItem('__PASSPORT', data.resource.passport)
+      history('/')
+    } catch (error: any) {
+      console.error(error)
+      Toast.show({
+        icon: 'fail',
+        content: error.data.message,
+      })
+    }
   }
 
   const handleSmsSend = () => {
     console.log('handleSmsSend', { phone })
 
+    const timeout = Number(window.localStorage.getItem('captcha_timeout'))
+    const now = new Date().getTime()
+    console.log({ timeout, now })
+    if (now - timeout < 6000 * 3) {
+      Toast.show({
+        icon: 'fail',
+        content: '点的太快了，请过三分钟再尝试。',
+      })
+      return
+    }
+
     // 如果是qq邮箱
     if (checkQQEmail(phone)) {
+      window.localStorage.setItem('captcha_timeout', String(new Date().getTime()))
       services.captcha.send({ email: phone })
     } else {
       if (!checkPhone(phone)) {
@@ -75,7 +95,17 @@ export const Page_passport = () => {
         })
         return
       }
-      services.captcha.send({ phone })
+      try {
+        window.localStorage.setItem('captcha_timeout', String(new Date().getTime()))
+        services.captcha.send({ phone })
+      } catch (error: any) {
+        console.error(error)
+        Toast.show({
+          icon: 'fail',
+          content: error.data.message,
+        })
+        return
+      }
     }
 
     Toast.show({
@@ -116,7 +146,7 @@ export const Page_passport = () => {
               placeholder="请输入验证码"
               clearable
               value={code}
-              onChange={(value) => setCode(value)}
+              onChange={(value) => setCode(value.substring(0, 6))}
             />
           </List.Item>
           <List.Item
