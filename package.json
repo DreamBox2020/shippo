@@ -9,10 +9,5 @@
       "wxamp-comments/**"
     ]
   },
-  "scripts": {
-    "lerna": "lerna"
-  },
-  "devDependencies": {
-    "lerna": "^4.0.0"
-  }
+  "scripts": {}
 }
