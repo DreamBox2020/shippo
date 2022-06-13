@@ -1,4 +1,5 @@
 import { List, Image, Button } from 'antd-mobile'
+import { useNavigate } from 'react-router'
 import avatar from '~/assets/avatar.png'
 import Container from '~/components/container'
 import Header from '~/components/header'
@@ -6,6 +7,7 @@ import Main from '~/components/main'
 import { StyledList } from '.'
 
 export const WxManagePage = () => {
+  const navigate = useNavigate()
   const users = [
     {
       id: '1',
@@ -84,7 +86,7 @@ export const WxManagePage = () => {
       </Header>
       <Main>
         <div style={{ padding: '20px 10px 10px 10px' }}>
-          <Button block color="primary" size="middle">
+          <Button block color="primary" size="middle" onClick={() => navigate('/wx/edit')}>
             发表
           </Button>
         </div>

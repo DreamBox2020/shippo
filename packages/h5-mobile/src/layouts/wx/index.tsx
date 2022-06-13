@@ -34,7 +34,15 @@ export const WxLayout = () => {
   const userInfo = useSelector(userSelector.infoGetter())
   const history = useNavigate()
   const location = useLocation()
-  const { pathname } = location
+
+  console.log(location)
+
+  const pathname = useMemo(() => {
+    if (location.pathname.endsWith('/')) {
+      return location.pathname.substring(0, location.pathname.length - 1)
+    }
+    return location.pathname
+  }, [location.pathname])
 
   const hasPermission = useCallback(
     (accessRule: string) => {
@@ -60,7 +68,13 @@ export const WxLayout = () => {
       <Main>
         <Outlet />
       </Main>
-      <Footer height={50 + safeAreaHeight + 'px'} style={{ backgroundColor: '#fff' }}>
+      <Footer
+        height={50 + safeAreaHeight + 'px'}
+        style={{
+          backgroundColor: '#fff',
+          display: tabs.some((tab) => tab.key === pathname) ? 'block' : 'none',
+        }}
+      >
         <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
           {tabs.map((item) =>
             hasPermission(item.key) ? (

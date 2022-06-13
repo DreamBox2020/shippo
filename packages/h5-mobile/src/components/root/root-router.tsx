@@ -107,6 +107,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         <Route path="" element={withLoading(lazy(() => import('~/pages/wx')))}></Route>
         <Route path="my" element={withLoading(lazy(() => import('~/pages/wx/my')))}></Route>
         <Route path="manage" element={withLoading(lazy(() => import('~/pages/wx/manage')))}></Route>
+        <Route path="edit" element={withLoading(lazy(() => import('~/pages/wx/edit')))}></Route>
       </Route>
       <Route path="*" element={<Navigate to={IS_MINIPROGRAM ? '/wx' : '/home'} replace />}></Route>
     </Routes>
