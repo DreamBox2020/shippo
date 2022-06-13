@@ -1,11 +1,15 @@
+const env = require('./env.development.json')
+
+console.log(env)
+
 module.exports = {
   env: {
-    NODE_ENV: '"development"'
+    NODE_ENV: '"development"',
+    ...env
   },
   defineConstants: {},
   mini: {},
   h5: {
-    esnextModules: ['taro-ui'],
     devServer: {
       proxy: {
         '/v1': {

@@ -1,12 +1,28 @@
-import React from 'react'
-import { View, Text, Button } from '@tarojs/components'
+import React, { useEffect, useState } from 'react'
+import Taro from '@tarojs/taro'
+import { View, WebView } from '@tarojs/components'
 
 const Index: React.FC = () => {
-  return (
-    <View>
-      <Text>Text</Text>
-      <Button>Button</Button>
-    </View>
+  const [wxCode, setWxCode] = useState('')
+
+  useEffect(() => {
+    Taro.login().then(result => {
+      console.log(result)
+      setWxCode(result.code)
+    })
+  }, [])
+
+  return wxCode ? (
+    <WebView
+      src={
+        'http://localhost:3000/?t=' +
+        new Date().getTime() +
+        '#?wxCode=' +
+        wxCode
+      }
+    />
+  ) : (
+    <View>loading....</View>
   )
 }
 
