@@ -1,3 +1,4 @@
+import { HttpRequestConfig } from '@shippo/sdk-utils';
 import * as passport from './passport';
 import * as user from './user';
 import * as temp from './temp';
@@ -16,5 +17,5 @@ export declare const services: {
     role: typeof role;
     permissionPolicy: typeof permissionPolicy;
     permissionAccess: typeof permissionAccess;
-    use: (config?: import("axios").AxiosRequestConfig | undefined) => void;
+    use: (config?: HttpRequestConfig) => void;
 };

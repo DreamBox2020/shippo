@@ -8,11 +8,11 @@ var request = new Request({
   }
 });
 
-var create$3 = function create() {
+var create$3 = function create(data) {
   return request.request({
     url: '/passport/create',
     method: 'POST',
-    data: {}
+    data: data
   });
 };
 
@@ -26,6 +26,14 @@ var login = function login(data) {
     url: '/user/login',
     method: 'POST',
     data: data
+  });
+};
+
+var logout = function logout() {
+  return request.request({
+    url: '/user/logout',
+    method: 'POST',
+    data: {}
   });
 };
 
@@ -48,6 +56,7 @@ var update_user_role = function update_user_role(data) {
 var user = /*#__PURE__*/Object.freeze({
 __proto__: null,
 login: login,
+logout: logout,
 find_all: find_all$3,
 update_user_role: update_user_role
 });

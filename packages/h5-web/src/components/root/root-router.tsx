@@ -52,6 +52,6 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
   )
 }
 
-export const RootRoute = withFetchLoading(Component, () => [services.passport.create()])
+export const RootRoute = withFetchLoading(Component, () => [services.passport.create({})])
 
 export default RootRoute

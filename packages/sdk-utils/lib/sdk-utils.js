@@ -136,6 +136,41 @@ var checkQQEmail = function checkQQEmail(email) {
   return /^[1-9][0-9]{4,9}@qq\.com$/.test(email);
 };
 
+/**
+ * 判断是否拥有权限
+ * @param to 要访问的地址
+ * @returns
+ */
+var hasAccess = function hasAccess(to) {
+  if (!to) return false; // 前端页面
+
+  if (to[0] === ':') ;
+
+  return true;
+};
+function keyMatch2(key1, key2) {
+  key2 = key2.replace(/\/\*/g, '/.*');
+  var regexp = new RegExp(/(.*):[^/]+(.*)/g);
+
+  for (;;) {
+    if (!key2.includes('/:')) {
+      break;
+    }
+
+    key2 = key2.replace(regexp, '$1[^/]+$2');
+  }
+
+  if (key2 === '*') {
+    key2 = '(.*)';
+  }
+
+  return regexMatch(key1, '^' + key2 + '$');
+}
+
+function regexMatch(key1, key2) {
+  return new RegExp(key2).test(key1);
+}
+
 var formatTimeStr = function formatTimeStr(t) {
   return moment__default["default"](t).format('YYYY-MM-DD HH:mm:ss');
 };
@@ -146,3 +181,5 @@ exports.checkQQ = checkQQ;
 exports.checkQQEmail = checkQQEmail;
 exports.checkSmsCode = checkSmsCode;
 exports.formatTimeStr = formatTimeStr;
+exports.hasAccess = hasAccess;
+exports.keyMatch2 = keyMatch2;

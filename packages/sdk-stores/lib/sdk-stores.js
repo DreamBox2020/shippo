@@ -10,11 +10,14 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var thunkMiddleware__default = /*#__PURE__*/_interopDefaultLegacy(thunkMiddleware);
 
-var userReducer = reactStore.createReducer('user', {
-  info: {
+var createDefaultInfo = function createDefaultInfo() {
+  return {
     uid: 0,
     access: []
-  }
+  };
+};
+var userReducer = reactStore.createReducer('user', {
+  info: createDefaultInfo()
 });
 
 var action = reactStore.createAction('user');

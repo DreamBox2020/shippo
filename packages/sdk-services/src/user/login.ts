@@ -1,3 +1,4 @@
+import { IPermissionAccess } from '../types'
 import { request, ResponsePack } from '../helpers'
 
 interface IRequestResource {
@@ -9,6 +10,7 @@ interface IRequestResource {
 interface IResponseResource {
   passport: string
   uid: number
+  access: IPermissionAccess[]
 }
 
 export const login = (data: IRequestResource) =>

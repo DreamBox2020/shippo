@@ -1,4 +1,8 @@
 import { IPermissionAccess } from '@shippo/sdk-services';
+export declare const createDefaultInfo: () => {
+    uid: number;
+    access: never[];
+};
 export interface IUserStore {
     info: {
         uid: number;

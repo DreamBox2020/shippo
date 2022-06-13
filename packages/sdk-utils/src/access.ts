@@ -13,7 +13,7 @@ export const hasAccess = (to: string): boolean => {
   return true
 }
 
-function keyMatch2(key1: string, key2: string): boolean {
+export function keyMatch2(key1: string, key2: string): boolean {
   key2 = key2.replace(/\/\*/g, '/.*')
 
   const regexp = new RegExp(/(.*):[^/]+(.*)/g)

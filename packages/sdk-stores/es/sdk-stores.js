@@ -2,11 +2,14 @@ import { combineReducers, createStore as createStore$1, applyMiddleware } from '
 import thunkMiddleware from 'redux-thunk';
 import { createReducer, createAction, createAsyncAction } from '@kazura/react-store';
 
-var userReducer = createReducer('user', {
-  info: {
+var createDefaultInfo = function createDefaultInfo() {
+  return {
     uid: 0,
     access: []
-  }
+  };
+};
+var userReducer = createReducer('user', {
+  info: createDefaultInfo()
 });
 
 var action = createAction('user');

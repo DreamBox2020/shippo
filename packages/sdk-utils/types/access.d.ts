@@ -4,3 +4,4 @@
  * @returns
  */
 export declare const hasAccess: (to: string) => boolean;
+export declare function keyMatch2(key1: string, key2: string): boolean;
