@@ -137,17 +137,23 @@ var checkQQEmail = function checkQQEmail(email) {
 };
 
 /**
- * 判断是否拥有权限
- * @param to 要访问的地址
+ * 判断是否含有该权限
+ * @param rule 权限规则
+ * @param access 权限列表
  * @returns
  */
-var hasAccess = function hasAccess(to) {
-  if (!to) return false; // 前端页面
-
-  if (to[0] === ':') ;
-
-  return true;
+var hasAccess = function hasAccess(rule, access) {
+  var key1 = rule.toLowerCase();
+  console.log('hasAccess->key1:', key1);
+  return access.some(function (acc) {
+    var key2 = acc.toLowerCase();
+    console.log('hasAccess->key2:', key2);
+    var tag = keyMatch2(key1, key2);
+    console.log('hasAccess->tag:', tag);
+    return tag;
+  });
 };
+
 function keyMatch2(key1, key2) {
   key2 = key2.replace(/\/\*/g, '/.*');
   var regexp = new RegExp(/(.*):[^/]+(.*)/g);
@@ -182,4 +188,3 @@ exports.checkQQEmail = checkQQEmail;
 exports.checkSmsCode = checkSmsCode;
 exports.formatTimeStr = formatTimeStr;
 exports.hasAccess = hasAccess;
-exports.keyMatch2 = keyMatch2;

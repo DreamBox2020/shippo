@@ -1,10 +1,9 @@
 import { ReactElement, useEffect, useMemo } from 'react'
-import { Navigate, useNavigate } from 'react-router'
-import { keyMatch2 } from '@shippo/sdk-utils'
+import { useNavigate } from 'react-router'
+import { hasAccess } from '@shippo/sdk-utils'
 import { useSelector } from 'react-redux'
 import { userSelector } from '@shippo/sdk-stores'
 import { Toast } from 'antd-mobile'
-import { useMount } from 'ahooks'
 
 export interface PermissionProps {
   accessRule: string
@@ -15,22 +14,15 @@ export const Permission: React.FC<PermissionProps> = (props) => {
   const userInfo = useSelector(userSelector.infoGetter())
   const history = useNavigate()
 
-  const hasAccess = useMemo(() => {
-    const key1 = `sys_mobile:${props.accessRule}`
-    console.log('hasAccess->access:', userInfo.access)
-    console.log('hasAccess->key1:', key1)
-    return userInfo.access
-      .filter((item) => item.accessType === 'resource')
-      .some((item) => {
-        console.log('hasAccess->key2:', item.accessRule)
-        const tag = keyMatch2(key1.toLowerCase(), item.accessRule.toLowerCase())
-        console.log('hasAccess->tag:', tag)
-        return tag
-      })
+  const hasPermission = useMemo(() => {
+    return hasAccess(
+      `sys_mobile:${props.accessRule}`,
+      userInfo.access.filter((i) => i.accessType === 'resource').map((i) => i.accessRule)
+    )
   }, [userInfo.access, props.accessRule])
 
   useEffect(() => {
-    if (!hasAccess) {
+    if (!hasPermission) {
       if (userInfo.uid > 0) {
         Toast.show({
           icon: 'fail',
@@ -45,9 +37,9 @@ export const Permission: React.FC<PermissionProps> = (props) => {
         history('/passport', { replace: true })
       }
     }
-  }, [userInfo.uid, hasAccess, history])
+  }, [userInfo.uid, hasPermission, history])
 
-  if (hasAccess) {
+  if (hasPermission) {
     return props.children
   }
   return null

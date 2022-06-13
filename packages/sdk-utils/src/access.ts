@@ -1,19 +1,22 @@
 /**
- * 判断是否拥有权限
- * @param to 要访问的地址
+ * 判断是否含有该权限
+ * @param rule 权限规则
+ * @param access 权限列表
  * @returns
  */
-export const hasAccess = (to: string): boolean => {
-  if (!to) return false
-
-  // 前端页面
-  if (to[0] === ':') {
-  }
-
-  return true
+export const hasAccess = (rule: string, access: string[]): boolean => {
+  const key1 = rule.toLowerCase()
+  console.log('hasAccess->key1:', key1)
+  return access.some((acc) => {
+    const key2 = acc.toLowerCase()
+    console.log('hasAccess->key2:', key2)
+    const tag = keyMatch2(key1, key2)
+    console.log('hasAccess->tag:', tag)
+    return tag
+  })
 }
 
-export function keyMatch2(key1: string, key2: string): boolean {
+function keyMatch2(key1: string, key2: string): boolean {
   key2 = key2.replace(/\/\*/g, '/.*')
 
   const regexp = new RegExp(/(.*):[^/]+(.*)/g)

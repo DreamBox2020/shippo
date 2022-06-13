@@ -5,7 +5,7 @@ import Footer from '~/components/footer'
 import Main from '~/components/main'
 import { MessageOutline, UnorderedListOutline, UserOutline } from 'antd-mobile-icons'
 import { useCallback, useMemo } from 'react'
-import { keyMatch2 } from '@shippo/sdk-utils'
+import { hasAccess } from '@shippo/sdk-utils'
 import { userSelector } from '@shippo/sdk-stores'
 import { useSelector } from 'react-redux'
 
@@ -36,19 +36,12 @@ export const WxLayout = () => {
   const location = useLocation()
   const { pathname } = location
 
-  const hasAccess = useCallback(
+  const hasPermission = useCallback(
     (accessRule: string) => {
-      const key1 = `sys_mobile:${accessRule}`
-      console.log('hasAccess->access:', userInfo.access)
-      console.log('hasAccess->key1:', key1)
-      return userInfo.access
-        .filter((item) => item.accessType === 'resource')
-        .some((item) => {
-          console.log('hasAccess->key2:', item.accessRule)
-          const tag = keyMatch2(key1.toLowerCase(), item.accessRule.toLowerCase())
-          console.log('hasAccess->tag:', tag)
-          return tag
-        })
+      return hasAccess(
+        `sys_mobile:${accessRule}`,
+        userInfo.access.filter((i) => i.accessType === 'resource').map((i) => i.accessRule)
+      )
     },
     [userInfo.access]
   )
@@ -70,7 +63,7 @@ export const WxLayout = () => {
       <Footer height={50 + safeAreaHeight + 'px'} style={{ backgroundColor: '#fff' }}>
         <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
           {tabs.map((item) =>
-            hasAccess(item.key) ? (
+            hasPermission(item.key) ? (
               <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
             ) : null
           )}
