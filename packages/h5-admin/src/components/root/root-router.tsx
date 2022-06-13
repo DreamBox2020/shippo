@@ -44,6 +44,12 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
 
   return (
     <Routes>
+      <Route path="/devtools/*" element={<Home />}>
+        <Route
+          path="apitest"
+          element={withLoading(lazy(() => import('~/pages/devtools/apitest')))}
+        ></Route>
+      </Route>
       <Route path="/passport" element={<Passport />}>
         <Route path="" element={<Page_passport />}></Route>
       </Route>
@@ -79,6 +85,6 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
   )
 }
 
-export const RootRoute = withFetchLoading(Component, () => [services.passport.create()])
+export const RootRoute = withFetchLoading(Component, () => [services.passport.create({})])
 
 export default RootRoute

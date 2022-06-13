@@ -113,6 +113,9 @@ export const Home = () => {
               <Menu.Item key="/permission/policy">权限策略设置</Menu.Item>
               <Menu.Item key="/permission/access">访问规则设置</Menu.Item>
             </SubMenu>
+            <SubMenu key="/devtools" icon={<UserOutlined />} title="开发工具">
+              <Menu.Item key="/devtools/apitest">接口测试</Menu.Item>
+            </SubMenu>
             <Menu.Item key="4" icon={<UserOutlined />}>
               个人设置
             </Menu.Item>
