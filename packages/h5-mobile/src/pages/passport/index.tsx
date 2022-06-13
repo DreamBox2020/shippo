@@ -8,6 +8,9 @@ import Header from '~/components/header'
 import Main from '~/components/main'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { userAction, userSelector } from '@shippo/sdk-stores'
+import { useMount } from 'ahooks'
 
 const StyledList = styled(List)`
   > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
@@ -16,7 +19,10 @@ const StyledList = styled(List)`
 `
 
 export const Page_passport = () => {
+  const userInfo = useSelector(userSelector.infoGetter())
+
   const history = useNavigate()
+  const dispatch = useDispatch()
 
   const [_phone, setPhone] = useState('')
   const [code, setCode] = useState('')
@@ -41,7 +47,10 @@ export const Page_passport = () => {
         code,
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
-      history('/')
+      window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
+      dispatch(userAction.userUpdateInfo(data.resource))
+      history('/', { replace: true })
+      console.log('jump')
       return
     }
 
@@ -59,7 +68,10 @@ export const Page_passport = () => {
         code,
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
-      history('/')
+      window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
+      dispatch(userAction.userUpdateInfo(data.resource))
+      history('/', { replace: true })
+      console.log('jump')
     } catch (error: any) {
       console.error(error)
       Toast.show({
@@ -113,6 +125,12 @@ export const Page_passport = () => {
       content: '验证码已经发送',
     })
   }
+
+  useMount(() => {
+    if (userInfo.uid > 0) {
+      history('/', { replace: true })
+    }
+  })
 
   return (
     <Container direction="vertical">

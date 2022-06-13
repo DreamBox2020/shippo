@@ -6,9 +6,13 @@ import { Main } from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
 import { BellOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { userAction } from '@shippo/sdk-stores'
+import { services } from '@shippo/sdk-services'
 
 export const Page_setting = () => {
   const history = useNavigate()
+  const dispatch = useDispatch()
 
   return (
     <Container direction="vertical">
@@ -35,8 +39,12 @@ export const Page_setting = () => {
           size="large"
           style={{ '--border-radius': '0px' }}
           onClick={() => {
-            localStorage.removeItem('__PASSPORT')
-            history('/')
+            services.user.logout().then(({ data }) => {
+              window.localStorage.setItem('__PASSPORT', data.resource.passport)
+              window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
+              dispatch(userAction.userUpdateInfo(data.resource))
+              console.log('jump')
+            })
           }}
         >
           退出登录
