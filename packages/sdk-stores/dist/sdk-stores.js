@@ -1,19 +1,14 @@
 (function (global, factory) {
-typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('redux'), require('redux-thunk'), require('@kazura/react-store')) :
-typeof define === 'function' && define.amd ? define(['exports', 'redux', 'redux-thunk', '@kazura/react-store'], factory) :
-(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.SdkStores = {}, global.redux, global.thunkMiddleware, global.reactStore));
-})(this, (function (exports, redux, thunkMiddleware, reactStore) { 'use strict';
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('redux'), require('redux-thunk'), require('@kazura/react-store'), require('@shippo/sdk-services')) :
+typeof define === 'function' && define.amd ? define(['exports', 'redux', 'redux-thunk', '@kazura/react-store', '@shippo/sdk-services'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.SdkStores = {}, global.redux, global.thunkMiddleware, global.reactStore, global.sdkServices));
+})(this, (function (exports, redux, thunkMiddleware, reactStore, sdkServices) { 'use strict';
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var thunkMiddleware__default = /*#__PURE__*/_interopDefaultLegacy(thunkMiddleware);
 
-var createDefaultInfo = function createDefaultInfo() {
-  return {
-    uid: 0,
-    access: []
-  };
-};
+var createDefaultInfo = sdkServices.__userInfo;
 var userReducer = reactStore.createReducer('user', {
   info: createDefaultInfo()
 });

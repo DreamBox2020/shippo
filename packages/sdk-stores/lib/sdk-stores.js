@@ -5,17 +5,13 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var redux = require('redux');
 var thunkMiddleware = require('redux-thunk');
 var reactStore = require('@kazura/react-store');
+var sdkServices = require('@shippo/sdk-services');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var thunkMiddleware__default = /*#__PURE__*/_interopDefaultLegacy(thunkMiddleware);
 
-var createDefaultInfo = function createDefaultInfo() {
-  return {
-    uid: 0,
-    access: []
-  };
-};
+var createDefaultInfo = sdkServices.__userInfo;
 var userReducer = reactStore.createReducer('user', {
   info: createDefaultInfo()
 });

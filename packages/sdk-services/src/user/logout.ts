@@ -1,11 +1,7 @@
-import { IPermissionAccess } from '../types'
+import { IUserInfo } from '../types'
 import { request, ResponsePack } from '../helpers'
 
-interface IResponseResource {
-  passport: string
-  uid: number
-  access: IPermissionAccess[]
-}
+interface IResponseResource extends IUserInfo {}
 
 export const logout = () =>
   request.request<ResponsePack<IResponseResource>>({

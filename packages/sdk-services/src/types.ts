@@ -52,6 +52,7 @@ export interface IUser {
   exp: number
   coin: number
   role: number
+  wxPassportId: number
 }
 
 export const __user = (): IUser => ({
@@ -64,6 +65,7 @@ export const __user = (): IUser => ({
   exp: 0,
   coin: 0,
   role: 0,
+  wxPassportId: 0,
 })
 
 export interface IPagination {
@@ -79,4 +81,73 @@ export interface IUserExtRoleName extends IUser {
 export const __userExtRoleName = (): IUserExtRoleName => ({
   ...__user(),
   roleName: '',
+})
+
+export interface IWxArticle {
+  id: number
+  createdAt: string
+  title: string
+  url: string
+  image1: string
+  image2: string
+  commentSwitch: number
+  offiaccountId: number
+  wxPassportId: number
+}
+
+export const __wxArticle = (): IWxArticle => ({
+  id: 0,
+  createdAt: '',
+  title: '',
+  url: '',
+  image1: '',
+  image2: '',
+  commentSwitch: 0,
+  offiaccountId: 0,
+  wxPassportId: 0,
+})
+
+export interface IWxArticleExtOffiaccountNickname extends IWxArticle {
+  offiaccountNickname: string
+}
+
+export const __wxArticleExtOffiaccountNickname = (): IWxArticleExtOffiaccountNickname => ({
+  ...__wxArticle(),
+  offiaccountNickname: '',
+})
+
+export interface IPassport {
+  id: number
+  createdAt: string
+  token: string
+  userId: number
+  ip: string
+  ua: string
+  client: number
+  wxPassportId: number
+}
+
+export const __passport = (): IPassport => ({
+  id: 0,
+  createdAt: '',
+  token: '',
+  userId: 0,
+  ip: '',
+  ua: '',
+  client: 0,
+  wxPassportId: 0,
+})
+
+export interface IUserInfo {
+  access: Array<IPermissionAccess>
+  user: IUser
+  passport: string
+  uid: number
+}
+
+export const __userInfo = (): IUserInfo => ({
+  access: [],
+  user: __user(),
+  passport: '',
+  uid: 0,
 })

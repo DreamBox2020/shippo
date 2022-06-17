@@ -1,12 +1,6 @@
-import { IPermissionAccess } from '@shippo/sdk-services';
-export declare const createDefaultInfo: () => {
-    uid: number;
-    access: never[];
-};
+import { IUserInfo } from '@shippo/sdk-services';
+export declare const createDefaultInfo: () => IUserInfo;
 export interface IUserStore {
-    info: {
-        uid: number;
-        access: IPermissionAccess[];
-    };
+    info: IUserInfo;
 }
 export declare const userReducer: (store: IUserStore | undefined, action: import("@kazura/react-store").StoreAction<IUserStore>) => IUserStore;

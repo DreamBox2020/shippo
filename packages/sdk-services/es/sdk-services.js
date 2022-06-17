@@ -8,7 +8,7 @@ var request = new Request({
   }
 });
 
-var create$3 = function create(data) {
+var create$4 = function create(data) {
   return request.request({
     url: '/passport/create',
     method: 'POST',
@@ -18,7 +18,7 @@ var create$3 = function create(data) {
 
 var passport = /*#__PURE__*/Object.freeze({
 __proto__: null,
-create: create$3
+create: create$4
 });
 
 var login = function login(data) {
@@ -125,7 +125,7 @@ var find_all$2 = function find_all() {
   });
 };
 
-var create$2 = function create(data) {
+var create$3 = function create(data) {
   return request.request({
     url: '/role/create',
     method: 'POST',
@@ -160,7 +160,7 @@ var update_policies = function update_policies(data) {
 var role = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all$2,
-create: create$2,
+create: create$3,
 update: update$2,
 del: del$2,
 update_policies: update_policies
@@ -173,7 +173,7 @@ var find_all$1 = function find_all() {
   });
 };
 
-var create$1 = function create(data) {
+var create$2 = function create(data) {
   return request.request({
     url: '/permissionPolicy/create',
     method: 'POST',
@@ -216,7 +216,7 @@ var update_access = function update_access(data) {
 var permissionPolicy = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all$1,
-create: create$1,
+create: create$2,
 update: update$1,
 del: del$1,
 find_all_ext_status: find_all_ext_status$1,
@@ -230,7 +230,7 @@ var find_all = function find_all() {
   });
 };
 
-var create = function create(data) {
+var create$1 = function create(data) {
   return request.request({
     url: '/permissionAccess/create',
     method: 'POST',
@@ -265,10 +265,41 @@ var find_all_ext_status = function find_all_ext_status(data) {
 var permissionAccess = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all,
-create: create,
+create: create$1,
 update: update,
 del: del,
 find_all_ext_status: find_all_ext_status
+});
+
+var create = function create(data) {
+  return request.request({
+    url: '/wxArticle/create',
+    method: 'POST',
+    data: data
+  });
+};
+
+var find = function find(data) {
+  return request.request({
+    url: '/wxArticle/find',
+    method: 'POST',
+    data: data
+  });
+};
+
+var find_all_by_wx_passport = function find_all_by_wx_passport() {
+  return request.request({
+    url: '/wxArticle/findAllByWxPassport',
+    method: 'POST',
+    data: {}
+  });
+};
+
+var wxArticle = /*#__PURE__*/Object.freeze({
+__proto__: null,
+create: create,
+find: find,
+find_all_by_wx_passport: find_all_by_wx_passport
 });
 
 /******************************************************************************
@@ -332,13 +363,52 @@ var __user = function __user() {
     avatar: '',
     exp: 0,
     coin: 0,
-    role: 0
+    role: 0,
+    wxPassportId: 0
   };
 };
 var __userExtRoleName = function __userExtRoleName() {
   return __assign(__assign({}, __user()), {
     roleName: ''
   });
+};
+var __wxArticle = function __wxArticle() {
+  return {
+    id: 0,
+    createdAt: '',
+    title: '',
+    url: '',
+    image1: '',
+    image2: '',
+    commentSwitch: 0,
+    offiaccountId: 0,
+    wxPassportId: 0
+  };
+};
+var __wxArticleExtOffiaccountNickname = function __wxArticleExtOffiaccountNickname() {
+  return __assign(__assign({}, __wxArticle()), {
+    offiaccountNickname: ''
+  });
+};
+var __passport = function __passport() {
+  return {
+    id: 0,
+    createdAt: '',
+    token: '',
+    userId: 0,
+    ip: '',
+    ua: '',
+    client: 0,
+    wxPassportId: 0
+  };
+};
+var __userInfo = function __userInfo() {
+  return {
+    access: [],
+    user: __user(),
+    passport: '',
+    uid: 0
+  };
 };
 
 var services = {
@@ -350,9 +420,10 @@ var services = {
   role: role,
   permissionPolicy: permissionPolicy,
   permissionAccess: permissionAccess,
+  wxArticle: wxArticle,
   use: function use(config) {
     request.http = request.create(config);
   }
 };
 
-export { __permissionAccess, __permissionPolicy, __role, __user, __userExtRoleName, services };
+export { __passport, __permissionAccess, __permissionPolicy, __role, __user, __userExtRoleName, __userInfo, __wxArticle, __wxArticleExtOffiaccountNickname, services };

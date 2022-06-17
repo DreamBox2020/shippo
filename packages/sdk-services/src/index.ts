@@ -8,8 +8,10 @@ import * as admin from './admin'
 import * as role from './role'
 import * as permissionPolicy from './permission_policy'
 import * as permissionAccess from './permission_access'
+import * as wxArticle from './wx_article'
 
 export * from './types'
+
 export const services = {
   passport,
   user,
@@ -19,6 +21,7 @@ export const services = {
   role,
   permissionPolicy,
   permissionAccess,
+  wxArticle,
   use: (config?: HttpRequestConfig) => {
     request.http = request.create(config)
   },

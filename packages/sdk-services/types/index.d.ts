@@ -7,6 +7,7 @@ import * as admin from './admin';
 import * as role from './role';
 import * as permissionPolicy from './permission_policy';
 import * as permissionAccess from './permission_access';
+import * as wxArticle from './wx_article';
 export * from './types';
 export declare const services: {
     passport: typeof passport;
@@ -17,5 +18,6 @@ export declare const services: {
     role: typeof role;
     permissionPolicy: typeof permissionPolicy;
     permissionAccess: typeof permissionAccess;
+    wxArticle: typeof wxArticle;
     use: (config?: HttpRequestConfig) => void;
 };
