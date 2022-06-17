@@ -9,6 +9,7 @@ services.use({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
 
 window.addEventListener('blur', () => {

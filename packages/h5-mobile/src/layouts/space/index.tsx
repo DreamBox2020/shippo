@@ -1,10 +1,14 @@
+import { userSelector } from '@shippo/sdk-stores'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
 
 export const Space = () => {
+  const userInfo = useSelector(userSelector.infoGetter())
+
   return (
     <Container direction="vertical">
       <Header
@@ -19,7 +23,9 @@ export const Space = () => {
         个人中心
       </Header>
       <WhiteSpace size={15} />
-      <Main></Main>
+      <Main>
+        <h1>UID:{userInfo.uid}</h1>
+      </Main>
     </Container>
   )
 }

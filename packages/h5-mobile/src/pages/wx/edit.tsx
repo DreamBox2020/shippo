@@ -1,25 +1,59 @@
-import { Button, Form, Input, List, Image, NavBar } from 'antd-mobile'
+import { Button, Form, Input, List, Image, NavBar, Toast } from 'antd-mobile'
 import { useLocation, useNavigate } from 'react-router'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import { useSearchParams } from 'react-router-dom'
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { WhiteSpace } from '~/components/white-space'
-import avatar from '~/assets/avatar.png'
 import { StyledList } from '.'
+import { services, __wxArticleExtOffiaccountNickname } from '@shippo/sdk-services'
+import { BASE_API } from '~/settings'
+
+const __defaultWxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname()
 
 export const WxEditPage = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const [searchParams] = useSearchParams()
+  const [url, setUrl] = useState('')
+  const [article, setArticle] = useState(__defaultWxArticleExtOffiaccountNickname)
 
-  const article = useMemo(() => {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const articleId = useMemo(() => {
     const str = searchParams.get('article_id') || ''
     const num = parseInt(str)
     return isNaN(num) ? 0 : num
   }, [searchParams])
+
+  const submit = useCallback(async () => {
+    if (!url) return
+
+    if (articleId) {
+    } else {
+      try {
+        const hr = await services.wxArticle.create({ url })
+        console.log(hr.data)
+        setUrl('')
+        searchParams.set('article_id', String(hr.data.resource.id))
+        setSearchParams(searchParams, { replace: true })
+      } catch (error: any) {
+        Toast.show({
+          icon: 'fail',
+          content: error.data.message,
+        })
+      }
+    }
+  }, [articleId, url, searchParams, setSearchParams])
+
+  useEffect(() => {
+    if (articleId) {
+      services.wxArticle.find({ id: articleId }).then((hr) => {
+        setArticle(hr.data.resource)
+      })
+    }
+  }, [articleId])
 
   return (
     <Container direction="vertical">
@@ -38,34 +72,49 @@ export const WxEditPage = () => {
         <div style={{ padding: '20px 10px 10px 10px' }}>
           <Form layout="vertical">
             <Form.Item label="文章链接">
-              <Input placeholder="请输入文章链接" clearable />
+              <Input
+                placeholder="请输入文章链接"
+                clearable
+                value={url}
+                onChange={(value) => setUrl(value)}
+              />
             </Form.Item>
           </Form>
 
           <WhiteSpace size={15} />
 
-          <Button block color="primary" size="middle">
-            {article ? '发表' : '创建草稿'}
+          <Button block color="primary" size="middle" onClick={submit}>
+            {articleId ? '发表' : '创建草稿'}
           </Button>
 
           <WhiteSpace size={15} />
-
-          <Form layout="vertical">
-            <Form.Item label="小程序路径">
-              <Input value="/pages/index?article_id=123456" />
-            </Form.Item>
-          </Form>
+          {article.id ? (
+            <Form layout="vertical">
+              <Form.Item label="小程序路径">
+                <Input value={'/pages/index?article_id=' + article.id} />
+              </Form.Item>
+            </Form>
+          ) : null}
         </div>
 
-        <StyledList mode="card" header="预览">
-          <List.Item
-            clickable
-            extra={<Image src={avatar} fit="cover" width={141} height={60} />}
-            description="二次元趣闻 "
-          >
-            文章标题 文章标题 文章标题 文章标题 文章标题 文章标题
-          </List.Item>
-        </StyledList>
+        {article.id ? (
+          <StyledList mode="card" header="预览">
+            <List.Item
+              clickable
+              extra={
+                <Image
+                  src={BASE_API + '/file' + article.image2}
+                  fit="cover"
+                  width={141}
+                  height={60}
+                />
+              }
+              description={article.offiaccountNickname}
+            >
+              {article.title}
+            </List.Item>
+          </StyledList>
+        ) : null}
       </Main>
     </Container>
   )

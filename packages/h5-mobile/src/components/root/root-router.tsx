@@ -6,7 +6,7 @@ import Loading, { withFetchLoading, withLoading } from '~/components/loading-hoc
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
-import { services } from '@shippo/sdk-services'
+import { IUserInfo, services } from '@shippo/sdk-services'
 import { Setting } from '~/layouts/setting'
 import { TempLayout } from '~/layouts/temp'
 import { Page_passport } from '~/pages/passport'
@@ -19,7 +19,7 @@ import { Permission } from '../permission'
 import WxLayout from '~/layouts/wx'
 
 export interface RootRouteProps {
-  result: AxiosResponse<ResponsePack<any>>[]
+  result: AxiosResponse<ResponsePack<IUserInfo>>[]
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
@@ -104,10 +104,46 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
       </Route>
 
       <Route path="/wx" element={<WxLayout />}>
-        <Route path="" element={withLoading(lazy(() => import('~/pages/wx')))}></Route>
-        <Route path="my" element={withLoading(lazy(() => import('~/pages/wx/my')))}></Route>
-        <Route path="manage" element={withLoading(lazy(() => import('~/pages/wx/manage')))}></Route>
-        <Route path="edit" element={withLoading(lazy(() => import('~/pages/wx/edit')))}></Route>
+        <Route
+          path=""
+          element={
+            <Permission accessRule="/wx">
+              {withLoading(lazy(() => import('~/pages/wx')))}
+            </Permission>
+          }
+        ></Route>
+        <Route
+          path="my"
+          element={
+            <Permission accessRule="/wx/my">
+              {withLoading(lazy(() => import('~/pages/wx/my')))}
+            </Permission>
+          }
+        ></Route>
+        <Route
+          path="manage"
+          element={
+            <Permission accessRule="/wx/manage">
+              {withLoading(lazy(() => import('~/pages/wx/manage')))}
+            </Permission>
+          }
+        ></Route>
+        <Route
+          path="edit"
+          element={
+            <Permission accessRule="/wx/edit">
+              {withLoading(lazy(() => import('~/pages/wx/edit')))}
+            </Permission>
+          }
+        ></Route>
+        <Route
+          path="article/:id"
+          element={
+            <Permission accessRule="/wx/edit">
+              {withLoading(lazy(() => import('~/pages/wx/article')))}
+            </Permission>
+          }
+        ></Route>
       </Route>
       <Route path="*" element={<Navigate to={IS_MINIPROGRAM ? '/wx' : '/home'} replace />}></Route>
     </Routes>

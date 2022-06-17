@@ -1,75 +1,32 @@
+import { IWxArticleExtOffiaccountNickname, services } from '@shippo/sdk-services'
+import { formatTimeStr } from '@shippo/sdk-utils'
 import { List, Image, Button } from 'antd-mobile'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
-import avatar from '~/assets/avatar.png'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
+import { BASE_API } from '~/settings'
 import { StyledList } from '.'
 
 export const WxManagePage = () => {
   const navigate = useNavigate()
-  const users = [
-    {
-      id: '1',
-      avatar: avatar,
-      name: '文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '2',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '3',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '4',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '5',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '6',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '7',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '8',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '9',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-    {
-      id: '10',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻    2022/06/13 12:00',
-    },
-  ]
+
+  const [articleAll, setArticleAll] = useState<IWxArticleExtOffiaccountNickname[]>([])
+
+  const articles = useMemo(() => {
+    return articleAll.filter((v) => v.url)
+  }, [articleAll])
+
+  const tempArticles = useMemo(() => {
+    return articleAll.filter((v) => !v.url)
+  }, [articleAll])
+
+  useEffect(() => {
+    services.wxArticle.find_all_by_wx_passport().then((hr) => {
+      setArticleAll(hr.data.resource)
+    })
+  }, [])
 
   return (
     <Container direction="vertical">
@@ -92,22 +49,34 @@ export const WxManagePage = () => {
         </div>
 
         <List mode="card" header="草稿">
-          {users.slice(5).map((user) => (
-            <List.Item key={user.id} clickable description={user.description}>
-              {user.name}
+          {tempArticles.map((v) => (
+            <List.Item
+              key={v.id}
+              clickable
+              description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
+              onClick={() => {
+                navigate('/wx/edit?article_id=' + v.id)
+              }}
+            >
+              {v.title}
             </List.Item>
           ))}
         </List>
 
         <StyledList mode="card" header="已发表内容">
-          {users.map((user) => (
+          {articles.map((v) => (
             <List.Item
-              key={user.id}
+              key={v.id}
               clickable
-              extra={<Image src={user.avatar} fit="cover" width={141} height={60} />}
-              description={user.description}
+              extra={
+                <Image src={BASE_API + '/file' + v.image2} fit="cover" width={141} height={60} />
+              }
+              description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
+              onClick={() => {
+                navigate('/wx/article/' + v.id + '?channel=manage')
+              }}
             >
-              {user.name}
+              {v.title}
             </List.Item>
           ))}
         </StyledList>

@@ -5,6 +5,8 @@ import { List, Image } from 'antd-mobile'
 import { Level } from '~/components/level'
 
 import avatar from '~/assets/avatar.png'
+import { userSelector } from '@shippo/sdk-stores'
+import { useSelector } from 'react-redux'
 
 const StyledInfoBlock = styled.span`
   font-size: 12px;
@@ -14,6 +16,7 @@ const StyledInfoBlock = styled.span`
 
 export const UserInfoCard = () => {
   const history = useNavigate()
+  const userInfo = useSelector(userSelector.infoGetter())
 
   return (
     <List>
@@ -29,13 +32,14 @@ export const UserInfoCard = () => {
         }
         description={
           <p>
-            <StyledInfoBlock>经验：99999</StyledInfoBlock>
-            <StyledInfoBlock>积分：99999</StyledInfoBlock>
+            <StyledInfoBlock>经验：{userInfo.user.exp}</StyledInfoBlock>
+            <StyledInfoBlock>积分：{userInfo.user.coin}</StyledInfoBlock>
           </p>
         }
-        onClick={() => history('/space/100000')}
+        onClick={() => history('/space/' + userInfo.uid)}
       >
-        内测账号001<Level>9</Level>
+        {userInfo.user.nickname || '暂无昵称'}
+        <Level>1</Level>
       </List.Item>
     </List>
   )

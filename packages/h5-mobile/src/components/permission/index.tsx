@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { hasAccess } from '@shippo/sdk-utils'
 import { useSelector } from 'react-redux'
 import { userSelector } from '@shippo/sdk-stores'
@@ -13,6 +13,7 @@ export interface PermissionProps {
 export const Permission: React.FC<PermissionProps> = (props) => {
   const userInfo = useSelector(userSelector.infoGetter())
   const history = useNavigate()
+  const location = useLocation()
 
   const hasPermission = useMemo(() => {
     return hasAccess(
