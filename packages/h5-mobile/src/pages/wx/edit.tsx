@@ -7,7 +7,9 @@ import { useSearchParams } from 'react-router-dom'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { WhiteSpace } from '~/components/white-space'
 import { StyledList } from '.'
-import { services, __wxArticleExtOffiaccountNickname } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { __wxArticleExtOffiaccountNickname } from '@shippo/types'
+
 import { BASE_API } from '~/settings'
 
 const __defaultWxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname()

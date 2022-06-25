@@ -1,4 +1,6 @@
-import { IWxArticleExtOffiaccountNickname, services } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
+
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { List, Image, Button } from 'antd-mobile'
 import { useEffect, useMemo, useState } from 'react'

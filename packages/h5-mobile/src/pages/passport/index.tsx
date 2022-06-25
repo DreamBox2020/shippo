@@ -1,5 +1,5 @@
 import { Button, Input, List, Toast } from 'antd-mobile'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { COLOR_PINK } from '~/constants/color'
 import { services } from '@shippo/sdk-services'
 import { checkPhone, checkQQEmail, checkSmsCode } from '@shippo/sdk-utils'
@@ -10,7 +10,8 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { userAction, userSelector } from '@shippo/sdk-stores'
-import { useMount } from 'ahooks'
+import { useLockFn, useMount } from 'ahooks'
+import { useLimitLock } from '~/hooks/use-limit-lock'
 
 const StyledList = styled(List)`
   > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
@@ -29,7 +30,7 @@ export const Page_passport = () => {
 
   const phone = useMemo(() => _phone.replace(/\s/g, ''), [_phone])
 
-  const handleLogon = async () => {
+  const __handleLogon = useCallback(async () => {
     console.log('handleLogon', { phone, code })
 
     if (!checkSmsCode(code)) {
@@ -79,52 +80,51 @@ export const Page_passport = () => {
         content: error.data.message,
       })
     }
-  }
+  }, [code, dispatch, history, phone])
 
-  const handleSmsSend = () => {
+  const handleLogon = useLockFn(__handleLogon)
+
+  const __handleSmsSend = useCallback(() => {
     console.log('handleSmsSend', { phone })
 
-    const timeout = Number(window.localStorage.getItem('captcha_timeout'))
-    const now = new Date().getTime()
-    console.log({ timeout, now })
-    if (now - timeout < 6000 * 3) {
+    try {
+      // 如果是qq邮箱
+      if (checkQQEmail(phone)) {
+        services.captcha.send({ email: phone })
+      } else {
+        if (!checkPhone(phone)) {
+          Toast.show({
+            icon: 'fail',
+            content: '手机号格式错误',
+          })
+          return
+        }
+
+        services.captcha.send({ phone })
+      }
+    } catch (error: any) {
+      console.error(error)
       Toast.show({
         icon: 'fail',
-        content: '点的太快了，请过三分钟再尝试。',
+        content: error.data.message,
       })
       return
-    }
-
-    // 如果是qq邮箱
-    if (checkQQEmail(phone)) {
-      window.localStorage.setItem('captcha_timeout', String(new Date().getTime()))
-      services.captcha.send({ email: phone })
-    } else {
-      if (!checkPhone(phone)) {
-        Toast.show({
-          icon: 'fail',
-          content: '手机号格式错误',
-        })
-        return
-      }
-      try {
-        window.localStorage.setItem('captcha_timeout', String(new Date().getTime()))
-        services.captcha.send({ phone })
-      } catch (error: any) {
-        console.error(error)
-        Toast.show({
-          icon: 'fail',
-          content: error.data.message,
-        })
-        return
-      }
     }
 
     Toast.show({
       icon: 'success',
       content: '验证码已经发送',
     })
-  }
+  }, [phone])
+
+  const __handleSmsSendLimit = useCallback(() => {
+    Toast.show({
+      icon: 'fail',
+      content: '点的太快了，请过三分钟再尝试。',
+    })
+  }, [])
+
+  const handleSmsSend = useLimitLock(__handleSmsSend, __handleSmsSendLimit, 180)
 
   useMount(() => {
     if (userInfo.uid > 0) {

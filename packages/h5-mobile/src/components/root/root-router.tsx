@@ -6,7 +6,9 @@ import Loading, { withFetchLoading, withLoading } from '~/components/loading-hoc
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
-import { IUserInfo, services } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IUserInfo } from '@shippo/types'
+
 import { Setting } from '~/layouts/setting'
 import { TempLayout } from '~/layouts/temp'
 import { Page_passport } from '~/pages/passport'
