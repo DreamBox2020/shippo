@@ -4,6 +4,12 @@ import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import avatar from '~/assets/avatar.png'
+import { useNavigate } from 'react-router'
+import { useEffect, useState } from 'react'
+import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
+import { services } from '@shippo/sdk-services'
+import { formatTimeStr } from '@shippo/sdk-utils'
+import { BASE_API } from '~/settings'
 
 export const StyledList = styled(List)`
   .adm-list-body {
@@ -43,6 +49,16 @@ export const StyledList = styled(List)`
 `
 
 export const WxPage = () => {
+  const navigate = useNavigate()
+
+  const [articleList, setArticleList] = useState<IWxArticleExtOffiaccountNickname[]>([])
+
+  useEffect(() => {
+    services.wxArticle.find_all_by_wx_passport_and_comment().then((hr) => {
+      setArticleList(hr.data.resource)
+    })
+  }, [])
+
   const users = [
     {
       id: '1',
@@ -121,14 +137,17 @@ export const WxPage = () => {
       </Header>
       <Main>
         <StyledList mode="card">
-          {users.map((user) => (
+          {articleList.map((v) => (
             <List.Item
-              key={user.id}
+              key={v.id}
               clickable
-              extra={<Image src={user.avatar} fit="cover" width={141} height={60} />}
-              description={user.description}
+              extra={
+                <Image src={BASE_API + '/file' + v.image2} fit="cover" width={141} height={60} />
+              }
+              description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
+              onClick={() => navigate(`/wx/article/${v.id}?channel=self`)}
             >
-              {user.name}
+              {v.title}
             </List.Item>
           ))}
         </StyledList>

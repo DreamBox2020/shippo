@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useState, useCallback, useMemo } from 'react'
+import { useImperativeHandle, useState, useCallback, useMemo, forwardRef } from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message } from 'antd'
 import { services } from '@shippo/sdk-services'
 import { IPermissionAccess, __permissionAccess } from '@shippo/types'
@@ -145,4 +145,4 @@ const Component: React.ForwardRefRenderFunction<EditAccessDrawerRef, EditAccessD
   )
 }
 
-export const EditAccessDrawer = React.forwardRef(Component)
+export const EditAccessDrawer = forwardRef(Component)

@@ -1,4 +1,7 @@
+import { services } from '@shippo/sdk-services'
+import { __wxPassport } from '@shippo/types'
 import { List, Image } from 'antd-mobile'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import avatar from '~/assets/avatar.png'
 import Container from '~/components/container'
@@ -13,7 +16,17 @@ const StyledList = styled(List)`
   }
 `
 
+const defaultWxPassport = __wxPassport()
+
 export const WxMyPage = () => {
+  const [wxInfo, setWxInfo] = useState(defaultWxPassport)
+
+  useEffect(() => {
+    services.wxPassport.find().then((hr) => {
+      setWxInfo(hr.data.resource)
+    })
+  }, [])
+
   return (
     <Container direction="vertical">
       <Header
@@ -33,7 +46,7 @@ export const WxMyPage = () => {
           <List.Item
             prefix={
               <Image
-                src={avatar}
+                src={wxInfo.avatarUrl || avatar}
                 style={{ borderRadius: '25px' }}
                 fit="cover"
                 width="50px"
@@ -41,7 +54,7 @@ export const WxMyPage = () => {
               />
             }
           >
-            暂无昵称
+            {wxInfo.nickname || '暂无昵称'}
           </List.Item>
         </StyledList>
         <WhiteSpace size={15} />

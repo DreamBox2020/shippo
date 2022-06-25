@@ -74,9 +74,7 @@ export const WxManagePage = () => {
                 <Image src={BASE_API + '/file' + v.image2} fit="cover" width={141} height={60} />
               }
               description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
-              onClick={() => {
-                navigate('/wx/article/' + v.id + '?channel=manage')
-              }}
+              onClick={() => navigate(`/wx/article/${v.id}?channel=manage`)}
             >
               {v.title}
             </List.Item>

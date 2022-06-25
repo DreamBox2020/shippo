@@ -19,10 +19,13 @@ export const WxEditPage = () => {
   const navigate = useNavigate()
 
   const [url, setUrl] = useState('')
+
+  // 从服务器获取的文章信息
   const [article, setArticle] = useState(__defaultWxArticleExtOffiaccountNickname)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
+  // 从url中获取的文章id，如果有，就是更新，反之，新建。
   const articleId = useMemo(() => {
     const str = searchParams.get('article_id') || ''
     const num = parseInt(str)
@@ -37,6 +40,13 @@ export const WxEditPage = () => {
       try {
         const hr = await services.wxArticle.create({ url })
         console.log(hr.data)
+
+        // 如果是直接添加的 已经发布的文章
+        if (hr.data.resource.url) {
+          navigate('/wx/manage', { replace: true })
+          return
+        }
+
         setUrl('')
         searchParams.set('article_id', String(hr.data.resource.id))
         setSearchParams(searchParams, { replace: true })
@@ -47,7 +57,7 @@ export const WxEditPage = () => {
         })
       }
     }
-  }, [articleId, url, searchParams, setSearchParams])
+  }, [articleId, url, searchParams, setSearchParams, navigate])
 
   useEffect(() => {
     if (articleId) {

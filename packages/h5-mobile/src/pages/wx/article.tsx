@@ -1,4 +1,4 @@
-import { ActionSheet, NavBar, Space, Image } from 'antd-mobile'
+import { ActionSheet, NavBar, Space, Image, List, Divider } from 'antd-mobile'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import Container from '~/components/container'
 import Header from '~/components/header'
@@ -7,10 +7,16 @@ import { MoreOutline } from 'antd-mobile-icons'
 import { useEffect, useMemo, useState } from 'react'
 import type { Action } from 'antd-mobile/es/components/action-sheet'
 import { useSearchParams } from 'react-router-dom'
-import { services, __wxArticleExtOffiaccountNickname } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { __wxArticleExtOffiaccountNickname } from '@shippo/types'
+
 import { userSelector } from '@shippo/sdk-stores'
 import { useSelector } from 'react-redux'
 import { BASE_API, IS_MINIPROGRAM } from '~/settings'
+import styled from 'styled-components'
+import { ManageCommentList } from './components/manage-comment-list'
+import { CommentList } from './components/comment-list'
+import { getQueryVariable } from '@kazura/web-util'
 
 const __defaultWxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname()
 
@@ -47,6 +53,20 @@ export const WxArticlePage = () => {
   }, [channel, article, userInfo])
 
   useEffect(() => {
+    const code = getQueryVariable('code')
+    if (code) {
+      console.log(window.location.href)
+      console.log(code)
+
+      services.wxPassport.update_info({ code }).finally(() => {
+        window.location.replace(
+          window.location.origin + window.location.pathname + window.location.hash
+        )
+      })
+    }
+  }, [])
+
+  useEffect(() => {
     if (articleId) {
       services.wxArticle.find({ id: articleId }).then((hr) => {
         setArticle(hr.data.resource)
@@ -77,11 +97,13 @@ export const WxArticlePage = () => {
             }
           }}
           right={
-            <div style={{ fontSize: 24 }}>
-              <Space style={{ '--gap': '16px' }}>
-                <MoreOutline onClick={() => setManageActionSheetVisible(true)} />
-              </Space>
-            </div>
+            isManage ? (
+              <div style={{ fontSize: 24 }}>
+                <Space style={{ '--gap': '16px' }}>
+                  <MoreOutline onClick={() => setManageActionSheetVisible(true)} />
+                </Space>
+              </div>
+            ) : null
           }
         >
           留言
@@ -106,13 +128,17 @@ export const WxArticlePage = () => {
                 bottom: 0,
                 color: '#fff',
                 fontSize: '16px',
-                lineHeight: 2,
+                lineHeight: 3,
+                width: ' 100%',
+                background: ' linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.3))',
               }}
             >
               {article.title}
             </p>
           </div>
         ) : null}
+        {isManage ? <ManageCommentList article={article} /> : <CommentList article={article} />}
+        <Divider>到底啦～</Divider>
       </Main>
       {isManage ? (
         <ActionSheet
