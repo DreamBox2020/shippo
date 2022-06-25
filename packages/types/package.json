@@ -1,0 +1,49 @@
+{
+  "name": "@shippo/types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "types",
+  "keywords": [
+    "types"
+  ],
+  "homepage": "https://github.com/DreamBox2020/shippo",
+  "repository": "https://github.com/DreamBox2020/shippo.git",
+  "bugs": "https://github.com/DreamBox2020/shippo/issues",
+  "author": "kazura233 <kazira233@gmail.com>",
+  "license": "MIT",
+  "main": "lib/types.js",
+  "unpkg": "dist/types.js",
+  "module": "es/types.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src",
+    "types"
+  ],
+  "scripts": {
+    "clean": "rimraf dist lib es types",
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.14.2",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-replace": "^3.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.48.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "tslib": "^2.2.0",
+    "typescript": "^4.5.4"
+  }
+}
