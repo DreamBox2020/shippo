@@ -3,7 +3,9 @@ import { Alert, Avatar, Button, Input, message, Modal, Space, Table } from 'antd
 import React, { useEffect, useRef, useState } from 'react'
 import { useCallback } from 'react'
 import { checkQQ, formatTimeStr } from '@shippo/sdk-utils'
-import { IUserExtRoleName, services } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IUserExtRoleName } from '@shippo/types'
+
 import { EditUserDrawer, EditUserDrawerRef } from './components/edit-user-drawer'
 import { ColumnsType } from 'antd/lib/table'
 import { useMount } from 'ahooks'

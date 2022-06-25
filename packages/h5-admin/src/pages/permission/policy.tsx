@@ -4,7 +4,9 @@ import { Button, Space, Table, Modal, message } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formatTimeStr } from '@shippo/sdk-utils'
-import { IPermissionPolicy, services } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IPermissionPolicy } from '@shippo/types'
+
 import {
   EditPolicyAccessDrawer,
   EditPolicyAccessDrawerRef,

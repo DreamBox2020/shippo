@@ -1,6 +1,7 @@
 import React, { useImperativeHandle, useState, useCallback, useMemo } from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message } from 'antd'
-import { IPermissionAccess, services, __permissionAccess } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IPermissionAccess, __permissionAccess } from '@shippo/types'
 
 const __defaultAccess = __permissionAccess()
 

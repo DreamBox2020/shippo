@@ -4,7 +4,8 @@ import { Button, Space, Table, Modal, message } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formatTimeStr } from '@shippo/sdk-utils'
-import { services, IPermissionAccess } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IPermissionAccess } from '@shippo/types'
 import { EditAccessDrawer, EditAccessDrawerRef } from './components/edit-access-drawer'
 const { confirm } = Modal
 

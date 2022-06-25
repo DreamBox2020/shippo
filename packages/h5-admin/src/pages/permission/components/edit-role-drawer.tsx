@@ -1,6 +1,7 @@
 import React, { useImperativeHandle, useState, useCallback, useMemo } from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message } from 'antd'
-import { IRole, services, __role } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IRole, __role } from '@shippo/types'
 
 const __defaultRole = __role()
 

@@ -1,4 +1,6 @@
-import { IPermissionPolicy, IRole, services, __role } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IPermissionPolicy, IRole, __role } from '@shippo/types'
+
 import {
   Drawer,
   Space,

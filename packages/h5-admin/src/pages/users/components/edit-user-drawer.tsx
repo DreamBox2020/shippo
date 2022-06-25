@@ -1,6 +1,8 @@
 import React, { useImperativeHandle, useState, useCallback, useMemo, useRef } from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message, Avatar } from 'antd'
-import { IUserExtRoleName, services, __userExtRoleName } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IUserExtRoleName, __userExtRoleName } from '@shippo/types'
+
 import { UserOutlined } from '@ant-design/icons'
 import { EditUserRoleDrawer, EditUserRoleDrawerRef } from './edit-user-role-drawer'
 

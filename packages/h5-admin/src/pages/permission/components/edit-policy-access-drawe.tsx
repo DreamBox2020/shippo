@@ -1,9 +1,6 @@
-import {
-  IPermissionPolicy,
-  IPermissionAccess,
-  services,
-  __permissionPolicy,
-} from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IPermissionPolicy, IPermissionAccess, __permissionPolicy } from '@shippo/types'
+
 import {
   Drawer,
   Space,

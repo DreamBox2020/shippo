@@ -1,24 +1,8 @@
-import {
-  IPermissionPolicy,
-  IRole,
-  IUserExtRoleName,
-  services,
-  __userExtRoleName,
-} from '@shippo/sdk-services'
-import {
-  Drawer,
-  Space,
-  Button,
-  Form,
-  Row,
-  Col,
-  Input,
-  Select,
-  DatePicker,
-  message,
-  Table,
-} from 'antd'
-import React, { useEffect, useImperativeHandle, useState, useCallback, useMemo } from 'react'
+import { services } from '@shippo/sdk-services'
+import { IRole, IUserExtRoleName, __userExtRoleName } from '@shippo/types'
+
+import { Drawer, Space, Button, Form, Table } from 'antd'
+import React, { useImperativeHandle, useState, useCallback } from 'react'
 
 const __defaultUserExtRoleName = __userExtRoleName()
 

@@ -4,7 +4,9 @@ import { Button, Space, Table, Modal, message } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formatTimeStr } from '@shippo/sdk-utils'
-import { services, IRole } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IRole } from '@shippo/types'
+
 import { EditRoleDrawer, EditRoleDrawerRef } from './components/edit-role-drawer'
 import { EditRolePolicyDrawer, EditRolePolicyDrawerRef } from './components/edit-role-policy-drawer'
 const { confirm } = Modal

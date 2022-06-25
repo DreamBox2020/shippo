@@ -1,6 +1,7 @@
 import React, { useImperativeHandle, useState, useCallback, useMemo } from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message } from 'antd'
-import { IPermissionPolicy, services, __permissionPolicy } from '@shippo/sdk-services'
+import { services } from '@shippo/sdk-services'
+import { IPermissionPolicy, __permissionPolicy } from '@shippo/types'
 
 const __defaultPolicy = __permissionPolicy()
 
