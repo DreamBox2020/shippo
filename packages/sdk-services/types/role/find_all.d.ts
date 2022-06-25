@@ -1,4 +1,4 @@
-import { IRole } from '../types';
+import { IRole } from '@shippo/types';
 import { ResponsePack } from '../helpers';
 interface IResponseResource extends Array<IRole> {
 }

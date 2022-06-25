@@ -8,7 +8,7 @@ var request = new Request({
   }
 });
 
-var create$4 = function create(data) {
+var create$5 = function create(data) {
   return request.request({
     url: '/passport/create',
     method: 'POST',
@@ -18,7 +18,7 @@ var create$4 = function create(data) {
 
 var passport = /*#__PURE__*/Object.freeze({
 __proto__: null,
-create: create$4
+create: create$5
 });
 
 var login = function login(data) {
@@ -125,7 +125,7 @@ var find_all$2 = function find_all() {
   });
 };
 
-var create$3 = function create(data) {
+var create$4 = function create(data) {
   return request.request({
     url: '/role/create',
     method: 'POST',
@@ -141,7 +141,7 @@ var update$2 = function update(data) {
   });
 };
 
-var del$2 = function del(data) {
+var del$3 = function del(data) {
   return request.request({
     url: '/role/del',
     method: 'POST',
@@ -160,9 +160,9 @@ var update_policies = function update_policies(data) {
 var role = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all$2,
-create: create$3,
+create: create$4,
 update: update$2,
-del: del$2,
+del: del$3,
 update_policies: update_policies
 });
 
@@ -173,7 +173,7 @@ var find_all$1 = function find_all() {
   });
 };
 
-var create$2 = function create(data) {
+var create$3 = function create(data) {
   return request.request({
     url: '/permissionPolicy/create',
     method: 'POST',
@@ -189,7 +189,7 @@ var update$1 = function update(data) {
   });
 };
 
-var del$1 = function del(data) {
+var del$2 = function del(data) {
   return request.request({
     url: '/permissionPolicy/del',
     method: 'POST',
@@ -216,9 +216,9 @@ var update_access = function update_access(data) {
 var permissionPolicy = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all$1,
-create: create$2,
+create: create$3,
 update: update$1,
-del: del$1,
+del: del$2,
 find_all_ext_status: find_all_ext_status$1,
 update_access: update_access
 });
@@ -230,7 +230,7 @@ var find_all = function find_all() {
   });
 };
 
-var create$1 = function create(data) {
+var create$2 = function create(data) {
   return request.request({
     url: '/permissionAccess/create',
     method: 'POST',
@@ -246,7 +246,7 @@ var update = function update(data) {
   });
 };
 
-var del = function del(data) {
+var del$1 = function del(data) {
   return request.request({
     url: '/permissionAccess/del',
     method: 'POST',
@@ -265,13 +265,13 @@ var find_all_ext_status = function find_all_ext_status(data) {
 var permissionAccess = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all,
-create: create$1,
+create: create$2,
 update: update,
-del: del,
+del: del$1,
 find_all_ext_status: find_all_ext_status
 });
 
-var create = function create(data) {
+var create$1 = function create(data) {
   return request.request({
     url: '/wxArticle/create',
     method: 'POST',
@@ -297,119 +297,50 @@ var find_all_by_wx_passport = function find_all_by_wx_passport() {
 
 var wxArticle = /*#__PURE__*/Object.freeze({
 __proto__: null,
-create: create,
+create: create$1,
 find: find,
 find_all_by_wx_passport: find_all_by_wx_passport
 });
 
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-var __role = function __role() {
-  return {
-    id: 0,
-    createdAt: '',
-    roleName: '',
-    remark: ''
-  };
-};
-var __permissionPolicy = function __permissionPolicy() {
-  return {
-    id: 0,
-    createdAt: '',
-    policyName: '',
-    remark: ''
-  };
-};
-var __permissionAccess = function __permissionAccess() {
-  return {
-    id: 0,
-    createdAt: '',
-    accessRule: '',
-    remark: '',
-    accessType: ''
-  };
-};
-var __user = function __user() {
-  return {
-    id: 0,
-    createdAt: '',
-    phone: '',
-    email: '',
-    nickname: '',
-    avatar: '',
-    exp: 0,
-    coin: 0,
-    role: 0,
-    wxPassportId: 0
-  };
-};
-var __userExtRoleName = function __userExtRoleName() {
-  return __assign(__assign({}, __user()), {
-    roleName: ''
+var admin__reply = function admin__reply(data) {
+  return request.request({
+    url: '/wxComment/admin/reply',
+    method: 'POST',
+    data: data
   });
 };
-var __wxArticle = function __wxArticle() {
-  return {
-    id: 0,
-    createdAt: '',
-    title: '',
-    url: '',
-    image1: '',
-    image2: '',
-    commentSwitch: 0,
-    offiaccountId: 0,
-    wxPassportId: 0
-  };
-};
-var __wxArticleExtOffiaccountNickname = function __wxArticleExtOffiaccountNickname() {
-  return __assign(__assign({}, __wxArticle()), {
-    offiaccountNickname: ''
+
+var create = function create(data) {
+  return request.request({
+    url: '/wxComment/create',
+    method: 'POST',
+    data: data
   });
 };
-var __passport = function __passport() {
-  return {
-    id: 0,
-    createdAt: '',
-    token: '',
-    userId: 0,
-    ip: '',
-    ua: '',
-    client: 0,
-    wxPassportId: 0
-  };
+
+var del = function del(data) {
+  return request.request({
+    url: '/wxComment/delete',
+    method: 'POST',
+    data: data
+  });
 };
-var __userInfo = function __userInfo() {
-  return {
-    access: [],
-    user: __user(),
-    passport: '',
-    uid: 0
-  };
+
+var reply = function reply(data) {
+  return request.request({
+    url: '/wxComment/reply',
+    method: 'POST',
+    data: data
+  });
 };
+
+var wxComment = /*#__PURE__*/Object.freeze({
+__proto__: null,
+admin__reply: admin__reply,
+create: create,
+del: del,
+reply: reply
+});
 
 var services = {
   passport: passport,
@@ -421,9 +352,10 @@ var services = {
   permissionPolicy: permissionPolicy,
   permissionAccess: permissionAccess,
   wxArticle: wxArticle,
+  wxComment: wxComment,
   use: function use(config) {
     request.http = request.create(config);
   }
 };
 
-export { __passport, __permissionAccess, __permissionPolicy, __role, __user, __userExtRoleName, __userInfo, __wxArticle, __wxArticleExtOffiaccountNickname, services };
+export { services };

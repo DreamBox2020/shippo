@@ -1,4 +1,4 @@
-import { IUserInfo } from '../types';
+import { IUserInfo } from '@shippo/types';
 import { ResponsePack } from '../helpers';
 interface IRequestResource {
     phone?: string;

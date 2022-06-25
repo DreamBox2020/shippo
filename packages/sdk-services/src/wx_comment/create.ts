@@ -1,15 +1,16 @@
-import { IUserInfo } from '@shippo/types'
+import { IWxComment } from '@shippo/types'
 import { request, ResponsePack } from '../helpers'
 
 interface IRequestResource {
-  wxCode?: string
+  content: string
+  articleId: number
 }
 
-interface IResponseResource extends IUserInfo {}
+interface IResponseResource extends IWxComment {}
 
 export const create = (data: IRequestResource) =>
   request.request<ResponsePack<IResponseResource>>({
-    url: '/passport/create',
+    url: '/wxComment/create',
     method: 'POST',
     data,
   })

@@ -1,5 +1,5 @@
 import { request, ResponsePack } from '../helpers'
-import { IWxArticleExtOffiaccountNickname } from '../types'
+import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
 
 interface IRequestResource {
   id: number

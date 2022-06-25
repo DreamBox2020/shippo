@@ -1,5 +1,5 @@
 import { request, ResponsePack } from '../helpers'
-import { IWxArticle } from '../types'
+import { IWxArticle } from '@shippo/types'
 
 interface IRequestResource {
   url: string

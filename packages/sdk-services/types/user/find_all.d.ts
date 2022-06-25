@@ -1,4 +1,4 @@
-import { IPagination, IUserExtRoleName } from '../types';
+import { IPagination, IUserExtRoleName } from '@shippo/types';
 import { ResponsePack } from '../helpers';
 interface IRequestResource extends Partial<IPagination> {
     id?: number;

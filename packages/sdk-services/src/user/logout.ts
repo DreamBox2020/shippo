@@ -1,4 +1,4 @@
-import { IUserInfo } from '../types'
+import { IUserInfo } from '@shippo/types'
 import { request, ResponsePack } from '../helpers'
 
 interface IResponseResource extends IUserInfo {}

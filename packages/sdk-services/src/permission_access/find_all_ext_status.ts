@@ -1,4 +1,4 @@
-import { IPermissionAccess } from '../types'
+import { IPermissionAccess } from '@shippo/types'
 import { request, ResponsePack } from '../helpers'
 
 interface IRequestResource {

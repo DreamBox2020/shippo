@@ -1,4 +1,4 @@
-import { IPermissionPolicy } from '../types';
+import { IPermissionPolicy } from '@shippo/types';
 import { ResponsePack } from '../helpers';
 interface IResponseResource extends Array<IPermissionPolicy & {
     roleAssociationCount: number;
