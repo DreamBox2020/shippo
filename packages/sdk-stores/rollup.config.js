@@ -86,6 +86,7 @@ export default [
         redux: 'redux',
         'redux-thunk': 'thunkMiddleware',
         '@kazura/react-store': 'reactStore',
+        '@shippo/types': 'types',
       },
     },
     external: makeExternalPredicate([

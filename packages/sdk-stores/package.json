@@ -29,7 +29,6 @@
   "dependencies": {
     "@babel/runtime": "^7.14.0",
     "@kazura/react-store": "^0.0.1-alpha.1",
-    "@shippo/sdk-services": "^0.1.0",
     "@shippo/types": "^0.1.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.3.0"
