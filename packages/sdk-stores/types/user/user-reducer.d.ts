@@ -1,4 +1,4 @@
-import { IUserInfo } from '@shippo/sdk-services';
+import { IUserInfo } from '@shippo/types';
 export declare const createDefaultInfo: () => IUserInfo;
 export interface IUserStore {
     info: IUserInfo;

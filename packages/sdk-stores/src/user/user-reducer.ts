@@ -1,5 +1,5 @@
 import { createReducer } from '@kazura/react-store'
-import { IUserInfo, __userInfo } from '@shippo/sdk-services'
+import { IUserInfo, __userInfo } from '@shippo/types'
 
 export const createDefaultInfo = __userInfo
 
