@@ -123,6 +123,28 @@ var __wxComment = function __wxComment() {
     replyCommentId: 0
   };
 };
+var __wxCommentExt = function __wxCommentExt() {
+  return __assign(__assign({}, __wxComment()), {
+    nickname: '',
+    avatarUrl: ''
+  });
+};
+var __wxCommentExtReplyList = function __wxCommentExtReplyList() {
+  return __assign(__assign({}, __wxCommentExt()), {
+    replyList: []
+  });
+};
+var __wxPassport = function __wxPassport() {
+  return {
+    id: 0,
+    createdAt: '',
+    unionId: '',
+    miniProgramOpenId: '',
+    offiaccountOpenId: '',
+    nickname: '',
+    avatarUrl: ''
+  };
+};
 
 exports.__passport = __passport;
 exports.__permissionAccess = __permissionAccess;
@@ -134,3 +156,6 @@ exports.__userInfo = __userInfo;
 exports.__wxArticle = __wxArticle;
 exports.__wxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname;
 exports.__wxComment = __wxComment;
+exports.__wxCommentExt = __wxCommentExt;
+exports.__wxCommentExtReplyList = __wxCommentExtReplyList;
+exports.__wxPassport = __wxPassport;

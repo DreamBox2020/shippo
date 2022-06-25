@@ -175,3 +175,43 @@ export const __wxComment = (): IWxComment => ({
   isTop: 0,
   replyCommentId: 0,
 })
+
+export interface IWxCommentExt extends IWxComment {
+  nickname: string
+  avatarUrl: string
+}
+
+export const __wxCommentExt = (): IWxCommentExt => ({
+  ...__wxComment(),
+  nickname: '',
+  avatarUrl: '',
+})
+
+export interface IWxCommentExtReplyList extends IWxCommentExt {
+  replyList: IWxCommentExt[]
+}
+
+export const __wxCommentExtReplyList = (): IWxCommentExtReplyList => ({
+  ...__wxCommentExt(),
+  replyList: [],
+})
+
+export interface IWxPassport {
+  id: number
+  createdAt: string
+  unionId: string
+  miniProgramOpenId: string
+  offiaccountOpenId: string
+  nickname: string
+  avatarUrl: string
+}
+
+export const __wxPassport = (): IWxPassport => ({
+  id: 0,
+  createdAt: '',
+  unionId: '',
+  miniProgramOpenId: '',
+  offiaccountOpenId: '',
+  nickname: '',
+  avatarUrl: '',
+})

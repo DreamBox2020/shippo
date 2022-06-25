@@ -119,5 +119,27 @@ var __wxComment = function __wxComment() {
     replyCommentId: 0
   };
 };
+var __wxCommentExt = function __wxCommentExt() {
+  return __assign(__assign({}, __wxComment()), {
+    nickname: '',
+    avatarUrl: ''
+  });
+};
+var __wxCommentExtReplyList = function __wxCommentExtReplyList() {
+  return __assign(__assign({}, __wxCommentExt()), {
+    replyList: []
+  });
+};
+var __wxPassport = function __wxPassport() {
+  return {
+    id: 0,
+    createdAt: '',
+    unionId: '',
+    miniProgramOpenId: '',
+    offiaccountOpenId: '',
+    nickname: '',
+    avatarUrl: ''
+  };
+};
 
-export { __passport, __permissionAccess, __permissionPolicy, __role, __user, __userExtRoleName, __userInfo, __wxArticle, __wxArticleExtOffiaccountNickname, __wxComment };
+export { __passport, __permissionAccess, __permissionPolicy, __role, __user, __userExtRoleName, __userInfo, __wxArticle, __wxArticleExtOffiaccountNickname, __wxComment, __wxCommentExt, __wxCommentExtReplyList, __wxPassport };

@@ -88,3 +88,22 @@ export interface IWxComment {
     replyCommentId: number;
 }
 export declare const __wxComment: () => IWxComment;
+export interface IWxCommentExt extends IWxComment {
+    nickname: string;
+    avatarUrl: string;
+}
+export declare const __wxCommentExt: () => IWxCommentExt;
+export interface IWxCommentExtReplyList extends IWxCommentExt {
+    replyList: IWxCommentExt[];
+}
+export declare const __wxCommentExtReplyList: () => IWxCommentExtReplyList;
+export interface IWxPassport {
+    id: number;
+    createdAt: string;
+    unionId: string;
+    miniProgramOpenId: string;
+    offiaccountOpenId: string;
+    nickname: string;
+    avatarUrl: string;
+}
+export declare const __wxPassport: () => IWxPassport;
