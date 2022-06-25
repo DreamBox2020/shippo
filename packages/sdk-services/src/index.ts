@@ -10,6 +10,7 @@ import * as permissionPolicy from './permission_policy'
 import * as permissionAccess from './permission_access'
 import * as wxArticle from './wx_article'
 import * as wxComment from './wx_comment'
+import * as wxPassport from './wx_passport'
 
 export const services = {
   passport,
@@ -22,6 +23,7 @@ export const services = {
   permissionAccess,
   wxArticle,
   wxComment,
+  wxPassport,
   use: (config?: HttpRequestConfig) => {
     request.http = request.create(config)
   },

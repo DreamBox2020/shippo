@@ -283,7 +283,7 @@ var create$1 = function create(data) {
   });
 };
 
-var find = function find(data) {
+var find$1 = function find(data) {
   return request.request({
     url: '/wxArticle/find',
     method: 'POST',
@@ -299,11 +299,20 @@ var find_all_by_wx_passport = function find_all_by_wx_passport() {
   });
 };
 
+var find_all_by_wx_passport_and_comment = function find_all_by_wx_passport_and_comment() {
+  return request.request({
+    url: '/wxArticle/findAllByWxPassportAndComment',
+    method: 'POST',
+    data: {}
+  });
+};
+
 var wxArticle = /*#__PURE__*/Object.freeze({
 __proto__: null,
 create: create$1,
-find: find,
-find_all_by_wx_passport: find_all_by_wx_passport
+find: find$1,
+find_all_by_wx_passport: find_all_by_wx_passport,
+find_all_by_wx_passport_and_comment: find_all_by_wx_passport_and_comment
 });
 
 var admin__reply = function admin__reply(data) {
@@ -338,12 +347,61 @@ var reply = function reply(data) {
   });
 };
 
+var find_by_article = function find_by_article(data) {
+  return request.request({
+    url: '/wxComment/findByArticle',
+    method: 'POST',
+    data: data
+  });
+};
+
+var admin__find_by_article = function admin__find_by_article(data) {
+  return request.request({
+    url: '/wxComment/admin/findByArticle',
+    method: 'POST',
+    data: data
+  });
+};
+
+var find_by_wx_passport_and_article = function find_by_wx_passport_and_article(data) {
+  return request.request({
+    url: '/wxComment/findByWxPassportAndArticle',
+    method: 'POST',
+    data: data
+  });
+};
+
 var wxComment = /*#__PURE__*/Object.freeze({
 __proto__: null,
 admin__reply: admin__reply,
 create: create,
 del: del,
-reply: reply
+reply: reply,
+find_by_article: find_by_article,
+admin__find_by_article: admin__find_by_article,
+find_by_wx_passport_and_article: find_by_wx_passport_and_article
+});
+
+var find = function find() {
+  return request.request({
+    url: '/wxPassport/find',
+    method: 'POST',
+    data: {}
+  });
+};
+
+var update_info = function update_info(data) {
+  return request.request({
+    url: '/wxPassport/updateInfo',
+    method: 'POST',
+    data: data
+  });
+};
+
+var wxPassport = /*#__PURE__*/Object.freeze({
+__proto__: null,
+find: find,
+update_info: update_info
 });
 
 var services = {
@@ -357,6 +415,7 @@ var services = {
   permissionAccess: permissionAccess,
   wxArticle: wxArticle,
   wxComment: wxComment,
+  wxPassport: wxPassport,
   use: function use(config) {
     request.http = request.create(config);
   }
