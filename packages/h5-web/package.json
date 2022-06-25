@@ -11,6 +11,7 @@
     "@ant-design/icons": "^4.7.0",
     "@kazura/react-store": "^0.0.1-alpha.1",
     "@shippo/sdk-services": "^0.1.0",
+    "@shippo/types": "^0.1.0",
     "@tinymce/tinymce-react": "^3.13.0",
     "ahooks": "^2.10.9",
     "antd": "^4.20.7",
