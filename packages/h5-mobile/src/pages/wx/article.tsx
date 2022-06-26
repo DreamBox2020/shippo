@@ -1,10 +1,10 @@
-import { ActionSheet, NavBar, Space, Image, List, Divider } from 'antd-mobile'
+import { ActionSheet, NavBar, Space, Image, Result, Divider, Toast } from 'antd-mobile'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import { MoreOutline } from 'antd-mobile-icons'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { Action } from 'antd-mobile/es/components/action-sheet'
 import { useSearchParams } from 'react-router-dom'
 import { services } from '@shippo/sdk-services'
@@ -66,7 +66,7 @@ export const WxArticlePage = () => {
     }
   }, [])
 
-  useEffect(() => {
+  const load = useCallback(() => {
     if (articleId) {
       services.wxArticle.find({ id: articleId }).then((hr) => {
         setArticle(hr.data.resource)
@@ -74,7 +74,40 @@ export const WxArticlePage = () => {
     }
   }, [articleId])
 
-  const actions: Action[] = [{ text: '关闭留言', key: 'switch' }]
+  useEffect(() => {
+    load()
+  }, [load])
+
+  const actions = useMemo(
+    (): Action[] => [
+      {
+        text: `${article.commentSwitch ? '关闭' : '开启'}留言`,
+        key: 'switch',
+        onClick: () => {
+          services.wxArticle
+            .update_comment_switch({
+              id: article.id,
+              commentSwitch: article.commentSwitch ? 0 : 1,
+            })
+            .then(() => {
+              Toast.show({
+                icon: 'success',
+                content: '修改成功',
+              })
+              load()
+              setManageActionSheetVisible(false)
+            })
+            .catch(() => {
+              Toast.show({
+                icon: 'fail',
+                content: '未知错误，请重试',
+              })
+            })
+        },
+      },
+    ],
+    [article.id, article.commentSwitch, load]
+  )
 
   return (
     <Container direction="vertical">
@@ -137,7 +170,15 @@ export const WxArticlePage = () => {
             </p>
           </div>
         ) : null}
-        {isManage ? <ManageCommentList article={article} /> : <CommentList article={article} />}
+        {article.commentSwitch ? (
+          isManage ? (
+            <ManageCommentList article={article} />
+          ) : (
+            <CommentList article={article} />
+          )
+        ) : (
+          <Result status="info" title="留言功能被管理员关闭" />
+        )}
         <Divider>到底啦～</Divider>
       </Main>
       {isManage ? (

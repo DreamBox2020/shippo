@@ -35,27 +35,23 @@ export const WxEditPage = () => {
   const submit = useCallback(async () => {
     if (!url) return
 
-    if (articleId) {
-    } else {
-      try {
+    try {
+      if (articleId) {
+        await services.wxArticle.update({ url, id: articleId })
+        navigate('/wx/manage', { replace: true })
+      } else {
         const hr = await services.wxArticle.create({ url })
         console.log(hr.data)
-
-        // 如果是直接添加的 已经发布的文章
-        if (hr.data.resource.url) {
-          navigate('/wx/manage', { replace: true })
-          return
-        }
 
         setUrl('')
         searchParams.set('article_id', String(hr.data.resource.id))
         setSearchParams(searchParams, { replace: true })
-      } catch (error: any) {
-        Toast.show({
-          icon: 'fail',
-          content: error.data.message,
-        })
       }
+    } catch (error: any) {
+      Toast.show({
+        icon: 'fail',
+        content: error.data.message,
+      })
     }
   }, [articleId, url, searchParams, setSearchParams, navigate])
 

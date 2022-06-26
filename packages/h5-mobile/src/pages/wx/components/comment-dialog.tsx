@@ -63,7 +63,7 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
           {
             key: 'confirm',
             text: '确认',
-            onClick: () => {
+            onClick: async () => {
               if (!content.trim().length) {
                 Toast.show({
                   icon: 'fail',
@@ -88,20 +88,18 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
                 return
               }
 
-              if (isManage) {
-              } else if (isReply) {
-                services.wxComment.reply({ id, content }).catch(() => {
-                  Toast.show({
-                    icon: 'fail',
-                    content: '留言失败',
-                  })
-                })
-              } else {
-                services.wxComment.create({ articleId: id, content }).catch(() => {
-                  Toast.show({
-                    icon: 'fail',
-                    content: '留言失败',
-                  })
+              try {
+                if (isManage) {
+                } else if (isReply) {
+                  await services.wxComment.reply({ id, content })
+                } else {
+                  await services.wxComment.create({ articleId: id, content })
+                }
+              } catch (error) {
+                console.error(error)
+                Toast.show({
+                  icon: 'fail',
+                  content: '留言失败',
                 })
               }
 
