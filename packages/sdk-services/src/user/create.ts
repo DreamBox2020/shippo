@@ -4,9 +4,9 @@ interface IRequestResource {
   email?: string
 }
 
-export const user__create = (data: IRequestResource) =>
+export const create = (data: IRequestResource) =>
   request.request<ResponsePack>({
-    url: '/admin/user/create',
+    url: '/user/create',
     method: 'POST',
     data,
   })

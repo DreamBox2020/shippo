@@ -12,7 +12,7 @@ var request = new sdkUtils.Request({
   }
 });
 
-var create$5 = function create(data) {
+var create$6 = function create(data) {
   return request.request({
     url: '/passport/create',
     method: 'POST',
@@ -22,7 +22,7 @@ var create$5 = function create(data) {
 
 var passport = /*#__PURE__*/Object.freeze({
 __proto__: null,
-create: create$5
+create: create$6
 });
 
 var login = function login(data) {
@@ -57,12 +57,21 @@ var update_user_role = function update_user_role(data) {
   });
 };
 
+var create$5 = function create(data) {
+  return request.request({
+    url: '/user/create',
+    method: 'POST',
+    data: data
+  });
+};
+
 var user = /*#__PURE__*/Object.freeze({
 __proto__: null,
 login: login,
 logout: logout,
 find_all: find_all$3,
-update_user_role: update_user_role
+update_user_role: update_user_role,
+create: create$5
 });
 
 var temp_trade_20220108__add = function temp_trade_20220108__add(data) {
@@ -109,19 +118,6 @@ __proto__: null,
 send: send
 });
 
-var user__create = function user__create(data) {
-  return request.request({
-    url: '/admin/user/create',
-    method: 'POST',
-    data: data
-  });
-};
-
-var admin = /*#__PURE__*/Object.freeze({
-__proto__: null,
-user__create: user__create
-});
-
 var find_all$2 = function find_all() {
   return request.request({
     url: '/role/findAll',
@@ -137,7 +133,7 @@ var create$4 = function create(data) {
   });
 };
 
-var update$2 = function update(data) {
+var update$3 = function update(data) {
   return request.request({
     url: '/role/update',
     method: 'POST',
@@ -165,7 +161,7 @@ var role = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all$2,
 create: create$4,
-update: update$2,
+update: update$3,
 del: del$3,
 update_policies: update_policies
 });
@@ -185,7 +181,7 @@ var create$3 = function create(data) {
   });
 };
 
-var update$1 = function update(data) {
+var update$2 = function update(data) {
   return request.request({
     url: '/permissionPolicy/update',
     method: 'POST',
@@ -221,7 +217,7 @@ var permissionPolicy = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all$1,
 create: create$3,
-update: update$1,
+update: update$2,
 del: del$2,
 find_all_ext_status: find_all_ext_status$1,
 update_access: update_access
@@ -242,7 +238,7 @@ var create$2 = function create(data) {
   });
 };
 
-var update = function update(data) {
+var update$1 = function update(data) {
   return request.request({
     url: '/permissionAccess/update',
     method: 'POST',
@@ -270,7 +266,7 @@ var permissionAccess = /*#__PURE__*/Object.freeze({
 __proto__: null,
 find_all: find_all,
 create: create$2,
-update: update,
+update: update$1,
 del: del$1,
 find_all_ext_status: find_all_ext_status
 });
@@ -307,12 +303,30 @@ var find_all_by_wx_passport_and_comment = function find_all_by_wx_passport_and_c
   });
 };
 
+var update = function update(data) {
+  return request.request({
+    url: '/wxArticle/update',
+    method: 'POST',
+    data: data
+  });
+};
+
+var update_comment_switch = function update_comment_switch(data) {
+  return request.request({
+    url: '/wxArticle/updateCommentSwitch',
+    method: 'POST',
+    data: data
+  });
+};
+
 var wxArticle = /*#__PURE__*/Object.freeze({
 __proto__: null,
 create: create$1,
 find: find$1,
 find_all_by_wx_passport: find_all_by_wx_passport,
-find_all_by_wx_passport_and_comment: find_all_by_wx_passport_and_comment
+find_all_by_wx_passport_and_comment: find_all_by_wx_passport_and_comment,
+update: update,
+update_comment_switch: update_comment_switch
 });
 
 var admin__reply = function admin__reply(data) {
@@ -409,7 +423,6 @@ var services = {
   user: user,
   temp: temp,
   captcha: captcha,
-  admin: admin,
   role: role,
   permissionPolicy: permissionPolicy,
   permissionAccess: permissionAccess,
