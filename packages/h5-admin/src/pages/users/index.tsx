@@ -27,7 +27,7 @@ export const Users = () => {
     }
 
     try {
-      const hr = await services.admin.user__create({ email: qq + '@qq.com' })
+      const hr = await services.user.create({ email: qq + '@qq.com' })
       if (hr.data.success) {
         message.success('成功')
       }
