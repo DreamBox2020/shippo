@@ -347,7 +347,7 @@ var create = function create(data) {
 
 var del = function del(data) {
   return request.request({
-    url: '/wxComment/delete',
+    url: '/wxComment/del',
     method: 'POST',
     data: data
   });
@@ -385,6 +385,22 @@ var find_by_wx_passport_and_article = function find_by_wx_passport_and_article(d
   });
 };
 
+var update_elected = function update_elected(data) {
+  return request.request({
+    url: '/wxComment/updateElected',
+    method: 'POST',
+    data: data
+  });
+};
+
+var update_top = function update_top(data) {
+  return request.request({
+    url: '/wxComment/updateTop',
+    method: 'POST',
+    data: data
+  });
+};
+
 var wxComment = /*#__PURE__*/Object.freeze({
 __proto__: null,
 admin__reply: admin__reply,
@@ -393,7 +409,9 @@ del: del,
 reply: reply,
 find_by_article: find_by_article,
 admin__find_by_article: admin__find_by_article,
-find_by_wx_passport_and_article: find_by_wx_passport_and_article
+find_by_wx_passport_and_article: find_by_wx_passport_and_article,
+update_elected: update_elected,
+update_top: update_top
 });
 
 var find = function find() {
