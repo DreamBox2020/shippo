@@ -1,18 +1,40 @@
-import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
+import { IWxArticleExtOffiaccountNickname, IWxCommentExt } from '@shippo/types'
 
 import { userSelector } from '@shippo/sdk-stores'
-import { Dialog, Button, List, Divider, Image, Toast, Empty } from 'antd-mobile'
+import { Dialog, Button, List, Divider, Image, Toast, Empty, ActionSheet, Badge } from 'antd-mobile'
 import { LikeOutline, UserOutline } from 'antd-mobile-icons'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { CommentDialog, CommentDialogRef } from './comment-dialog'
 import styled from 'styled-components'
 import { services } from '@shippo/sdk-services'
 import avatar from '~/assets/avatar.png'
+import type { Action } from 'antd-mobile/es/components/action-sheet'
 
 import { IWxCommentExtReplyList } from '@shippo/types'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { IS_MINIPROGRAM, OFFIACCOUNT_APP_ID } from '~/settings'
+
+export const StyledCommentItem = styled.div`
+  .nickname {
+    color: #6d757a;
+    font-size: 14px;
+  }
+
+  .content {
+    font-size: 14px;
+  }
+
+  .action-wrap {
+  }
+
+  .action-wrap span {
+    margin-right: 15px;
+    padding: 2px 5px;
+    color: #99a2aa;
+    font-size: 12px;
+  }
+`
 
 export const StyledList = styled(List)`
   .adm-list-item-content-arrow {
@@ -45,6 +67,8 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
   // 用户信息
   const userInfo = useSelector(userSelector.infoGetter())
 
+  const [sheetVisible, setSheetVisible] = useState(false)
+
   const commentDialogRef = useRef<CommentDialogRef>(null)
 
   const [commentList, setCommentList] = useState<IWxCommentExtReplyList[]>([])
@@ -70,6 +94,26 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
   useEffect(() => {
     load()
   }, [load])
+
+  const actions = useMemo(
+    (): Action[] => [
+      {
+        text: '删除留言',
+        key: 'del',
+        onClick: () => {},
+      },
+    ],
+    [props.article.id, load]
+  )
+
+  const commentContentClickHndler = useCallback(
+    (comment: IWxCommentExt) => {
+      if (comment.wxPassportId === userInfo.user.wxPassportId) {
+        setSheetVisible(true)
+      }
+    },
+    [userInfo.user.wxPassportId]
+  )
 
   const openWxInfoDialog = useCallback(() => {
     Dialog.show({
@@ -146,32 +190,26 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                     height={40}
                   />
                 }
-                extra={
-                  c1.isElected ? (
-                    <div>
-                      <LikeOutline />
-                      <span>{c1.likeNum}</span>
-                    </div>
-                  ) : (
-                    '未精选'
-                  )
-                }
+                extra={c1.isElected ? '已精选' : '未精选'}
               >
-                <p>{c1.nickname}</p>
-                <p>{c1.content}</p>
+                <StyledCommentItem>
+                  <p className="nickname">{c1.nickname}</p>
+                  <p className="content" onClick={() => commentContentClickHndler(c1)}>
+                    {c1.content}
+                  </p>
 
-                <p>
-                  <span>{formatTimeStr(c1.createdAt)}</span>&nbsp;
-                  <span style={{ color: 'blue' }}>删除</span>
-                  <span
-                    style={{ color: 'blue' }}
-                    onClick={() => {
-                      commentDialogRef.current?.open(c1.id, true)
-                    }}
-                  >
-                    回复
-                  </span>
-                </p>
+                  <p className="action-wrap">
+                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
+                    <span
+                      className="action-reply"
+                      onClick={() => {
+                        commentDialogRef.current?.open(c1.id, true)
+                      }}
+                    >
+                      回复
+                    </span>
+                  </p>
+                </StyledCommentItem>
               </List.Item>
               {c1.replyList.length ? (
                 <StyledReplyList>
@@ -188,32 +226,24 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                             height={24}
                           />
                         }
-                        extra={
-                          c2.isElected ? (
-                            <div>
-                              <LikeOutline />
-                              <span>{c2.likeNum}</span>
-                            </div>
-                          ) : (
-                            '未精选'
-                          )
-                        }
+                        extra={c2.isElected ? '已精选' : '未精选'}
                       >
-                        <p>
-                          {c2.nickname || (
-                            <span>
-                              作者
-                              <UserOutline />
-                            </span>
-                          )}
-                        </p>
-                        <p>{c2.content}</p>
-                        <p>
-                          <span>{formatTimeStr(c2.createdAt)}</span>&nbsp;
-                          {userInfo.user.wxPassportId === c2.wxPassportId ? (
-                            <span style={{ color: 'blue' }}>删除</span>
-                          ) : null}
-                        </p>
+                        <StyledCommentItem>
+                          <p className="nickname">
+                            {c2.nickname || (
+                              <span>
+                                作者
+                                <UserOutline />
+                              </span>
+                            )}
+                          </p>
+                          <p className="content" onClick={() => commentContentClickHndler(c2)}>
+                            {c2.content}
+                          </p>
+                          <p className="action-wrap">
+                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
+                          </p>
+                        </StyledCommentItem>
                       </List.Item>
                     )
                   })}
@@ -249,11 +279,16 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                   </div>
                 }
               >
-                <p>{c1.nickname}</p>
-                <p>{c1.content}</p>
-                <p>
-                  <span>{formatTimeStr(c1.createdAt)}</span>&nbsp;
-                </p>
+                <StyledCommentItem>
+                  <p className="nickname">
+                    <span style={{ verticalAlign: 'middle' }}>{c1.nickname}</span>{' '}
+                    {c1.isTop ? <Badge content="置顶" /> : null}
+                  </p>
+                  <p className="content">{c1.content}</p>
+                  <p className="action-wrap">
+                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
+                  </p>
+                </StyledCommentItem>
               </List.Item>
               {c1.replyList.length ? (
                 <StyledReplyList>
@@ -277,18 +312,20 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                           </div>
                         }
                       >
-                        <p>
-                          {c2.nickname || (
-                            <span>
-                              作者
-                              <UserOutline />
-                            </span>
-                          )}
-                        </p>
-                        <p>{c2.content}</p>
-                        <p>
-                          <span>{formatTimeStr(c2.createdAt)}</span>&nbsp;
-                        </p>
+                        <StyledCommentItem>
+                          <p className="nickname">
+                            {c2.nickname || (
+                              <span>
+                                作者
+                                <UserOutline />
+                              </span>
+                            )}
+                          </p>
+                          <p className="content">{c2.content}</p>
+                          <p className="action-wrap">
+                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
+                          </p>
+                        </StyledCommentItem>
                       </List.Item>
                     )
                   })}
@@ -298,6 +335,11 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
           )
         })}
       </StyledList>
+      <ActionSheet
+        visible={sheetVisible}
+        actions={actions}
+        onClose={() => setSheetVisible(false)}
+      />
     </div>
   )
 }

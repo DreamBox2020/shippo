@@ -1,6 +1,6 @@
 import { services } from '@shippo/sdk-services'
 import { __wxPassport } from '@shippo/types'
-import { List, Image } from 'antd-mobile'
+import { List, Image, Toast } from 'antd-mobile'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import avatar from '~/assets/avatar.png'
@@ -59,9 +59,33 @@ export const WxMyPage = () => {
         </StyledList>
         <WhiteSpace size={15} />
         <List>
-          <List.Item onClick={() => {}}>浏览记录</List.Item>
-          <List.Item onClick={() => {}}>通知</List.Item>
-          <List.Item onClick={() => {}}>设置</List.Item>
+          <List.Item
+            onClick={() => {
+              Toast.show({
+                content: '开发中',
+              })
+            }}
+          >
+            浏览记录
+          </List.Item>
+          <List.Item
+            onClick={() => {
+              Toast.show({
+                content: '开发中',
+              })
+            }}
+          >
+            通知
+          </List.Item>
+          <List.Item
+            onClick={() => {
+              Toast.show({
+                content: '开发中',
+              })
+            }}
+          >
+            设置
+          </List.Item>
         </List>
       </Main>
     </Container>
