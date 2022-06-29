@@ -7,6 +7,7 @@ import replace from '@rollup/plugin-replace'
 import { terser } from 'rollup-plugin-terser'
 
 import pkg from './package.json'
+import { defineConfig } from 'rollup'
 
 const extensions = ['.ts']
 const noDeclarationFiles = { compilerOptions: { declaration: false } }
@@ -21,7 +22,7 @@ const makeExternalPredicate = (externalArr) => {
   return (id) => pattern.test(id)
 }
 
-export default [
+export default defineConfig([
   // CommonJS
   {
     input: 'src/index.ts',
@@ -83,11 +84,8 @@ export default [
     output: {
       file: pkg.unpkg,
       format: 'umd',
-      name: 'SdkServices',
+      name: 'types',
       indent: false,
-      globals: {
-        '@shippo/sdk-utils': 'sdkUtils',
-      },
     },
     external: makeExternalPredicate([
       ...Object.keys(pkg.dependencies || {}),
@@ -114,13 +112,10 @@ export default [
   {
     input: 'src/index.ts',
     output: {
-      file: 'dist/sdk-services.min.js',
+      file: 'dist/types.min.js',
       format: 'umd',
-      name: 'SdkServices',
+      name: 'types',
       indent: false,
-      globals: {
-        '@shippo/sdk-utils': 'sdkUtils',
-      },
     },
     external: makeExternalPredicate([
       ...Object.keys(pkg.dependencies || {}),
@@ -146,9 +141,8 @@ export default [
           pure_getters: true,
           unsafe: true,
           unsafe_comps: true,
-          warnings: false,
         },
       }),
     ],
   },
-]
+])

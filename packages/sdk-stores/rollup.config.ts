@@ -3,10 +3,9 @@ import resolve from '@rollup/plugin-node-resolve'
 import typescript from 'rollup-plugin-typescript2'
 import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
-import replace from '@rollup/plugin-replace'
-import { terser } from 'rollup-plugin-terser'
 
 import pkg from './package.json'
+import { defineConfig } from 'rollup'
 
 const extensions = ['.ts']
 const noDeclarationFiles = { compilerOptions: { declaration: false } }
@@ -21,7 +20,7 @@ const makeExternalPredicate = (externalArr) => {
   return (id) => pattern.test(id)
 }
 
-export default [
+export default defineConfig([
   // CommonJS
   {
     input: 'src/index.ts',
@@ -29,7 +28,6 @@ export default [
       file: pkg.main,
       format: 'cjs',
       indent: false,
-      exports: 'auto',
     },
     external: makeExternalPredicate([
       ...Object.keys(pkg.dependencies || {}),
@@ -77,14 +75,20 @@ export default [
       commonjs(),
     ],
   },
-  // UMD Development
+  // UMD
   {
     input: 'src/index.ts',
     output: {
       file: pkg.unpkg,
       format: 'umd',
-      name: 'types',
+      name: 'SdkStores',
       indent: false,
+      globals: {
+        redux: 'redux',
+        'redux-thunk': 'thunkMiddleware',
+        '@kazura/react-store': 'reactStore',
+        '@shippo/types': 'types',
+      },
     },
     external: makeExternalPredicate([
       ...Object.keys(pkg.dependencies || {}),
@@ -96,53 +100,12 @@ export default [
       typescript({ tsconfigOverride: noDeclarationFiles }),
       babel({
         extensions,
-        plugins: [['@babel/plugin-transform-runtime', { version: babelRuntimeVersion }]],
+        plugins: [
+          ['@babel/plugin-transform-runtime', { version: babelRuntimeVersion, useESModules: true }],
+        ],
         babelHelpers: 'runtime',
-        exclude: 'node_modules/**',
       }),
       commonjs(),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('development'),
-        preventAssignment: true,
-      }),
     ],
   },
-  // UMD Production
-  {
-    input: 'src/index.ts',
-    output: {
-      file: 'dist/types.min.js',
-      format: 'umd',
-      name: 'types',
-      indent: false,
-    },
-    external: makeExternalPredicate([
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {}),
-    ]),
-    plugins: [
-      json(),
-      resolve({ extensions }),
-      typescript({ tsconfigOverride: noDeclarationFiles }),
-      babel({
-        extensions,
-        plugins: [['@babel/plugin-transform-runtime', { version: babelRuntimeVersion }]],
-        babelHelpers: 'runtime',
-        exclude: 'node_modules/**',
-      }),
-      commonjs(),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('production'),
-        preventAssignment: true,
-      }),
-      terser({
-        compress: {
-          pure_getters: true,
-          unsafe: true,
-          unsafe_comps: true,
-          warnings: false,
-        },
-      }),
-    ],
-  },
-]
+])
