@@ -1,10 +1,10 @@
 import { getQueryVariable } from '@kazura/web-util'
-import { IS_MINIPROGRAM } from '~/settings'
+import { config } from '~/config'
 
 export {}
 
 export const getWxCode = () => {
-  if (IS_MINIPROGRAM) {
+  if (config.isMiniProgram()) {
     return getQueryVariable('wxCode', window.location.hash)
   }
   return ''

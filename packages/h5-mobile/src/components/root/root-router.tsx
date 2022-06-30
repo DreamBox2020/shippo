@@ -16,7 +16,7 @@ import { Page_setting } from '~/pages/setting'
 import { getWxCode } from '~/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { userAction, userSelector } from '@shippo/sdk-stores'
-import { IS_MINIPROGRAM } from '~/settings'
+import { config } from '~/config'
 import { Permission } from '../permission'
 import WxLayout from '~/layouts/wx'
 
@@ -147,7 +147,10 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
           }
         ></Route>
       </Route>
-      <Route path="*" element={<Navigate to={IS_MINIPROGRAM ? '/wx' : '/home'} replace />}></Route>
+      <Route
+        path="*"
+        element={<Navigate to={config.isMiniProgram() ? '/wx' : '/home'} replace />}
+      ></Route>
     </Routes>
   )
 }

@@ -13,7 +13,7 @@ import type { Action } from 'antd-mobile/es/components/action-sheet'
 
 import { IWxCommentExtReplyList } from '@shippo/types'
 import { formatTimeStr } from '@shippo/sdk-utils'
-import { IS_MINIPROGRAM, OFFIACCOUNT_APP_ID } from '~/settings'
+import { config } from '~/config'
 
 export const StyledCommentItem = styled.div`
   .nickname {
@@ -129,7 +129,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
             key: 'confirm',
             text: '前往设置',
             onClick: () => {
-              if (!IS_MINIPROGRAM) {
+              if (!config.isMiniProgram()) {
                 Toast.show({
                   icon: 'fail',
                   content: '非小程序环境',
@@ -138,7 +138,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
               }
               window.location.replace(
                 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
-                  OFFIACCOUNT_APP_ID +
+                  config.OFFIACCOUNT_APP_ID +
                   '&redirect_uri=' +
                   encodeURIComponent(window.location.href) +
                   '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'

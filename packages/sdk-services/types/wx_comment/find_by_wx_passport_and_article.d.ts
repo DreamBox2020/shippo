@@ -1,9 +1,0 @@
-import { IWxCommentExtReplyList } from '@shippo/types';
-import { ResponsePack } from '../helpers';
-interface IRequestResource {
-    articleId: number;
-}
-interface IResponseResource extends Array<IWxCommentExtReplyList> {
-}
-export declare const find_by_wx_passport_and_article: (data: IRequestResource) => Promise<import("@shippo/sdk-utils").HttpResponse<ResponsePack<IResponseResource>>>;
-export {};

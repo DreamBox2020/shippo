@@ -10,7 +10,7 @@ import { StyledList } from '.'
 import { services } from '@shippo/sdk-services'
 import { __wxArticleExtOffiaccountNickname } from '@shippo/types'
 
-import { BASE_API } from '~/settings'
+import { config } from '~/config'
 
 const __defaultWxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname()
 
@@ -111,7 +111,7 @@ export const WxEditPage = () => {
               clickable
               extra={
                 <Image
-                  src={BASE_API + '/file' + article.image2}
+                  src={config.BASE_API + '/file' + article.image2}
                   fit="cover"
                   width={141}
                   height={60}

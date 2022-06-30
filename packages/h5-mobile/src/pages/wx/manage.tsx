@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
-import { BASE_API } from '~/settings'
+import { config } from '~/config'
 import { StyledList } from '.'
 
 export const WxManagePage = () => {
@@ -71,7 +71,12 @@ export const WxManagePage = () => {
               key={v.id}
               clickable
               extra={
-                <Image src={BASE_API + '/file' + v.image2} fit="cover" width={141} height={60} />
+                <Image
+                  src={config.BASE_API + '/file' + v.image2}
+                  fit="cover"
+                  width={141}
+                  height={60}
+                />
               }
               description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
               onClick={() => navigate(`/wx/article/${v.id}?channel=manage`)}

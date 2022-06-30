@@ -12,7 +12,7 @@ import { __wxArticleExtOffiaccountNickname } from '@shippo/types'
 
 import { userSelector } from '@shippo/sdk-stores'
 import { useSelector } from 'react-redux'
-import { BASE_API, IS_MINIPROGRAM } from '~/settings'
+import { config } from '~/config'
 import styled from 'styled-components'
 import { ManageCommentList } from './components/manage-comment-list'
 import { CommentList } from './components/comment-list'
@@ -148,13 +148,13 @@ export const WxArticlePage = () => {
             style={{ width: '100%', position: 'relative' }}
             onClick={() => {
               if (article.url) {
-                if (IS_MINIPROGRAM) {
+                if (config.isMiniProgram()) {
                   window.wx.miniProgram.navigateTo({ url: '/pages/article/index' })
                 }
               }
             }}
           >
-            <Image src={BASE_API + '/file' + article.image2} fit="cover" width="100%" />
+            <Image src={config.BASE_API + '/file' + article.image2} fit="cover" width="100%" />
             <p
               style={{
                 position: 'absolute',

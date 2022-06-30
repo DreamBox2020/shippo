@@ -2,10 +2,10 @@ import { applyMiddleware } from 'redux'
 import { createStore } from '@shippo/sdk-stores'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
-import { IS_DEV } from '~/settings'
+import { config } from '~/config'
 
 const { stores, dispatch, thunkDispatch, selector } = createStore((...middleware) => {
-  if (IS_DEV) {
+  if (config.isLocal()) {
     middleware.push(createLogger())
   }
   return composeWithDevTools(applyMiddleware(...middleware))

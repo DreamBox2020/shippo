@@ -9,5 +9,14 @@
       "wxamp-comments/**"
     ]
   },
-  "scripts": {}
+  "scripts": {
+    "clean:sdk": "lerna run clean --scope @shippo/*",
+    "build:sdk": "lerna run build --scope @shippo/*"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.15.0",
+    "eslint-config-react-app": "^7.0.1",
+    "lerna": "^5.1.6"
+  }
 }

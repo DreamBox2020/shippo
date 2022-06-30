@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
 import { services } from '@shippo/sdk-services'
 import { formatTimeStr } from '@shippo/sdk-utils'
-import { BASE_API } from '~/settings'
+import { config } from '~/config'
 
 export const StyledList = styled(List)`
   .adm-list-body {
@@ -142,7 +142,12 @@ export const WxPage = () => {
               key={v.id}
               clickable
               extra={
-                <Image src={BASE_API + '/file' + v.image2} fit="cover" width={141} height={60} />
+                <Image
+                  src={config.BASE_API + '/file' + v.image2}
+                  fit="cover"
+                  width={141}
+                  height={60}
+                />
               }
               description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
               onClick={() => navigate(`/wx/article/${v.id}?channel=self`)}

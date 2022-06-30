@@ -24,6 +24,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist lib es types",
+    "dev": "rollup -c -w",
     "build": "rollup -c"
   },
   "peerDependencies": {},

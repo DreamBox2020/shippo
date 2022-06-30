@@ -3,8 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "cross-env VITE_ENV=local vite",
+    "dev:dev": "cross-env VITE_ENV=development vite",
+    "dev:prod": "cross-env VITE_ENV=production vite",
+    "build:local": "cross-env VITE_ENV=local tsc && vite build",
+    "build:dev": "cross-env VITE_ENV=development tsc && vite build",
+    "build:prod": "cross-env VITE_ENV=production tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -12,6 +16,8 @@
     "@kazura/react-store": "^0.0.1-alpha.1",
     "@kazura/web-util": "^0.0.1-alpha.5",
     "@shippo/sdk-services": "^0.1.0",
+    "@shippo/sdk-stores": "^0.1.0",
+    "@shippo/sdk-utils": "^0.1.0",
     "@shippo/types": "^0.1.0",
     "ahooks": "^2.10.9",
     "antd-mobile": "^5.13.0",
@@ -37,6 +43,7 @@
     "@types/styled-components": "^5.1.12",
     "@types/uuid": "^8.3.0",
     "@vitejs/plugin-react": "^1.3.2",
+    "cross-env": "^7.0.3",
     "eslint": "^8.15.0",
     "eslint-config-react-app": "^7.0.1",
     "redux-devtools-extension": "^2.13.9",
