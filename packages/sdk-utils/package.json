@@ -12,7 +12,6 @@
   "author": "kazura233 <kazira233@gmail.com>",
   "license": "MIT",
   "main": "lib/sdk-utils.js",
-  "unpkg": "dist/sdk-utils.js",
   "module": "es/sdk-utils.js",
   "types": "types/index.d.ts",
   "files": [

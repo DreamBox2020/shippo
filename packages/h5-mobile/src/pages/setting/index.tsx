@@ -4,10 +4,9 @@ import { Container } from '~/components/container'
 import { Header } from '~/components/header'
 import { Main } from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
-import { BellOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
-import { userAction } from '@shippo/sdk-stores'
+import { userActions } from '@shippo/sdk-stores'
 import { services } from '@shippo/sdk-services'
 
 export const Page_setting = () => {
@@ -22,7 +21,7 @@ export const Page_setting = () => {
           lineHeight: '45px',
           backgroundColor: '#fff',
           textAlign: 'center',
-          fontSize: '18px',
+          fontSize: '18px'
         }}
       >
         设置
@@ -41,8 +40,11 @@ export const Page_setting = () => {
           onClick={() => {
             services.user.logout().then(({ data }) => {
               window.localStorage.setItem('__PASSPORT', data.resource.passport)
-              window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
-              dispatch(userAction.userUpdateInfo(data.resource))
+              window.localStorage.setItem(
+                '__USER_INFO',
+                JSON.stringify(data.resource)
+              )
+              dispatch(userActions.userUpdateInfo(data.resource))
               console.log('jump')
             })
           }}

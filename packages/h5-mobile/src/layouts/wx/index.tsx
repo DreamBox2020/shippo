@@ -3,35 +3,41 @@ import { Outlet, useLocation, useNavigate } from 'react-router'
 import Container from '~/components/container'
 import Footer from '~/components/footer'
 import Main from '~/components/main'
-import { MessageOutline, UnorderedListOutline, UserOutline } from 'antd-mobile-icons'
+import {
+  MessageOutline,
+  UnorderedListOutline,
+  UserOutline
+} from 'antd-mobile-icons'
 import { useCallback, useMemo } from 'react'
 import { hasAccess } from '@shippo/sdk-utils'
-import { userSelector } from '@shippo/sdk-stores'
+import { userGetters } from '@shippo/sdk-stores'
 import { useSelector } from 'react-redux'
 
-const safeArea = getComputedStyle(document.documentElement).getPropertyValue('--sab').trim()
+const safeArea = getComputedStyle(document.documentElement)
+  .getPropertyValue('--sab')
+  .trim()
 console.log('safeArea:', safeArea)
 
 const tabs = [
   {
     key: '/wx',
     title: '互动',
-    icon: <MessageOutline />,
+    icon: <MessageOutline />
   },
   {
     key: '/wx/manage',
     title: '管理',
-    icon: <UnorderedListOutline />,
+    icon: <UnorderedListOutline />
   },
   {
     key: '/wx/my',
     title: '我的',
-    icon: <UserOutline />,
-  },
+    icon: <UserOutline />
+  }
 ]
 
 export const WxLayout = () => {
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
   const history = useNavigate()
   const location = useLocation()
 
@@ -48,7 +54,9 @@ export const WxLayout = () => {
     (accessRule: string) => {
       return hasAccess(
         `sys_mobile:${accessRule}`,
-        userInfo.access.filter((i) => i.accessType === 'resource').map((i) => i.accessRule)
+        userInfo.access
+          .filter(i => i.accessType === 'resource')
+          .map(i => i.accessRule)
       )
     },
     [userInfo.access]
@@ -72,11 +80,11 @@ export const WxLayout = () => {
         height={50 + safeAreaHeight + 'px'}
         style={{
           backgroundColor: '#fff',
-          display: tabs.some((tab) => tab.key === pathname) ? 'block' : 'none',
+          display: tabs.some(tab => tab.key === pathname) ? 'block' : 'none'
         }}
       >
-        <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
-          {tabs.map((item) =>
+        <TabBar activeKey={pathname} onChange={value => setRouteActive(value)}>
+          {tabs.map(item =>
             hasPermission(item.key) ? (
               <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
             ) : null

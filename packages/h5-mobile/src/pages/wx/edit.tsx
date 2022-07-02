@@ -21,7 +21,9 @@ export const WxEditPage = () => {
   const [url, setUrl] = useState('')
 
   // 从服务器获取的文章信息
-  const [article, setArticle] = useState(__defaultWxArticleExtOffiaccountNickname)
+  const [article, setArticle] = useState(
+    __defaultWxArticleExtOffiaccountNickname
+  )
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -47,17 +49,17 @@ export const WxEditPage = () => {
         searchParams.set('article_id', String(hr.data.resource.id))
         setSearchParams(searchParams, { replace: true })
       }
-    } catch (error: any) {
+    } catch (error) {
       Toast.show({
         icon: 'fail',
-        content: error.data.message,
+        content: (error as any).data.message
       })
     }
   }, [articleId, url, searchParams, setSearchParams, navigate])
 
   useEffect(() => {
     if (articleId) {
-      services.wxArticle.find({ id: articleId }).then((hr) => {
+      services.wxArticle.find({ id: articleId }).then(hr => {
         setArticle(hr.data.resource)
       })
     }
@@ -71,7 +73,7 @@ export const WxEditPage = () => {
           lineHeight: '45px',
           backgroundColor: '#fff',
           textAlign: 'center',
-          fontSize: '18px',
+          fontSize: '18px'
         }}
       >
         <NavBar onBack={() => navigate(-1)}>编辑</NavBar>
@@ -84,7 +86,7 @@ export const WxEditPage = () => {
                 placeholder="请输入文章链接"
                 clearable
                 value={url}
-                onChange={(value) => setUrl(value)}
+                onChange={value => setUrl(value)}
               />
             </Form.Item>
           </Form>

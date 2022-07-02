@@ -1,12 +1,24 @@
 import { PlusOutlined, UserOutlined } from '@ant-design/icons'
-import { Alert, Avatar, Button, Input, message, Modal, Space, Table } from 'antd'
+import {
+  Alert,
+  Avatar,
+  Button,
+  Input,
+  message,
+  Modal,
+  Space,
+  Table
+} from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { useCallback } from 'react'
 import { checkQQ, formatTimeStr } from '@shippo/sdk-utils'
 import { services } from '@shippo/sdk-services'
 import { IUserExtRoleName } from '@shippo/types'
 
-import { EditUserDrawer, EditUserDrawerRef } from './components/edit-user-drawer'
+import {
+  EditUserDrawer,
+  EditUserDrawerRef
+} from './components/edit-user-drawer'
 import { ColumnsType } from 'antd/lib/table'
 import { useMount } from 'ahooks'
 
@@ -41,50 +53,50 @@ export const Users = () => {
     {
       title: 'UID',
       dataIndex: 'id',
-      key: 'id',
+      key: 'id'
     },
     {
       title: '手机号',
       dataIndex: 'phone',
-      key: 'phone',
+      key: 'phone'
     },
     {
       title: '邮箱',
       dataIndex: 'email',
-      key: 'email',
+      key: 'email'
     },
     {
       title: '昵称',
       dataIndex: 'nickname',
-      key: 'nickname',
+      key: 'nickname'
     },
     {
       title: '头像',
       dataIndex: 'avatar',
       key: 'avatar',
-      render: (value) => {
+      render: value => {
         return <Avatar shape="square" size="small" icon={<UserOutlined />} />
-      },
+      }
     },
     {
       title: '经验',
       dataIndex: 'exp',
-      key: 'exp',
+      key: 'exp'
     },
     {
       title: '硬币',
       dataIndex: 'coin',
-      key: 'coin',
+      key: 'coin'
     },
     {
       title: '角色名称',
       dataIndex: 'roleName',
-      key: 'roleName',
+      key: 'roleName'
     },
     {
       title: '注册时间',
       dataIndex: 'createdAt',
-      key: 'createdAt',
+      key: 'createdAt'
     },
     {
       title: '操作',
@@ -92,24 +104,27 @@ export const Users = () => {
       render: (_, record) => {
         return (
           <Space size="middle">
-            <Button type="link" onClick={() => editUserDrawerRef.current?.open(record)}>
+            <Button
+              type="link"
+              onClick={() => editUserDrawerRef.current?.open(record)}
+            >
               编辑用户
             </Button>
           </Space>
         )
-      },
-    },
+      }
+    }
   ]
 
   const updateTable = useCallback(() => {
     services.user
       .find_all({
         pageSize: 20,
-        current,
+        current
       })
-      .then((hr) => {
+      .then(hr => {
         setData(
-          hr.data.resource.items.map((item) => {
+          hr.data.resource.items.map(item => {
             return { ...item, createdAt: formatTimeStr(item.createdAt) }
           })
         )
@@ -147,7 +162,7 @@ export const Users = () => {
           size: 'default',
           onChange: (page: number, pageSize: number) => {
             setCurrent(page)
-          },
+          }
         }}
         size="small"
       />
@@ -161,8 +176,15 @@ export const Users = () => {
         }}
         onCancel={() => setIsModalVisible(false)}
       >
-        <Alert message="只需要输入QQ号即可，不需要后戳。（@qq.com）" type="warning" />
-        <Input placeholder="QQ号" value={qq} onChange={(event) => setQQ(event.target.value)} />
+        <Alert
+          message="只需要输入QQ号即可，不需要后戳。（@qq.com）"
+          type="warning"
+        />
+        <Input
+          placeholder="QQ号"
+          value={qq}
+          onChange={event => setQQ(event.target.value)}
+        />
       </Modal>
     </div>
   )

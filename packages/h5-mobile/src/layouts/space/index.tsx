@@ -1,4 +1,4 @@
-import { userSelector } from '@shippo/sdk-stores'
+import { userGetters } from '@shippo/sdk-stores'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Container from '~/components/container'
@@ -7,7 +7,7 @@ import Main from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
 
 export const Space = () => {
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
 
   return (
     <Container direction="vertical">
@@ -17,7 +17,7 @@ export const Space = () => {
           lineHeight: '45px',
           backgroundColor: '#fff',
           textAlign: 'center',
-          fontSize: '18px',
+          fontSize: '18px'
         }}
       >
         个人中心

@@ -24,7 +24,7 @@ export const Page_temp_trade_20220108 = () => {
       if (!checkQQ(qq)) {
         Toast.show({
           icon: 'fail',
-          content: 'QQ格式不正确',
+          content: 'QQ格式不正确'
         })
         return
       }
@@ -32,7 +32,7 @@ export const Page_temp_trade_20220108 = () => {
       if (!checkPhone(phone)) {
         Toast.show({
           icon: 'fail',
-          content: '手机号格式不正确',
+          content: '手机号格式不正确'
         })
         return
       }
@@ -40,7 +40,7 @@ export const Page_temp_trade_20220108 = () => {
       if (trade1 === '') {
         Toast.show({
           icon: 'fail',
-          content: '定金单号不能为空',
+          content: '定金单号不能为空'
         })
         return
       }
@@ -49,19 +49,19 @@ export const Page_temp_trade_20220108 = () => {
         trade1,
         trade2,
         qq,
-        phone,
+        phone
       })
 
       if (data.success) {
         Toast.show({
           icon: 'success',
-          content: data.message,
+          content: data.message
         })
       }
-    } catch (error: any) {
+    } catch (error) {
       Toast.show({
         icon: 'fail',
-        content: error.data.message,
+        content: (error as any).data.message
       })
     }
   }, [phone, qq, trade1, trade2])
@@ -70,20 +70,20 @@ export const Page_temp_trade_20220108 = () => {
     if (!checkQQ(qq)) {
       Toast.show({
         icon: 'fail',
-        content: 'QQ格式不正确',
+        content: 'QQ格式不正确'
       })
       return
     }
 
     const { data } = await services.temp.temp_trade_20220108__find({
-      qq,
+      qq
     })
 
     const count = data.resource.reduce((count, item) => count + item.amount, 0)
 
     Toast.show({
       icon: 'success',
-      content: `该账号下，有${data.resource.length}笔订单，金额共${count}元。`,
+      content: `该账号下，有${data.resource.length}笔订单，金额共${count}元。`
     })
   }, [qq])
 
@@ -95,7 +95,7 @@ export const Page_temp_trade_20220108 = () => {
           lineHeight: '45px',
           backgroundColor: '#fff',
           textAlign: 'center',
-          fontSize: '18px',
+          fontSize: '18px'
         }}
       >
         订单查询与录入
@@ -106,11 +106,16 @@ export const Page_temp_trade_20220108 = () => {
           <Tabs.Tab title="查询订单" key="query">
             <List>
               <List.Item prefix="QQ号">
-                <Input placeholder="请输入QQ号" clearable value={qq} onChange={setQQ} />
+                <Input
+                  placeholder="请输入QQ号"
+                  clearable
+                  value={qq}
+                  onChange={setQQ}
+                />
               </List.Item>
               <List.Item
                 style={{
-                  backgroundColor: '#f5f5f9',
+                  backgroundColor: '#f5f5f9'
                 }}
               >
                 <Button
@@ -125,23 +130,46 @@ export const Page_temp_trade_20220108 = () => {
             </List>
           </Tabs.Tab>
           <Tabs.Tab title="录入订单" key="add">
-            <NoticeBar content="若是全款，则订单号填到定金中，第二项不填写。" color="info" />
+            <NoticeBar
+              content="若是全款，则订单号填到定金中，第二项不填写。"
+              color="info"
+            />
             <List>
               <List.Item prefix="定金单号">
-                <Input placeholder="请输入定金单号" clearable value={trade1} onChange={setTrade1} />
+                <Input
+                  placeholder="请输入定金单号"
+                  clearable
+                  value={trade1}
+                  onChange={setTrade1}
+                />
               </List.Item>
               <List.Item prefix="补款单号">
-                <Input placeholder="请输入补款单号" clearable value={trade2} onChange={setTrade2} />
+                <Input
+                  placeholder="请输入补款单号"
+                  clearable
+                  value={trade2}
+                  onChange={setTrade2}
+                />
               </List.Item>
               <List.Item prefix="手机号">
-                <Input placeholder="请输入手机号" clearable value={phone} onChange={setPhone} />
+                <Input
+                  placeholder="请输入手机号"
+                  clearable
+                  value={phone}
+                  onChange={setPhone}
+                />
               </List.Item>
               <List.Item prefix="QQ号">
-                <Input placeholder="请输入QQ号" clearable value={qq} onChange={setQQ} />
+                <Input
+                  placeholder="请输入QQ号"
+                  clearable
+                  value={qq}
+                  onChange={setQQ}
+                />
               </List.Item>
               <List.Item
                 style={{
-                  backgroundColor: '#f5f5f9',
+                  backgroundColor: '#f5f5f9'
                 }}
               >
                 <Button

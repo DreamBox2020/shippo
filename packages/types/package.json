@@ -12,7 +12,6 @@
   "author": "kazura233 <kazira233@gmail.com>",
   "license": "MIT",
   "main": "lib/types.js",
-  "unpkg": "dist/types.js",
   "module": "es/types.js",
   "types": "types/index.d.ts",
   "files": [

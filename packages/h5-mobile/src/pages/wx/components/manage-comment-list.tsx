@@ -4,7 +4,7 @@ import {
   IWxCommentExtReplyList,
 } from '@shippo/types'
 
-import { userSelector } from '@shippo/sdk-stores'
+import { userGetters } from '@shippo/sdk-stores'
 import { List, Image, ActionSheet } from 'antd-mobile'
 import { EyeInvisibleOutline, UserOutline } from 'antd-mobile-icons'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -21,7 +21,7 @@ export interface ManageCommentListProps {
 }
 export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
   // 用户信息
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
 
   const [sheetVisible, setSheetVisible] = useState(false)
 

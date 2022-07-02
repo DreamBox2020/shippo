@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { hasAccess } from '@shippo/sdk-utils'
 import { useSelector } from 'react-redux'
-import { userSelector } from '@shippo/sdk-stores'
+import { userGetters } from '@shippo/sdk-stores'
 import { Toast } from 'antd-mobile'
 
 export interface PermissionProps {
@@ -10,15 +10,17 @@ export interface PermissionProps {
   children: ReactElement
 }
 
-export const Permission: React.FC<PermissionProps> = (props) => {
-  const userInfo = useSelector(userSelector.infoGetter())
+export const Permission: React.FC<PermissionProps> = props => {
+  const userInfo = useSelector(userGetters.infoGetter())
   const history = useNavigate()
   const location = useLocation()
 
   const hasPermission = useMemo(() => {
     return hasAccess(
       `sys_mobile:${props.accessRule}`,
-      userInfo.access.filter((i) => i.accessType === 'resource').map((i) => i.accessRule)
+      userInfo.access
+        .filter(i => i.accessType === 'resource')
+        .map(i => i.accessRule)
     )
   }, [userInfo.access, props.accessRule])
 
@@ -27,13 +29,13 @@ export const Permission: React.FC<PermissionProps> = (props) => {
       if (userInfo.uid > 0) {
         Toast.show({
           icon: 'fail',
-          content: '权限不足',
+          content: '权限不足'
         })
         history('/', { replace: true })
       } else {
         Toast.show({
           icon: 'fail',
-          content: '请登录后访问',
+          content: '请登录后访问'
         })
         history('/passport', { replace: true })
       }

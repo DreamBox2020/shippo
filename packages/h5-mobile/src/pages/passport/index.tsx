@@ -9,18 +9,20 @@ import Main from '~/components/main'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { userAction, userSelector } from '@shippo/sdk-stores'
+import { userActions, userGetters } from '@shippo/sdk-stores'
 import { useLockFn, useMount } from 'ahooks'
 import { useLimitLock } from '~/hooks/use-limit-lock'
 
 const StyledList = styled(List)`
-  > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
+  > .adm-list-inner
+    > .adm-list-item:not(:first-child)
+    > .adm-list-item-content {
     border-bottom: unset;
   }
 `
 
 export const Page_passport = () => {
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
 
   const history = useNavigate()
   const dispatch = useDispatch()
@@ -36,7 +38,7 @@ export const Page_passport = () => {
     if (!checkSmsCode(code)) {
       Toast.show({
         icon: 'fail',
-        content: '短信验证码格式错误',
+        content: '短信验证码格式错误'
       })
       return
     }
@@ -45,11 +47,11 @@ export const Page_passport = () => {
     if (checkQQEmail(phone)) {
       const { data } = await services.user.login({
         email: phone,
-        code,
+        code
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
       window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
-      dispatch(userAction.userUpdateInfo(data.resource))
+      dispatch(userActions.userUpdateInfo(data.resource))
       history('/', { replace: true })
       console.log('jump')
       return
@@ -58,7 +60,7 @@ export const Page_passport = () => {
     if (!checkPhone(phone)) {
       Toast.show({
         icon: 'fail',
-        content: '手机号格式错误',
+        content: '手机号格式错误'
       })
       return
     }
@@ -66,18 +68,18 @@ export const Page_passport = () => {
     try {
       const { data } = await services.user.login({
         phone,
-        code,
+        code
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
       window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
-      dispatch(userAction.userUpdateInfo(data.resource))
+      dispatch(userActions.userUpdateInfo(data.resource))
       history('/', { replace: true })
       console.log('jump')
-    } catch (error: any) {
+    } catch (error) {
       console.error(error)
       Toast.show({
         icon: 'fail',
-        content: error.data.message,
+        content: (error as any).data.message
       })
     }
   }, [code, dispatch, history, phone])
@@ -95,32 +97,32 @@ export const Page_passport = () => {
         if (!checkPhone(phone)) {
           Toast.show({
             icon: 'fail',
-            content: '手机号格式错误',
+            content: '手机号格式错误'
           })
           return
         }
 
         services.captcha.send({ phone })
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error(error)
       Toast.show({
         icon: 'fail',
-        content: error.data.message,
+        content: (error as any).data.message
       })
       return
     }
 
     Toast.show({
       icon: 'success',
-      content: '验证码已经发送',
+      content: '验证码已经发送'
     })
   }, [phone])
 
   const __handleSmsSendLimit = useCallback(() => {
     Toast.show({
       icon: 'fail',
-      content: '点的太快了，请过三分钟再尝试。',
+      content: '点的太快了，请过三分钟再尝试。'
     })
   }, [])
 
@@ -139,7 +141,7 @@ export const Page_passport = () => {
           height: '80px',
           textAlign: 'center',
           lineHeight: '80px',
-          fontSize: '30px',
+          fontSize: '30px'
         }}
       >
         Shippo
@@ -148,7 +150,7 @@ export const Page_passport = () => {
         <StyledList
           style={{
             '--prefix-width': '6em',
-            border: 'unset',
+            border: 'unset'
           }}
         >
           <List.Item prefix="手机号">
@@ -156,20 +158,23 @@ export const Page_passport = () => {
               placeholder="请输入手机号"
               clearable
               value={_phone}
-              onChange={(value) => setPhone(value)}
+              onChange={value => setPhone(value)}
             />
           </List.Item>
-          <List.Item prefix="短信验证码" extra={<span onClick={handleSmsSend}>发送验证码</span>}>
+          <List.Item
+            prefix="短信验证码"
+            extra={<span onClick={handleSmsSend}>发送验证码</span>}
+          >
             <Input
               placeholder="请输入验证码"
               clearable
               value={code}
-              onChange={(value) => setCode(value.substring(0, 6))}
+              onChange={value => setCode(value.substring(0, 6))}
             />
           </List.Item>
           <List.Item
             style={{
-              backgroundColor: '#f5f5f9',
+              backgroundColor: '#f5f5f9'
             }}
           >
             <Button

@@ -10,10 +10,9 @@ import { useSearchParams } from 'react-router-dom'
 import { services } from '@shippo/sdk-services'
 import { __wxArticleExtOffiaccountNickname } from '@shippo/types'
 
-import { userSelector } from '@shippo/sdk-stores'
+import { userGetters } from '@shippo/sdk-stores'
 import { useSelector } from 'react-redux'
 import { config } from '~/config'
-import styled from 'styled-components'
 import { ManageCommentList } from './components/manage-comment-list'
 import { CommentList } from './components/comment-list'
 import { getQueryVariable } from '@kazura/web-util'
@@ -32,7 +31,7 @@ export const WxArticlePage = () => {
   // 文章，来自服务器的数据
   const [article, setArticle] = useState(__defaultWxArticleExtOffiaccountNickname)
   // 用户信息
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
 
   // 文章id，来自url
   const articleId = useMemo(() => {

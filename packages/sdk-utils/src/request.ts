@@ -35,29 +35,35 @@ export class Request {
   }
   public init(http: Http) {
     http.interceptors.request.use(
-      (request) => {
+      request => {
         if (request.data === undefined) {
           request.data = {}
         }
-        if (request.data && Object.prototype.toString.call(request.data) === '[object Object]') {
+        if (
+          request.data &&
+          Object.prototype.toString.call(request.data) === '[object Object]'
+        ) {
           request.data = {
             passport: localStorage.getItem('__PASSPORT'),
             session: uuidv4(),
             resource: JSON.stringify(request.data),
             sign: '',
-            other: null,
+            other: null
           }
         }
         return request
       },
-      (error) => {
+      error => {
         return Promise.reject(error)
       }
     )
 
     http.interceptors.response.use(
       (response: HttpResponse<ResponsePack>) => {
-        if (response.data && Object.prototype.toString.call(response.data) === '[object Object]') {
+        if (
+          response.data &&
+          Object.prototype.toString.call(response.data) === '[object Object]'
+        ) {
           if (!response.data.success) {
             console.error(response.data)
             return Promise.reject(response)
@@ -72,7 +78,7 @@ export class Request {
         }
         return response
       },
-      (error) => {
+      error => {
         return Promise.reject(error)
       }
     )

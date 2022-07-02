@@ -1,42 +1,24 @@
-import {
-  applyMiddleware,
-  createStore as create,
-  Middleware,
-  combineReducers,
-  Action,
-  AnyAction,
-  Dispatch,
-  StoreEnhancer,
-} from 'redux'
-import thunkMiddleware, { ThunkAction } from 'redux-thunk'
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { logger } from 'redux-logger'
+import { userSlice } from './user'
 
-import { userReducer } from './user/user-reducer'
+export * from 'immer'
+export * from 'redux-thunk'
 
-export * from './helpers'
+export * from './user'
 
-export const reducers = combineReducers({ user: userReducer })
+export const store = configureStore({
+  reducer: {
+    user: userSlice.reducer
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger)
+})
 
-export type IStores = ReturnType<typeof reducers>
-
-export interface ThunkDispatch<A extends Action = AnyAction> {
-  <TReturnType = any, TState = any, TExtraThunkArg = any>(
-    thunkAction: ThunkAction<TReturnType, TState, TExtraThunkArg, A>
-  ): TReturnType
-}
-
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, IStores, unknown, Action<string>>
-
-export const createStore = (compose?: (...middleware: Middleware[]) => StoreEnhancer) => {
-  compose = compose || applyMiddleware
-  const middleware: Array<Middleware> = [thunkMiddleware]
-  const stores = create(reducers, compose(...middleware))
-  const thunkDispatch: ThunkDispatch = (action) => stores.dispatch<any>(action)
-  const dispatch: Dispatch = (action) => stores.dispatch<any>(action)
-  const selector = <T>(selector: (store: IStores) => T) => selector(stores.getState())
-  return {
-    stores,
-    thunkDispatch,
-    dispatch,
-    selector,
-  }
-}
+export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>

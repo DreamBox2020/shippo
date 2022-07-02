@@ -2,7 +2,10 @@ import { useMount } from 'ahooks'
 import { AxiosResponse } from 'axios'
 import React, { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import Loading, { withFetchLoading, withLoading } from '~/components/loading-hoc'
+import Loading, {
+  withFetchLoading,
+  withLoading
+} from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
@@ -15,7 +18,7 @@ import { Page_passport } from '~/pages/passport'
 import { Page_setting } from '~/pages/setting'
 import { getWxCode } from '~/utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { userAction, userSelector } from '@shippo/sdk-stores'
+import { userActions, userGetters } from '@shippo/sdk-stores'
 import { config } from '~/config'
 import { Permission } from '../permission'
 import WxLayout from '~/layouts/wx'
@@ -25,7 +28,7 @@ export interface RootRouteProps {
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
   const dispatch = useDispatch()
 
   useMount(() => {
@@ -33,7 +36,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
     const resource = result[0].data.resource
     window.localStorage.setItem('__PASSPORT', resource.passport)
     window.localStorage.setItem('__USER_INFO', JSON.stringify(resource))
-    dispatch(userAction.userUpdateInfo(resource))
+    dispatch(userActions.userUpdateInfo(resource))
   })
 
   if (!userInfo.access.length) {
@@ -54,7 +57,10 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
           </Permission>
         }
       >
-        <Route path="" element={withLoading(lazy(() => import('~/pages/home')))}></Route>
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/home')))}
+        ></Route>
       </Route>
       <Route
         path="/discover"
@@ -64,7 +70,10 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
           </Permission>
         }
       >
-        <Route path="" element={withLoading(lazy(() => import('~/pages/discover')))}></Route>
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/discover')))}
+        ></Route>
       </Route>
       <Route
         path="/my"
@@ -74,7 +83,10 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
           </Permission>
         }
       >
-        <Route path="" element={withLoading(lazy(() => import('~/pages/my')))}></Route>
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/my')))}
+        ></Route>
       </Route>
       <Route
         path="/setting"
@@ -99,7 +111,9 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
           path="temp_trade_20220108"
           element={
             <Permission accessRule="/temp/temp_trade_20220108">
-              {withLoading(lazy(() => import('~/pages/temp/temp_trade_20220108')))}
+              {withLoading(
+                lazy(() => import('~/pages/temp/temp_trade_20220108'))
+              )}
             </Permission>
           }
         ></Route>
@@ -149,7 +163,9 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
       </Route>
       <Route
         path="*"
-        element={<Navigate to={config.isMiniProgram() ? '/wx' : '/home'} replace />}
+        element={
+          <Navigate to={config.isMiniProgram() ? '/wx' : '/home'} replace />
+        }
       ></Route>
     </Routes>
   )
@@ -157,8 +173,8 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
 
 export const RootRoute = withFetchLoading(Component, () => [
   services.passport.create({
-    wxCode: getWxCode(),
-  }),
+    wxCode: getWxCode()
+  })
 ])
 
 export default RootRoute

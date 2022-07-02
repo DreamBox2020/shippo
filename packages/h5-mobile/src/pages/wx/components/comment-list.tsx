@@ -1,6 +1,6 @@
 import { IWxArticleExtOffiaccountNickname, IWxCommentExt } from '@shippo/types'
 
-import { userSelector } from '@shippo/sdk-stores'
+import { userGetters } from '@shippo/sdk-stores'
 import { Dialog, Button, List, Divider, Image, Toast, Empty, ActionSheet, Badge } from 'antd-mobile'
 import { LikeOutline, UserOutline } from 'antd-mobile-icons'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -65,7 +65,7 @@ export interface CommentListProps {
 
 export const CommentList: React.FC<CommentListProps> = (props) => {
   // 用户信息
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
 
   const [sheetVisible, setSheetVisible] = useState(false)
 

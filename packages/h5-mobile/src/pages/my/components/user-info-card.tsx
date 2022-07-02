@@ -5,7 +5,7 @@ import { List, Image } from 'antd-mobile'
 import { Level } from '~/components/level'
 
 import avatar from '~/assets/avatar.png'
-import { userSelector } from '@shippo/sdk-stores'
+import { userGetters } from '@shippo/sdk-stores'
 import { useSelector } from 'react-redux'
 
 const StyledInfoBlock = styled.span`
@@ -16,7 +16,7 @@ const StyledInfoBlock = styled.span`
 
 export const UserInfoCard = () => {
   const history = useNavigate()
-  const userInfo = useSelector(userSelector.infoGetter())
+  const userInfo = useSelector(userGetters.infoGetter())
 
   return (
     <List>

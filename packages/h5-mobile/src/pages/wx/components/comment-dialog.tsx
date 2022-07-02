@@ -11,10 +11,10 @@ export interface CommentDialogProps {
   onConfirm?: () => void
 }
 
-const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogProps> = (
-  props,
-  ref
-) => {
+const Component: React.ForwardRefRenderFunction<
+  CommentDialogRef,
+  CommentDialogProps
+> = (props, ref) => {
   const [visible, setVisible] = useState(false)
   const [id, setId] = useState(0)
   const [isReply, setIsReply] = useState(false)
@@ -25,13 +25,17 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
   useImperativeHandle(ref, () => {
     return {
       // 打开对话框
-      open: (id: number, isReply: boolean = false, isManage: boolean = false) => {
+      open: (
+        id: number,
+        isReply: boolean = false,
+        isManage: boolean = false
+      ) => {
         setId(id)
         setIsReply(isReply)
         setIsManage(isManage)
         setContent('')
         setVisible(true)
-      },
+      }
     }
   })
 
@@ -47,7 +51,7 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
           rows={4}
           maxLength={233}
           value={content}
-          onChange={(value) => setContent(value.trim())}
+          onChange={value => setContent(value.trim())}
         />
       }
       actions={[
@@ -58,7 +62,7 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
             onClick: () => {
               setVisible(false)
               props.onCancel && props.onCancel()
-            },
+            }
           },
           {
             key: 'confirm',
@@ -67,7 +71,7 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
               if (!content.trim().length) {
                 Toast.show({
                   icon: 'fail',
-                  content: '内容为空',
+                  content: '内容为空'
                 })
                 return
               }
@@ -75,7 +79,7 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
               if (content.trim().length > 233) {
                 Toast.show({
                   icon: 'fail',
-                  content: '内容不能超过233个字符',
+                  content: '内容不能超过233个字符'
                 })
                 return
               }
@@ -83,7 +87,7 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
               if (id <= 0) {
                 Toast.show({
                   icon: 'fail',
-                  content: '未知错误，请重试',
+                  content: '未知错误，请重试'
                 })
                 return
               }
@@ -99,15 +103,15 @@ const Component: React.ForwardRefRenderFunction<CommentDialogRef, CommentDialogP
                 console.error(error)
                 Toast.show({
                   icon: 'fail',
-                  content: '留言失败',
+                  content: '留言失败'
                 })
               }
 
               setVisible(false)
               props.onConfirm && props.onConfirm()
-            },
-          },
-        ],
+            }
+          }
+        ]
       ]}
     />
   )

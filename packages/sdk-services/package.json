@@ -12,7 +12,6 @@
   "author": "kazura233 <kazira233@gmail.com>",
   "license": "MIT",
   "main": "lib/sdk-services.js",
-  "unpkg": "dist/sdk-services.js",
   "module": "es/sdk-services.js",
   "types": "types/index.d.ts",
   "files": [
