@@ -1,4 +1,12 @@
-import { ActionSheet, NavBar, Space, Image, Result, Divider, Toast } from 'antd-mobile'
+import {
+  ActionSheet,
+  NavBar,
+  Space,
+  Image,
+  Result,
+  Divider,
+  Toast,
+} from 'antd-mobile'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import Container from '~/components/container'
 import Header from '~/components/header'
@@ -17,7 +25,8 @@ import { ManageCommentList } from './components/manage-comment-list'
 import { CommentList } from './components/comment-list'
 import { getQueryVariable } from '@kazura/web-util'
 
-const __defaultWxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname()
+const __defaultWxArticleExtOffiaccountNickname =
+  __wxArticleExtOffiaccountNickname()
 
 export const WxArticlePage = () => {
   const navigate = useNavigate()
@@ -27,9 +36,12 @@ export const WxArticlePage = () => {
   console.log(location)
 
   // 动作面板（评论区开关
-  const [manageActionSheetVisible, setManageActionSheetVisible] = useState(false)
+  const [manageActionSheetVisible, setManageActionSheetVisible] =
+    useState(false)
   // 文章，来自服务器的数据
-  const [article, setArticle] = useState(__defaultWxArticleExtOffiaccountNickname)
+  const [article, setArticle] = useState(
+    __defaultWxArticleExtOffiaccountNickname
+  )
   // 用户信息
   const userInfo = useSelector(userGetters.infoGetter())
 
@@ -59,7 +71,9 @@ export const WxArticlePage = () => {
 
       services.wxPassport.update_info({ code }).finally(() => {
         window.location.replace(
-          window.location.origin + window.location.pathname + window.location.hash
+          window.location.origin +
+            window.location.pathname +
+            window.location.hash
         )
       })
     }
@@ -132,7 +146,9 @@ export const WxArticlePage = () => {
             isManage ? (
               <div style={{ fontSize: 24 }}>
                 <Space style={{ '--gap': '16px' }}>
-                  <MoreOutline onClick={() => setManageActionSheetVisible(true)} />
+                  <MoreOutline
+                    onClick={() => setManageActionSheetVisible(true)}
+                  />
                 </Space>
               </div>
             ) : null
@@ -148,12 +164,20 @@ export const WxArticlePage = () => {
             onClick={() => {
               if (article.url) {
                 if (config.isMiniProgram()) {
-                  window.wx.miniProgram.navigateTo({ url: '/pages/article/index' })
+                  window.wx.miniProgram.navigateTo({
+                    url:
+                      '/pages/article/index?url=' +
+                      encodeURIComponent(article.url),
+                  })
                 }
               }
             }}
           >
-            <Image src={config.BASE_API + '/file' + article.image2} fit="cover" width="100%" />
+            <Image
+              src={config.BASE_API + '/file' + article.image2}
+              fit="cover"
+              width="100%"
+            />
             <p
               style={{
                 position: 'absolute',

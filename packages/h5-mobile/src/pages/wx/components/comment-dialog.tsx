@@ -94,8 +94,15 @@ const Component: React.ForwardRefRenderFunction<
 
               try {
                 if (isManage) {
+                  await services.wxComment.admin__reply({
+                    replyCommentId: id,
+                    content
+                  })
                 } else if (isReply) {
-                  await services.wxComment.reply({ id, content })
+                  await services.wxComment.reply({
+                    replyCommentId: id,
+                    content
+                  })
                 } else {
                   await services.wxComment.create({ articleId: id, content })
                 }

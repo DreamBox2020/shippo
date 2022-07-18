@@ -67,12 +67,19 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
   // 用户信息
   const userInfo = useSelector(userGetters.infoGetter())
 
+  // 当前选中评论
+  const [currentCommentId,setCurrentCommentId] = useState(0)
+
+  // 删除评论面板 是否可见
   const [sheetVisible, setSheetVisible] = useState(false)
 
+  // 评论对话框ref
   const commentDialogRef = useRef<CommentDialogRef>(null)
 
+  // 我的评论列表
   const [commentList, setCommentList] = useState<IWxCommentExtReplyList[]>([])
 
+  // 精选评论列表
   const [electedCommentList, setElectedCommentList] = useState<IWxCommentExtReplyList[]>([])
 
   const load = useCallback(() => {
@@ -100,21 +107,43 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
       {
         text: '删除留言',
         key: 'del',
-        onClick: () => {},
+        onClick:async () => {
+          try {
+            const hr = await services.wxComment.del({id:currentCommentId})
+            if(hr.data.success){
+              Toast.show({
+                icon: 'success',
+                content: '删除成功'
+              })
+              load()
+            }
+          } catch (error) {
+            console.error(error)
+            Toast.show({
+              icon: 'success',
+              content: '删除失败'
+            })
+          } finally{
+            setSheetVisible(false)
+          }
+        },
       },
     ],
-    [props.article.id, load]
+    [currentCommentId, load]
   )
 
+  // 评论内容点击处理
   const commentContentClickHndler = useCallback(
     (comment: IWxCommentExt) => {
       if (comment.wxPassportId === userInfo.user.wxPassportId) {
+        setCurrentCommentId(comment.id)
         setSheetVisible(true)
       }
     },
     [userInfo.user.wxPassportId]
   )
 
+  // 打开绑定微信信息对话框
   const openWxInfoDialog = useCallback(() => {
     Dialog.show({
       content: '还没有设置昵称和头像哦～',
@@ -193,7 +222,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 extra={c1.isElected ? '已精选' : '未精选'}
               >
                 <StyledCommentItem>
-                  <p className="nickname">{c1.nickname}</p>
+                  <div className="nickname">{c1.nickname}</div>
                   <p className="content" onClick={() => commentContentClickHndler(c1)}>
                     {c1.content}
                   </p>
@@ -229,14 +258,14 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                         extra={c2.isElected ? '已精选' : '未精选'}
                       >
                         <StyledCommentItem>
-                          <p className="nickname">
+                          <div className="nickname">
                             {c2.nickname || (
                               <span>
                                 作者
                                 <UserOutline />
                               </span>
                             )}
-                          </p>
+                          </div>
                           <p className="content" onClick={() => commentContentClickHndler(c2)}>
                             {c2.content}
                           </p>
@@ -280,10 +309,10 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 }
               >
                 <StyledCommentItem>
-                  <p className="nickname">
-                    <span style={{ verticalAlign: 'middle' }}>{c1.nickname}</span>{' '}
+                  <div className="nickname">
+                    <span style={{ verticalAlign: 'middle' }}>{c1.nickname}</span>
                     {c1.isTop ? <Badge content="置顶" /> : null}
-                  </p>
+                  </div>
                   <p className="content">{c1.content}</p>
                   <p className="action-wrap">
                     <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
@@ -313,14 +342,14 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                         }
                       >
                         <StyledCommentItem>
-                          <p className="nickname">
+                          <div className="nickname">
                             {c2.nickname || (
                               <span>
                                 作者
                                 <UserOutline />
                               </span>
                             )}
-                          </p>
+                          </div>
                           <p className="content">{c2.content}</p>
                           <p className="action-wrap">
                             <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>

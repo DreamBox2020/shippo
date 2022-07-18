@@ -1,7 +1,7 @@
 import { request, ResponsePack } from '../helpers'
 
 interface IRequestResource {
-  id: string
+  id: number
   isElected: number
 }
 
@@ -11,5 +11,5 @@ export const update_elected = (data: IRequestResource) =>
   request.request<ResponsePack<IResponseResource>>({
     url: '/wxComment/updateElected',
     method: 'POST',
-    data,
+    data
   })
