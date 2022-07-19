@@ -7,8 +7,8 @@
     "dev:dev": "cross-env VITE_ENV=development vite",
     "dev:prod": "cross-env VITE_ENV=production vite",
     "build:local": "cross-env VITE_ENV=local tsc && vite build",
-    "build:dev": "cross-env VITE_ENV=development tsc && vite build",
-    "build:prod": "cross-env VITE_ENV=production tsc && vite build",
+    "build:dev": "tsc && cross-env VITE_ENV=development vite build",
+    "build:prod": "tsc && cross-env VITE_ENV=production vite build",
     "preview": "vite preview"
   },
   "dependencies": {

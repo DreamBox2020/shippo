@@ -8,7 +8,10 @@ import VConsole from 'vconsole'
 
 export const Root = () => {
   useEffect(() => {
-    new VConsole()
+    const tag = window.localStorage.getItem('__SHIPPO_DEBUG')
+    if (tag) {
+      new VConsole()
+    }
   }, [])
 
   return (

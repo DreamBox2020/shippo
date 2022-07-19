@@ -4,7 +4,7 @@ import React, { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Loading, {
   withFetchLoading,
-  withLoading
+  withLoading,
 } from '~/components/loading-hoc'
 import { Home } from '~/layouts/home'
 import { Passport } from '~/layouts/passport'
@@ -155,7 +155,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         <Route
           path="article/:id"
           element={
-            <Permission accessRule="/wx/edit">
+            <Permission accessRule="/wx/article/:id">
               {withLoading(lazy(() => import('~/pages/wx/article')))}
             </Permission>
           }
@@ -173,8 +173,8 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
 
 export const RootRoute = withFetchLoading(Component, () => [
   services.passport.create({
-    wxCode: getWxCode()
-  })
+    wxCode: getWxCode(),
+  }),
 ])
 
 export default RootRoute

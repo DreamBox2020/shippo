@@ -19,6 +19,7 @@ const StyledList = styled(List)`
 const defaultWxPassport = __wxPassport()
 
 export const WxMyPage = () => {
+  const [point, setPoint] = useState(0)
   const [wxInfo, setWxInfo] = useState(defaultWxPassport)
 
   useEffect(() => {
@@ -82,6 +83,11 @@ export const WxMyPage = () => {
               Toast.show({
                 content: '开发中',
               })
+              if (point > 15) {
+                window.localStorage.setItem('__SHIPPO_DEBUG', 'true')
+              } else {
+                setPoint(point + 1)
+              }
             }}
           >
             设置
