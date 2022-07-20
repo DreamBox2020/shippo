@@ -1,13 +1,18 @@
 import { services } from '@shippo/sdk-services'
+import { userGetters } from '@shippo/sdk-stores'
 import { __wxPassport } from '@shippo/types'
-import { List, Image, Toast } from 'antd-mobile'
+import { List, Image, Toast, Modal } from 'antd-mobile'
+import { ExclamationOutline } from 'antd-mobile-icons'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 import avatar from '~/assets/avatar.png'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
+import { config } from '~/config'
 
 const StyledList = styled(List)`
   .adm-list-item-content-prefix {
@@ -19,14 +24,20 @@ const StyledList = styled(List)`
 const defaultWxPassport = __wxPassport()
 
 export const WxMyPage = () => {
+  // 用户信息
+  const userInfo = useSelector(userGetters.infoGetter())
+  const navigate = useNavigate()
+
   const [point, setPoint] = useState(0)
   const [wxInfo, setWxInfo] = useState(defaultWxPassport)
 
   useEffect(() => {
-    services.wxPassport.find().then((hr) => {
-      setWxInfo(hr.data.resource)
-    })
-  }, [])
+    if (userInfo.uid > 0) {
+      services.wxPassport.find().then((hr) => {
+        setWxInfo(hr.data.resource)
+      })
+    }
+  }, [userInfo.uid])
 
   return (
     <Container direction="vertical">
@@ -39,12 +50,21 @@ export const WxMyPage = () => {
           fontSize: '18px',
         }}
       >
-        互动
+        我的
       </Header>
       <Main>
         <WhiteSpace size={15} />
         <StyledList>
           <List.Item
+            onClick={() => {
+              if (userInfo.uid === 0) {
+                Toast.show({
+                  icon: <ExclamationOutline />,
+                  content: '点击登录',
+                })
+                navigate('/passport?channel=wx')
+              }
+            }}
             prefix={
               <Image
                 src={wxInfo.avatarUrl || avatar}
@@ -55,12 +75,12 @@ export const WxMyPage = () => {
               />
             }
           >
-            {wxInfo.nickname || '暂无昵称'}
+            {userInfo.uid ? wxInfo.nickname || '暂无昵称' : '未登录'}
           </List.Item>
         </StyledList>
         <WhiteSpace size={15} />
         <List>
-          <List.Item
+          {/* <List.Item
             onClick={() => {
               Toast.show({
                 content: '开发中',
@@ -77,11 +97,17 @@ export const WxMyPage = () => {
             }}
           >
             通知
-          </List.Item>
+          </List.Item> */}
           <List.Item
             onClick={() => {
-              Toast.show({
-                content: '开发中',
+              Modal.show({
+                content: (
+                  <div>
+                    <h3>Shippo</h3>
+                    <p>Version 1.0.0</p>
+                  </div>
+                ),
+                closeOnMaskClick: true,
               })
               if (point > 15) {
                 window.localStorage.setItem('__SHIPPO_DEBUG', 'true')
@@ -90,7 +116,7 @@ export const WxMyPage = () => {
               }
             }}
           >
-            设置
+            关于
           </List.Item>
         </List>
       </Main>

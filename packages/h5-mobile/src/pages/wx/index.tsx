@@ -1,4 +1,4 @@
-import { List, Image } from 'antd-mobile'
+import { List, Image, Empty } from 'antd-mobile'
 import styled from 'styled-components'
 import Container from '~/components/container'
 import Header from '~/components/header'
@@ -10,6 +10,8 @@ import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
 import { services } from '@shippo/sdk-services'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { config } from '~/config'
+import { userGetters } from '@shippo/sdk-stores'
+import { useSelector } from 'react-redux'
 
 export const StyledList = styled(List)`
   .adm-list-body {
@@ -49,78 +51,22 @@ export const StyledList = styled(List)`
 `
 
 export const WxPage = () => {
+  // 用户信息
+  const userInfo = useSelector(userGetters.infoGetter())
+
   const navigate = useNavigate()
 
-  const [articleList, setArticleList] = useState<IWxArticleExtOffiaccountNickname[]>([])
+  const [articleList, setArticleList] = useState<
+    IWxArticleExtOffiaccountNickname[]
+  >([])
 
   useEffect(() => {
-    services.wxArticle.find_all_by_wx_passport_and_comment().then((hr) => {
-      setArticleList(hr.data.resource)
-    })
-  }, [])
-
-  const users = [
-    {
-      id: '1',
-      avatar: avatar,
-      name: '文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '2',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '3',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '4',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '5',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '6',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '7',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '8',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '9',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-    {
-      id: '10',
-      avatar: avatar,
-      name: '文章标题',
-      description: '二次元趣闻',
-    },
-  ]
+    if (userInfo.uid > 0) {
+      services.wxArticle.find_all_by_wx_passport_and_comment().then((hr) => {
+        setArticleList(hr.data.resource)
+      })
+    }
+  }, [userInfo.uid])
 
   return (
     <Container direction="vertical">
@@ -137,6 +83,13 @@ export const WxPage = () => {
       </Header>
       <Main>
         <StyledList mode="card">
+          {articleList.length ? null : (
+            <Empty
+              style={{ padding: '64px 0' }}
+              imageStyle={{ width: 128 }}
+              description="暂无数据"
+            />
+          )}
           {articleList.map((v) => (
             <List.Item
               key={v.id}
@@ -149,7 +102,9 @@ export const WxPage = () => {
                   height={60}
                 />
               }
-              description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
+              description={`${v.offiaccountNickname} ${formatTimeStr(
+                v.createdAt
+              )}`}
               onClick={() => navigate(`/wx/article/${v.id}?channel=self`)}
             >
               {v.title}

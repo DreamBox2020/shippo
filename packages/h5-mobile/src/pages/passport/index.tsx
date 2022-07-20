@@ -1,4 +1,4 @@
-import { Button, Input, List, Toast } from 'antd-mobile'
+import { Button, Input, List, NavBar, Toast } from 'antd-mobile'
 import React, { useCallback, useMemo, useState } from 'react'
 import { COLOR_PINK } from '~/constants/color'
 import { services } from '@shippo/sdk-services'
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userActions, userGetters } from '@shippo/sdk-stores'
 import { useLockFn, useMount } from 'ahooks'
 import { useLimitLock } from '~/hooks/use-limit-lock'
+import { useSearchParams } from 'react-router-dom'
 
 const StyledList = styled(List)`
   > .adm-list-inner
@@ -22,10 +23,14 @@ const StyledList = styled(List)`
 `
 
 export const Page_passport = () => {
-  const userInfo = useSelector(userGetters.infoGetter())
-
-  const history = useNavigate()
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch()
+
+  const channel = useMemo(() => {
+    const str = searchParams.get('channel') || ''
+    return str
+  }, [searchParams])
 
   const [_phone, setPhone] = useState('')
   const [code, setCode] = useState('')
@@ -38,7 +43,7 @@ export const Page_passport = () => {
     if (!checkSmsCode(code)) {
       Toast.show({
         icon: 'fail',
-        content: '短信验证码格式错误'
+        content: '短信验证码格式错误',
       })
       return
     }
@@ -47,12 +52,12 @@ export const Page_passport = () => {
     if (checkQQEmail(phone)) {
       const { data } = await services.user.login({
         email: phone,
-        code
+        code,
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
       window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
       dispatch(userActions.userUpdateInfo(data.resource))
-      history('/', { replace: true })
+      navigate('/', { replace: true })
       console.log('jump')
       return
     }
@@ -60,7 +65,7 @@ export const Page_passport = () => {
     if (!checkPhone(phone)) {
       Toast.show({
         icon: 'fail',
-        content: '手机号格式错误'
+        content: '手机号格式错误',
       })
       return
     }
@@ -68,21 +73,21 @@ export const Page_passport = () => {
     try {
       const { data } = await services.user.login({
         phone,
-        code
+        code,
       })
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
       window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
       dispatch(userActions.userUpdateInfo(data.resource))
-      history('/', { replace: true })
+      navigate('/', { replace: true })
       console.log('jump')
     } catch (error) {
       console.error(error)
       Toast.show({
         icon: 'fail',
-        content: (error as any).data.message
+        content: (error as any).data.message,
       })
     }
-  }, [code, dispatch, history, phone])
+  }, [code, dispatch, navigate, phone])
 
   const handleLogon = useLockFn(__handleLogon)
 
@@ -97,7 +102,7 @@ export const Page_passport = () => {
         if (!checkPhone(phone)) {
           Toast.show({
             icon: 'fail',
-            content: '手机号格式错误'
+            content: '手机号格式错误',
           })
           return
         }
@@ -108,49 +113,61 @@ export const Page_passport = () => {
       console.error(error)
       Toast.show({
         icon: 'fail',
-        content: (error as any).data.message
+        content: (error as any).data.message,
       })
       return
     }
 
     Toast.show({
       icon: 'success',
-      content: '验证码已经发送'
+      content: '验证码已经发送',
     })
   }, [phone])
 
   const __handleSmsSendLimit = useCallback(() => {
     Toast.show({
       icon: 'fail',
-      content: '点的太快了，请过三分钟再尝试。'
+      content: '点的太快了，请过三分钟再尝试。',
     })
   }, [])
 
   const handleSmsSend = useLimitLock(__handleSmsSend, __handleSmsSendLimit, 180)
 
-  useMount(() => {
-    if (userInfo.uid > 0) {
-      history('/', { replace: true })
-    }
-  })
-
   return (
     <Container direction="vertical">
-      <Header
-        style={{
-          height: '80px',
-          textAlign: 'center',
-          lineHeight: '80px',
-          fontSize: '30px'
-        }}
-      >
-        Shippo
-      </Header>
+      {channel === 'wx' ? (
+        <Header
+          style={{
+            height: '45px',
+            lineHeight: '45px',
+            backgroundColor: '#fff',
+            textAlign: 'center',
+            fontSize: '18px',
+          }}
+        >
+          <NavBar
+            onBack={() => {
+              navigate(-1)
+            }}
+          ></NavBar>
+        </Header>
+      ) : null}
+
       <Main>
+        <div
+          style={{
+            height: '80px',
+            textAlign: 'center',
+            lineHeight: '80px',
+            fontSize: '30px',
+          }}
+        >
+          Shipppo
+        </div>
         <StyledList
           style={{
             '--prefix-width': '6em',
-            border: 'unset'
+            border: 'unset',
           }}
         >
           <List.Item prefix="手机号">
@@ -158,7 +175,7 @@ export const Page_passport = () => {
               placeholder="请输入手机号"
               clearable
               value={_phone}
-              onChange={value => setPhone(value)}
+              onChange={(value) => setPhone(value)}
             />
           </List.Item>
           <List.Item
@@ -169,12 +186,12 @@ export const Page_passport = () => {
               placeholder="请输入验证码"
               clearable
               value={code}
-              onChange={value => setCode(value.substring(0, 6))}
+              onChange={(value) => setCode(value.substring(0, 6))}
             />
           </List.Item>
           <List.Item
             style={{
-              backgroundColor: '#f5f5f9'
+              backgroundColor: '#f5f5f9',
             }}
           >
             <Button
@@ -192,4 +209,15 @@ export const Page_passport = () => {
   )
 }
 
-export default Page_passport
+const withOnlyNotLogon = (CurrentComponent: React.ComponentType) => () => {
+  const navigate = useNavigate()
+  const userInfo = useSelector(userGetters.infoGetter())
+  useMount(() => {
+    if (userInfo.uid > 0) {
+      navigate('/', { replace: true })
+    }
+  })
+  return <CurrentComponent />
+}
+
+export default withOnlyNotLogon(Page_passport)
