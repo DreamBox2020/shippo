@@ -9,6 +9,7 @@ import { CommentDialog, CommentDialogRef } from './comment-dialog'
 import styled from 'styled-components'
 import { services } from '@shippo/sdk-services'
 import avatar from '~/assets/avatar.png'
+import notavatar from '~/assets/notavatar.png'
 import type { Action } from 'antd-mobile/es/components/action-sheet'
 
 import { IWxCommentExtReplyList } from '@shippo/types'
@@ -175,7 +176,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
                   config.OFFIACCOUNT_APP_ID +
                   '&redirect_uri=' +
-                  encodeURIComponent(window.location.href) +
+                  encodeURIComponent(window.location.href.replace('wxCode','oldWxCode')) +
                   '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
               )
             },
@@ -228,7 +229,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 key={c1.id}
                 prefix={
                   <Image
-                    src={c1.avatarUrl}
+                    src={c1.avatarUrl || notavatar}
                     style={{ borderRadius: 5 }}
                     fit="cover"
                     width={40}
@@ -310,7 +311,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 key={c1.id}
                 prefix={
                   <Image
-                    src={c1.avatarUrl}
+                    src={c1.avatarUrl  || notavatar}
                     style={{ borderRadius: 5 }}
                     fit="cover"
                     width={40}
