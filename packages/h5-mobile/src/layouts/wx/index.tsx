@@ -6,7 +6,7 @@ import Main from '~/components/main'
 import {
   MessageOutline,
   UnorderedListOutline,
-  UserOutline
+  UserOutline,
 } from 'antd-mobile-icons'
 import { useCallback, useMemo } from 'react'
 import { hasAccess } from '@shippo/sdk-utils'
@@ -22,18 +22,18 @@ const tabs = [
   {
     key: '/wx',
     title: '互动',
-    icon: <MessageOutline />
+    icon: <MessageOutline />,
   },
   {
     key: '/wx/manage',
     title: '管理',
-    icon: <UnorderedListOutline />
+    icon: <UnorderedListOutline />,
   },
   {
     key: '/wx/my',
     title: '我的',
-    icon: <UserOutline />
-  }
+    icon: <UserOutline />,
+  },
 ]
 
 export const WxLayout = () => {
@@ -55,8 +55,8 @@ export const WxLayout = () => {
       return hasAccess(
         `sys_mobile:${accessRule}`,
         userInfo.access
-          .filter(i => i.accessType === 'resource')
-          .map(i => i.accessRule)
+          .filter((i) => i.accessType === 'resource')
+          .map((i) => i.accessRule)
       )
     },
     [userInfo.access]
@@ -77,14 +77,18 @@ export const WxLayout = () => {
         <Outlet />
       </Main>
       <Footer
-        height={50 + safeAreaHeight + 'px'}
+        // height={50 + safeAreaHeight + 'px'}
+        height="calc(50px +  env(safe-area-inset-bottom))"
         style={{
           backgroundColor: '#fff',
-          display: tabs.some(tab => tab.key === pathname) ? 'block' : 'none'
+          display: tabs.some((tab) => tab.key === pathname) ? 'block' : 'none',
         }}
       >
-        <TabBar activeKey={pathname} onChange={value => setRouteActive(value)}>
-          {tabs.map(item =>
+        <TabBar
+          activeKey={pathname}
+          onChange={(value) => setRouteActive(value)}
+        >
+          {tabs.map((item) =>
             hasPermission(item.key) ? (
               <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
             ) : null
