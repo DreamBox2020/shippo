@@ -32,6 +32,18 @@ export const Page_passport = () => {
     return str
   }, [searchParams])
 
+  const redirect = useMemo(() => {
+    const str = searchParams.get('redirect') || ''
+    return decodeURIComponent(str)
+  }, [searchParams])
+
+  const goto = useCallback(
+    (to: string = '/') => {
+      navigate(redirect ? redirect : to, { replace: true })
+    },
+    [redirect, navigate]
+  )
+
   const [_phone, setPhone] = useState('')
   const [code, setCode] = useState('')
 
@@ -57,7 +69,7 @@ export const Page_passport = () => {
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
       window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
       dispatch(userActions.userUpdateInfo(data.resource))
-      navigate('/', { replace: true })
+      goto()
       console.log('jump')
       return
     }
@@ -78,7 +90,7 @@ export const Page_passport = () => {
       window.localStorage.setItem('__PASSPORT', data.resource.passport)
       window.localStorage.setItem('__USER_INFO', JSON.stringify(data.resource))
       dispatch(userActions.userUpdateInfo(data.resource))
-      navigate('/', { replace: true })
+      goto()
       console.log('jump')
     } catch (error) {
       console.error(error)
@@ -87,7 +99,7 @@ export const Page_passport = () => {
         content: (error as any).data.message,
       })
     }
-  }, [code, dispatch, navigate, phone])
+  }, [code, dispatch, goto, phone])
 
   const handleLogon = useLockFn(__handleLogon)
 

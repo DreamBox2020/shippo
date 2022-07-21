@@ -2,7 +2,7 @@ import { IWxArticleExtOffiaccountNickname, IWxCommentExt } from '@shippo/types'
 
 import { userGetters } from '@shippo/sdk-stores'
 import { Dialog, Button, List, Divider, Image, Toast, Empty, ActionSheet, Badge } from 'antd-mobile'
-import { LikeOutline, UserOutline } from 'antd-mobile-icons'
+import { ExclamationOutline, LikeOutline, UserOutline } from 'antd-mobile-icons'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { CommentDialog, CommentDialogRef } from './comment-dialog'
@@ -14,6 +14,7 @@ import type { Action } from 'antd-mobile/es/components/action-sheet'
 import { IWxCommentExtReplyList } from '@shippo/types'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { config } from '~/config'
+import { useLocation, useNavigate } from 'react-router'
 
 export const StyledCommentItem = styled.div`
   .nickname {
@@ -64,6 +65,9 @@ export interface CommentListProps {
 }
 
 export const CommentList: React.FC<CommentListProps> = (props) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
   // 用户信息
   const userInfo = useSelector(userGetters.infoGetter())
 
@@ -89,14 +93,16 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
         setElectedCommentList(hr.data.resource)
       })
 
-      services.wxComment
-        .find_by_wx_passport_and_article({ articleId: props.article.id })
-        .then((hr) => {
-          console.log(hr.data.resource)
-          setCommentList(hr.data.resource)
-        })
+      if(userInfo.uid>0){
+        services.wxComment
+          .find_by_wx_passport_and_article({ articleId: props.article.id })
+          .then((hr) => {
+            console.log(hr.data.resource)
+            setCommentList(hr.data.resource)
+          })
+      }
     }
-  }, [props.article.id])
+  }, [props.article.id,userInfo.uid])
 
   useEffect(() => {
     load()
@@ -187,6 +193,16 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
           color="primary"
           fill="outline"
           onClick={() => {
+            if (userInfo.uid === 0) {
+              Toast.show({
+                icon: <ExclamationOutline />,
+                content: '请先登录',
+              })
+              console.log(location)
+              navigate('/passport?channel=wx&redirect=' + encodeURIComponent(location.pathname+location.search))
+              return
+            }
+
             services.wxPassport.find().then((hr) => {
               if (hr.data.resource.nickname) {
                 commentDialogRef.current?.open(props.article.id)
@@ -203,7 +219,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
       <CommentDialog ref={commentDialogRef} onConfirm={load} />
 
       <StyledList header="我的留言">
-        {commentList.length ? null : <Empty description="暂无数据" />}
+        {commentList.length ? null : <Empty description={userInfo.uid>0?"暂无数据":"请登录"} />}
 
         {commentList.map((c1) => {
           return (

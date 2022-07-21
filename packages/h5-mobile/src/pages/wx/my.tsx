@@ -60,7 +60,7 @@ export const WxMyPage = () => {
               if (userInfo.uid === 0) {
                 Toast.show({
                   icon: <ExclamationOutline />,
-                  content: '点击登录',
+                  content: '请先登录',
                 })
                 navigate('/passport?channel=wx')
               }

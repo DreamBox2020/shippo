@@ -106,6 +106,10 @@ const Component: React.ForwardRefRenderFunction<
                 } else {
                   await services.wxComment.create({ articleId: id, content })
                 }
+                Toast.show({
+                  icon: 'success',
+                  content: '留言成功，被精选后将公开'
+                })
               } catch (error) {
                 console.error(error)
                 Toast.show({

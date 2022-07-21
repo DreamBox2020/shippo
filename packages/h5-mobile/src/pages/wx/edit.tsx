@@ -101,7 +101,7 @@ export const WxEditPage = () => {
           {article.id ? (
             <Form layout="vertical">
               <Form.Item label="小程序路径">
-                <Input value={'/pages/index?article_id=' + article.id} />
+                <Input value={'/pages/index/index?article_id=' + article.id} />
               </Form.Item>
             </Form>
           ) : null}
