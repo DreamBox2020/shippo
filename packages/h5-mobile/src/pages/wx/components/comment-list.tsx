@@ -9,7 +9,7 @@ import { CommentDialog, CommentDialogRef } from './comment-dialog'
 import styled from 'styled-components'
 import { services } from '@shippo/sdk-services'
 import avatar from '~/assets/avatar.png'
-import notavatar from '~/assets/notavatar.png'
+import notavatar from '~/assets/notavatar.jpg'
 import type { Action } from 'antd-mobile/es/components/action-sheet'
 
 import { IWxCommentExtReplyList } from '@shippo/types'

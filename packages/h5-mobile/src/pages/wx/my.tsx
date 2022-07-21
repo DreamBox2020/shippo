@@ -7,12 +7,11 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
-import avatar from '~/assets/avatar.png'
+import notavatar from '~/assets/notavatar.jpg'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
-import { config } from '~/config'
 
 const StyledList = styled(List)`
   .adm-list-item-content-prefix {
@@ -67,7 +66,7 @@ export const WxMyPage = () => {
             }}
             prefix={
               <Image
-                src={wxInfo.avatarUrl || avatar}
+                src={wxInfo.avatarUrl || notavatar}
                 style={{ borderRadius: '25px' }}
                 fit="cover"
                 width="50px"
