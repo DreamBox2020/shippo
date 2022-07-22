@@ -1,5 +1,17 @@
 import React from 'react'
-import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix, Button, Space, Dropdown } from 'antd'
+import {
+  Layout,
+  Menu,
+  Input,
+  Tabs,
+  Card,
+  List,
+  Avatar,
+  Affix,
+  Button,
+  Space,
+  Dropdown,
+} from 'antd'
 import {
   MailOutlined,
   AppstoreOutlined,
@@ -51,36 +63,45 @@ export const ReadLayout: React.FC = () => {
               selectedKeys={[current]}
               mode="horizontal"
               style={{ borderBottom: '1px solid #fff' }}
-            >
-              <Menu.Item key="index" icon={<img width="40px" src={avatar} alt="" />}>
-                Shippo
-              </Menu.Item>
-              <Menu.Item key="app1">导航1</Menu.Item>
-              <Menu.Item key="app2">导航2</Menu.Item>
-              <Menu.Item key="app3">导航3</Menu.Item>
-              <Menu.Item key="app4">导航4</Menu.Item>
-            </Menu>
+              items={[
+                {
+                  label: 'Shippo',
+                  key: 'index',
+                  icon: <img width="40px" src={avatar} alt="" />,
+                },
+                { label: '导航1', key: 'app1' },
+                { label: '导航2', key: 'app2' },
+                { label: '导航3', key: 'app3' },
+                { label: '导航4', key: 'app4' },
+              ]}
+            />
           </div>
           <div style={{ flex: '1 1 0%', backgroundColor: '#fff' }}>
             <Search
               placeholder=""
               allowClear
               onSearch={onSearch}
-              style={{ width: '100%', maxWidth: '500px', padding: '12px 10px 0 50px' }}
+              style={{
+                width: '100%',
+                maxWidth: '500px',
+                padding: '12px 10px 0 50px',
+              }}
               size="large"
             />
           </div>
           <div style={{ backgroundColor: '#fff', padding: '0 20px' }}>
             <Space size={30}>
               <Dropdown
-                placement="bottomCenter"
+                placement="bottom"
                 overlay={
-                  <Menu>
-                    <Menu.Item>个人中心</Menu.Item>
-                    <Menu.Item>投稿管理</Menu.Item>
-                    <Menu.Divider />
-                    <Menu.Item>退出登录</Menu.Item>
-                  </Menu>
+                  <Menu
+                    items={[
+                      { label: '个人中心', key: '1' },
+                      { label: '投稿管理', key: '2' },
+                      { type: 'divider', key: '3' },
+                      { label: '退出登录', key: '4' },
+                    ]}
+                  />
                 }
               >
                 <Avatar size={40} icon={<UserOutlined />} />
@@ -99,23 +120,14 @@ export const ReadLayout: React.FC = () => {
               style={{ width: '250px' }}
               defaultSelectedKeys={['home']}
               mode="inline"
-            >
-              <Menu.Item key="home" icon={<MailOutlined />}>
-                推荐
-              </Menu.Item>
-              <Menu.Item key="a" icon={<MailOutlined />}>
-                动画
-              </Menu.Item>
-              <Menu.Item key="c" icon={<MailOutlined />}>
-                漫画
-              </Menu.Item>
-              <Menu.Item key="g" icon={<MailOutlined />}>
-                游戏
-              </Menu.Item>
-              <Menu.Item key="n" icon={<MailOutlined />}>
-                轻小说
-              </Menu.Item>
-            </Menu>
+              items={[
+                { label: '推荐', key: 'home' },
+                { label: '动画', key: 'a' },
+                { label: '漫画', key: 'c' },
+                { label: '游戏', key: 'g' },
+                { label: '轻小说', key: 'n' },
+              ]}
+            />
           </Affix>
         </Sider>
         <Content>

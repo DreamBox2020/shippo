@@ -1,57 +1,89 @@
 import { useMount } from 'ahooks'
 import { AxiosResponse } from 'axios'
 import React, { lazy } from 'react'
-import { useLocation } from 'react-router'
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
-import { withFetchLoading, withLoading } from '~/components/loading-hoc'
-import { Home } from '~/layouts/home'
-import { Passport } from '~/layouts/passport'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Loading, {
+  withFetchLoading,
+  withLoading,
+} from '~/components/loading-hoc'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
-// import { IResponseResource } from '@shippo/sdk-services/types/passport'
-import { message } from 'antd'
+import { IUserInfo } from '@shippo/types'
+
+import LayoutHome from '~/layouts/home'
+import LayoutPassport from '~/layouts/passport'
 import ReadLayout from '~/layouts/read'
 import CreationLayout from '~/layouts/creation'
-import { Page_passport } from '~/pages/passport'
+
+import { Permission } from '../permission'
+
+import PagePassport from '~/pages/passport'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { userActions, userGetters } from '@shippo/sdk-stores'
 
 export interface RootRouteProps {
-  result: AxiosResponse<ResponsePack<any>>[]
+  result: AxiosResponse<ResponsePack<IUserInfo>>[]
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {
-  const history = useNavigate()
-  const location = useLocation()
+  const userInfo = useSelector(userGetters.infoGetter())
+  const dispatch = useDispatch()
 
   useMount(() => {
     console.log(result)
     const resource = result[0].data.resource
-    localStorage.setItem('__PASSPORT', resource.passport)
-    if (resource.uid > 0) {
-      message.success(`已经登录，UID为${resource.uid}`)
-      if (location.pathname.startsWith('/passport')) {
-        history('/')
-      }
-    } else {
-      message.error('没有登录')
-      history('/passport')
-    }
+    window.localStorage.setItem('__PASSPORT', resource.passport)
+    window.localStorage.setItem('__USER_INFO', JSON.stringify(resource))
+    dispatch(userActions.userUpdateInfo(resource))
   })
+
+  if (!userInfo.access.length) {
+    console.log('userInfo.access.length', userInfo.access)
+    return <Loading></Loading>
+  }
 
   return (
     <Routes>
-      <Route path="/passport" element={<Passport />}>
-        <Route path="" element={<Page_passport />}></Route>
+      <Route path="/passport" element={<LayoutPassport />}>
+        <Route path="" element={<PagePassport />}></Route>
       </Route>
-      <Route path="/dashboard" element={<Home />}>
-        <Route path="" element={withLoading(lazy(() => import('~/pages/dashboard')))}></Route>
+      <Route
+        path="/"
+        element={
+          <Permission accessRule="/">
+            <LayoutHome />
+          </Permission>
+        }
+      >
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/index')))}
+        ></Route>
       </Route>
-      <Route path="/read" element={<ReadLayout />}></Route>
-      <Route path="/creation" element={<CreationLayout />}></Route>
-      <Route path="*" element={<Navigate to="/dashboard" replace />}></Route>
+      <Route
+        path="/read"
+        element={
+          <Permission accessRule="/read">
+            <ReadLayout />
+          </Permission>
+        }
+      ></Route>
+      <Route
+        path="/creation"
+        element={
+          <Permission accessRule="/creation">
+            <CreationLayout />
+          </Permission>
+        }
+      ></Route>
+      <Route path="*" element={<Navigate to="/" replace />}></Route>
     </Routes>
   )
 }
 
-export const RootRoute = withFetchLoading(Component, () => [services.passport.create({})])
+export const RootRoute = withFetchLoading(Component, () => [
+  services.passport.create({}),
+])
 
 export default RootRoute

@@ -3,12 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "cross-env VITE_ENV=local vite",
+    "dev:dev": "cross-env VITE_ENV=development vite",
+    "dev:prod": "cross-env VITE_ENV=production vite",
+    "build:local": "cross-env VITE_ENV=local tsc && vite build",
+    "build:dev": "tsc && cross-env VITE_ENV=development vite build",
+    "build:prod": "tsc && cross-env VITE_ENV=production vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@kazura/web-util": "^0.0.1-alpha.5",
     "@reduxjs/toolkit": "^1.8.3",
     "@shippo/sdk-services": "^0.1.0",
     "@shippo/sdk-stores": "^0.1.0",
@@ -30,7 +35,8 @@
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.0",
-    "tinymce": "^5.10.2"
+    "tinymce": "^5.10.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@redux-devtools/extension": "^3.2.2",
@@ -39,7 +45,9 @@
     "@types/react-dom": "^18.0.4",
     "@types/redux-logger": "^3.0.9",
     "@types/styled-components": "^5.1.12",
+    "@types/uuid": "^8.3.0",
     "@vitejs/plugin-react": "^1.3.2",
+    "cross-env": "^7.0.3",
     "eslint": "^8.15.0",
     "eslint-config-react-app": "^7.0.1",
     "redux-logger": "^3.0.6",

@@ -1,5 +1,17 @@
 import React from 'react'
-import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix, Button, Space, Dropdown } from 'antd'
+import {
+  Layout,
+  Menu,
+  Input,
+  Tabs,
+  Card,
+  List,
+  Avatar,
+  Affix,
+  Button,
+  Space,
+  Dropdown,
+} from 'antd'
 import {
   MailOutlined,
   AppstoreOutlined,
@@ -17,6 +29,7 @@ import { useState } from 'react'
 import type { MenuClickEventHandler } from 'rc-menu/es/interface'
 import styled from 'styled-components'
 import { Tinymce } from '~/components/tinymce'
+import { type } from 'os'
 
 const { Header, Footer, Content, Sider } = Layout
 const { SubMenu } = Menu
@@ -78,25 +91,36 @@ export const CreationLayout: React.FC = () => {
     <Layout>
       <Header>
         <div style={{ display: 'flex', backgroundColor: '#fff' }}>
-          <div style={{ width: '250px', fontSize: '25px', color: '#1890ff', textAlign: 'center' }}>
+          <div
+            style={{
+              width: '250px',
+              fontSize: '25px',
+              color: '#1890ff',
+              textAlign: 'center',
+            }}
+          >
             Shippo 创作中心
           </div>
           <div style={{ flex: '1 1 0%' }}>
-            <span style={{ fontSize: '16px', margin: '0 30px', color: '#757575' }}>
+            <span
+              style={{ fontSize: '16px', margin: '0 30px', color: '#757575' }}
+            >
               <CrownOutlined style={{ marginRight: '5px' }} />
               主页
             </span>
           </div>
           <div style={{ padding: '0 50px' }}>
             <Dropdown
-              placement="bottomCenter"
+              placement="bottom"
               overlay={
-                <Menu>
-                  <Menu.Item>个人中心</Menu.Item>
-                  <Menu.Item>投稿管理</Menu.Item>
-                  <Menu.Divider />
-                  <Menu.Item>退出登录</Menu.Item>
-                </Menu>
+                <Menu
+                  items={[
+                    { label: '个人中心', key: '1' },
+                    { label: '投稿管理', key: '2' },
+                    { type: 'divider', key: '3' },
+                    { label: '退出登录', key: '4' },
+                  ]}
+                />
               }
             >
               <Avatar size={40} icon={<UserOutlined />} />
@@ -118,30 +142,34 @@ export const CreationLayout: React.FC = () => {
                   style={{ width: '200px', border: 0, backgroundColor: '#fff' }}
                   defaultSelectedKeys={['1']}
                   mode="inline"
-                >
-                  <Menu.Item key="1" icon={<HomeOutlined />}>
-                    首页
-                  </Menu.Item>
-                  <SubMenu key="sub1" icon={<FileTextOutlined />} title="内容管理">
-                    <Menu.Item key="2">稿件管理</Menu.Item>
-                  </SubMenu>
-                  <Menu.Item key="5" icon={<TeamOutlined />}>
-                    粉丝管理
-                  </Menu.Item>
-                  <SubMenu key="sub2" icon={<MessageOutlined />} title="互动管理">
-                    <Menu.Item key="6">评论管理</Menu.Item>
-                  </SubMenu>
-                  <Menu.Item key="7" icon={<SettingOutlined />}>
-                    创作设置
-                  </Menu.Item>
-                </StyledMenu>
+                  items={[
+                    { label: '首页', key: '1', icon: <HomeOutlined /> },
+                    {
+                      label: '内容管理',
+                      key: '2',
+                      icon: <FileTextOutlined />,
+                      children: [{ label: '稿件管理', key: '2-1' }],
+                    },
+                    { label: '粉丝管理', key: '3', icon: <TeamOutlined /> },
+                    {
+                      label: '互动管理',
+                      key: '4',
+                      icon: <MessageOutlined />,
+                      children: [{ label: '评论管理', key: '4-1' }],
+                    },
+                    { label: '创作设置', key: '5', icon: <SettingOutlined /> },
+                  ]}
+                />
               </div>
             </div>
           </Affix>
         </Sider>
         <Content>
           <div style={{ padding: '30px 50px' }}>
-            <StyledTabs defaultActiveKey="1" style={{ backgroundColor: '#fff' }}>
+            <StyledTabs
+              defaultActiveKey="1"
+              style={{ backgroundColor: '#fff' }}
+            >
               <TabPane tab="文章管理" key="1">
                 <Tinymce></Tinymce>
               </TabPane>
