@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Page_temp_trade_20220108 } from '~/pages/temp/temp_trade_20220108'
 
-export const TempLayout = () => {
+export const LayoutTemp = () => {
   return (
     <Routes>
       <Route
@@ -13,3 +13,5 @@ export const TempLayout = () => {
     </Routes>
   )
 }
+
+export default LayoutTemp

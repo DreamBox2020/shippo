@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import { userActions } from '@shippo/sdk-stores'
 import { services } from '@shippo/sdk-services'
 
-export const Page_setting = () => {
+export const PageSetting = () => {
   const history = useNavigate()
   const dispatch = useDispatch()
 
@@ -21,7 +21,7 @@ export const Page_setting = () => {
           lineHeight: '45px',
           backgroundColor: '#fff',
           textAlign: 'center',
-          fontSize: '18px'
+          fontSize: '18px',
         }}
       >
         设置
@@ -56,4 +56,4 @@ export const Page_setting = () => {
   )
 }
 
-export default Page_setting
+export default PageSetting

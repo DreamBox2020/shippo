@@ -36,7 +36,7 @@ const tabs = [
   },
 ]
 
-export const WxLayout = () => {
+export const LayoutWx = () => {
   const userInfo = useSelector(userGetters.infoGetter())
   const history = useNavigate()
   const location = useLocation()
@@ -99,4 +99,4 @@ export const WxLayout = () => {
   )
 }
 
-export default WxLayout
+export default LayoutWx

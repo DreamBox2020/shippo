@@ -1,6 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-export const Setting = () => {
+export const LayoutSetting = () => {
   return <Outlet />
 }
+
+export default LayoutSetting

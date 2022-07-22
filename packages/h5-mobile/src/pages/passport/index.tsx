@@ -1,7 +1,7 @@
-import { Button, Input, List, NavBar, Toast } from 'antd-mobile'
 import React, { useCallback, useMemo, useState } from 'react'
-import { COLOR_PINK } from '~/constants/color'
 import { services } from '@shippo/sdk-services'
+import { Button, Input, List, NavBar, Toast } from 'antd-mobile'
+import { COLOR_PINK } from '~/constants/color'
 import { checkPhone, checkQQEmail, checkSmsCode } from '@shippo/sdk-utils'
 import Container from '~/components/container'
 import Header from '~/components/header'
@@ -22,7 +22,7 @@ const StyledList = styled(List)`
   }
 `
 
-export const Page_passport = () => {
+export const PagePassport = () => {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch()
@@ -232,4 +232,4 @@ const withOnlyNotLogon = (CurrentComponent: React.ComponentType) => () => {
   return <CurrentComponent />
 }
 
-export default withOnlyNotLogon(Page_passport)
+export default withOnlyNotLogon(PagePassport)

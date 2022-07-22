@@ -42,7 +42,7 @@ const tabBarItems: Array<tabBarItem> = [
   },
 ]
 
-export const Home = () => {
+export const LayoutHome = () => {
   const history = useNavigate()
   const location = useLocation()
   console.log(location)
@@ -63,9 +63,16 @@ export const Home = () => {
         <Outlet />
       </Main>
       <Footer height="50px" style={{ backgroundColor: '#fff' }}>
-        <StyledTabBar activeKey={selectedTab} onChange={(activeKey) => onPress(activeKey)}>
+        <StyledTabBar
+          activeKey={selectedTab}
+          onChange={(activeKey) => onPress(activeKey)}
+        >
           {tabBarItems.map((item) => (
-            <TabBar.Item title={item.title} key={item.path} icon={<Icon type={item.icon} />} />
+            <TabBar.Item
+              title={item.title}
+              key={item.path}
+              icon={<Icon type={item.icon} />}
+            />
           ))}
         </StyledTabBar>
       </Footer>
@@ -73,4 +80,4 @@ export const Home = () => {
   )
 }
 
-export default Home
+export default LayoutHome

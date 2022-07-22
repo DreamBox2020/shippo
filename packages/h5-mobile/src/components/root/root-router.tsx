@@ -6,22 +6,26 @@ import Loading, {
   withFetchLoading,
   withLoading,
 } from '~/components/loading-hoc'
-import { Home } from '~/layouts/home'
-import { Passport } from '~/layouts/passport'
 import { ResponsePack } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 import { IUserInfo } from '@shippo/types'
 
-import { Setting } from '~/layouts/setting'
-import { TempLayout } from '~/layouts/temp'
-import { Page_passport } from '~/pages/passport'
-import { Page_setting } from '~/pages/setting'
-import { getWxCode } from '~/utils'
+import LayoutHome from '~/layouts/home'
+import LayoutPassport from '~/layouts/passport'
+import LayoutTemp from '~/layouts/temp'
+import LayoutWx from '~/layouts/wx'
+import LayoutSetting from '~/layouts/setting'
+
+import { Permission } from '../permission'
+
+import PagePassport from '~/pages/passport'
+import PageSetting from '~/pages/setting'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { userActions, userGetters } from '@shippo/sdk-stores'
+
+import { getWxCode } from '~/utils'
 import { config } from '~/config'
-import { Permission } from '../permission'
-import WxLayout from '~/layouts/wx'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<IUserInfo>>[]
@@ -46,14 +50,14 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
 
   return (
     <Routes>
-      <Route path="/passport" element={<Passport />}>
-        <Route path="" element={<Page_passport />}></Route>
+      <Route path="/passport" element={<LayoutPassport />}>
+        <Route path="" element={<PagePassport />}></Route>
       </Route>
       <Route
         path="/home"
         element={
           <Permission accessRule="/home">
-            <Home />
+            <LayoutHome />
           </Permission>
         }
       >
@@ -66,7 +70,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         path="/discover"
         element={
           <Permission accessRule="/discover">
-            <Home />
+            <LayoutHome />
           </Permission>
         }
       >
@@ -79,7 +83,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         path="/my"
         element={
           <Permission accessRule="/my">
-            <Home />
+            <LayoutHome />
           </Permission>
         }
       >
@@ -92,11 +96,11 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         path="/setting"
         element={
           <Permission accessRule="/setting">
-            <Setting />
+            <LayoutSetting />
           </Permission>
         }
       >
-        <Route path="" element={<Page_setting />}></Route>
+        <Route path="" element={<PageSetting />}></Route>
       </Route>
       <Route
         path="/space/:uid"
@@ -106,7 +110,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
           </Permission>
         }
       ></Route>
-      <Route path="/temp/*" element={<TempLayout />}>
+      <Route path="/temp/*" element={<LayoutTemp />}>
         <Route
           path="temp_trade_20220108"
           element={
@@ -119,7 +123,7 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         ></Route>
       </Route>
 
-      <Route path="/wx" element={<WxLayout />}>
+      <Route path="/wx" element={<LayoutWx />}>
         <Route
           path=""
           element={
