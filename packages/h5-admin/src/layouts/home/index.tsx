@@ -1,5 +1,9 @@
 import { Layout, Menu } from 'antd'
-import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Dropdown } from 'antd'
@@ -8,7 +12,6 @@ import { useNavigate, useLocation, Outlet } from 'react-router'
 import avatar from '~/assets/avatar.png'
 
 const { Header, Footer, Sider, Content } = Layout
-const { SubMenu } = Menu
 
 const StyledLogo = styled.div`
   position: relative;
@@ -101,39 +104,72 @@ export const Home = () => {
               console.log(key)
               history(key)
             }}
-          >
-            <Menu.Item key="/dashboard" icon={<UserOutlined />}>
-              仪表盘
-            </Menu.Item>
-            <Menu.Item key="/users" icon={<UserOutlined />}>
-              用户管理
-            </Menu.Item>
-            <SubMenu key="/permission" icon={<UserOutlined />} title="权限管理">
-              <Menu.Item key="/permission/role">角色设置</Menu.Item>
-              <Menu.Item key="/permission/policy">权限策略设置</Menu.Item>
-              <Menu.Item key="/permission/access">访问规则设置</Menu.Item>
-            </SubMenu>
-            <SubMenu key="/devtools" icon={<UserOutlined />} title="开发工具">
-              <Menu.Item key="/devtools/apitest">接口测试</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="4" icon={<UserOutlined />}>
-              个人设置
-            </Menu.Item>
-            <Menu.Item key="5" icon={<UserOutlined />}>
-              文章管理
-            </Menu.Item>
-            <SubMenu key="/temp" icon={<UserOutlined />} title="临时页面">
-              <Menu.Item key="/temp/temp_trade_20220108">手办活动</Menu.Item>
-              <Menu.Item key="3">Option 2</Menu.Item>
-            </SubMenu>
-          </Menu>
+            items={[
+              {
+                label: '仪表盘',
+                key: '/dashboard',
+                icon: <UserOutlined />,
+              },
+              { label: '用户管理', key: '/users', icon: <UserOutlined /> },
+              {
+                label: '权限管理',
+                key: '/permission',
+                icon: <UserOutlined />,
+                children: [
+                  {
+                    label: '角色设置',
+                    key: '/permission/role',
+                  },
+                  {
+                    label: '权限策略设置',
+                    key: '/permission/policy',
+                  },
+                  {
+                    label: '访问规则设置',
+                    key: '/permission/access',
+                  },
+                ],
+              },
+              {
+                label: '开发工具',
+                key: '/devtools',
+                icon: <UserOutlined />,
+                children: [
+                  {
+                    label: '接口测试',
+                    key: '/devtools/apitest',
+                  },
+                ],
+              },
+              { label: '个人设置', key: '4', icon: <UserOutlined /> },
+              { label: '文章管理', key: '5', icon: <UserOutlined /> },
+              {
+                label: '临时页面',
+                key: '/temp',
+                icon: <UserOutlined />,
+                children: [
+                  { label: '手办活动', key: '/temp/temp_trade_20220108' },
+                ],
+              },
+            ]}
+          />
         </div>
         <div>
-          <Menu theme="dark" mode="inline" inlineIndent={16} selectedKeys={[]} openKeys={[]}>
-            <Menu.Item title={false} key="collapsed" onClick={() => setCollapsed(!collapsed)}>
-              {defaultRenderCollapsedButton(collapsed)}
-            </Menu.Item>
-          </Menu>
+          <Menu
+            theme="dark"
+            mode="inline"
+            inlineIndent={16}
+            selectedKeys={[]}
+            openKeys={[]}
+            items={[
+              {
+                title: '',
+                label: defaultRenderCollapsedButton(collapsed),
+                key: 'collapsed',
+                onClick: () => setCollapsed(!collapsed),
+              },
+            ]}
+          />
         </div>
       </StyledSider>
       <Layout>
