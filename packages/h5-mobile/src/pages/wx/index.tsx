@@ -5,7 +5,7 @@ import Header from '~/components/header'
 import Main from '~/components/main'
 import avatar from '~/assets/avatar.png'
 import { useNavigate } from 'react-router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
 import { services } from '@shippo/sdk-services'
 import { formatTimeStr } from '@shippo/sdk-utils'
@@ -60,6 +60,12 @@ export const WxPage = () => {
     IWxArticleExtOffiaccountNickname[]
   >([])
 
+  // useEffect(() => {
+  //   services.wxArticle.find_all().then((hr) => {
+  //     setArticleList(hr.data.resource)
+  //   })
+  // }, [])
+
   useEffect(() => {
     if (userInfo.uid > 0) {
       services.wxArticle.find_all_by_wx_passport_and_comment().then((hr) => {
@@ -67,6 +73,13 @@ export const WxPage = () => {
       })
     }
   }, [userInfo.uid])
+
+  const onClick = useCallback(
+    (article: IWxArticleExtOffiaccountNickname) => {
+      navigate(`/wx/article/${article.id}?channel=self`)
+    },
+    [navigate]
+  )
 
   return (
     <Container direction="vertical">
@@ -90,24 +103,32 @@ export const WxPage = () => {
               description="暂无数据"
             />
           )}
-          {articleList.map((v) => (
+          {articleList.map((article) => (
             <List.Item
-              key={v.id}
+              key={article.id}
               clickable
               extra={
                 <Image
-                  src={config.BASE_API + '/file' + v.image2}
+                  src={config.BASE_API + '/file' + article.image2}
+                  // src={article.image2}
                   fit="cover"
                   width={141}
                   height={60}
                 />
               }
-              description={`${v.offiaccountNickname} ${formatTimeStr(
-                v.createdAt
+              description={`${article.offiaccountNickname} ${formatTimeStr(
+                article.createdAt
               )}`}
-              onClick={() => navigate(`/wx/article/${v.id}?channel=self`)}
+              onClick={() => onClick(article)}
+              // onClick={() =>
+              //   window.wx.miniProgram.navigateTo({
+              //     url:
+              //       '/pages/article/index?url=' +
+              //       encodeURIComponent(article.url),
+              //   })
+              // }
             >
-              {v.title}
+              {article.title}
             </List.Item>
           ))}
         </StyledList>
