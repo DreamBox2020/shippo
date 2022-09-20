@@ -1,5 +1,9 @@
 import { services } from '@shippo/sdk-services'
-import { IPermissionPolicy, IPermissionAccess, __permissionPolicy } from '@shippo/types'
+import {
+  IPermissionPolicy,
+  IPermissionAccess,
+  __permissionPolicy,
+} from '@shippo/types'
 
 import {
   Drawer,
@@ -14,15 +18,21 @@ import {
   message,
   Table,
 } from 'antd'
-import React, { useEffect, useImperativeHandle, useState, useCallback, useMemo } from 'react'
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react'
 
 const __defaultPolicy = __permissionPolicy()
 
 const columns = [
   {
     title: '访问规则名称',
-    dataIndex: 'policyName',
-    key: 'policyName',
+    dataIndex: 'accessRule',
+    key: 'accessRule',
   },
   {
     title: '描述',
@@ -55,10 +65,16 @@ const Component: React.ForwardRefRenderFunction<
     return {
       // 打开抽屉
       open: (policy: IPermissionPolicy) => {
-        services.permissionAccess.find_all_ext_status({ id: policy.id }).then((hr) => {
-          setDataSource(hr.data.resource)
-          setSelectedRowKeys(hr.data.resource.filter((item) => item.status).map((item) => item.id))
-        })
+        services.permissionAccess
+          .find_all_ext_status({ id: policy.id })
+          .then((hr) => {
+            setDataSource(hr.data.resource)
+            setSelectedRowKeys(
+              hr.data.resource
+                .filter((item) => item.status)
+                .map((item) => item.id)
+            )
+          })
         setPolicy(policy)
         setVisible(true)
       },
@@ -73,7 +89,10 @@ const Component: React.ForwardRefRenderFunction<
 
   const handleSave = useCallback(async () => {
     console.log(policy)
-    services.permissionPolicy.update_access({ id: policy.id, access: selectedRowKeys })
+    services.permissionPolicy.update_access({
+      id: policy.id,
+      access: selectedRowKeys,
+    })
     closeDrawer()
   }, [policy, selectedRowKeys, closeDrawer])
 
