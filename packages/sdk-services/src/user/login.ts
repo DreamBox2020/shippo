@@ -1,5 +1,5 @@
 import { IUserInfo } from '@shippo/types'
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   phone?: string
@@ -9,9 +9,7 @@ interface IRequestResource {
 
 interface IResponseResource extends IUserInfo {}
 
-export const login = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/user/login',
-    method: 'POST',
-    data,
-  })
+export const login = createAPI<IRequestResource, IResponseResource>({
+  url: '/user/login',
+  method: 'POST',
+})

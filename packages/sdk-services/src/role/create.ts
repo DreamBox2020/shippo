@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   roleName: string
@@ -7,9 +7,7 @@ interface IRequestResource {
 
 interface IResponseResource {}
 
-export const create = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/role/create',
-    method: 'POST',
-    data,
-  })
+export const create = createAPI<IRequestResource, IResponseResource>({
+  url: '/role/create',
+  method: 'POST',
+})

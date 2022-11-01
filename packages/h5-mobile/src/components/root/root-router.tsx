@@ -6,7 +6,7 @@ import Loading, {
   withFetchLoading,
   withLoading,
 } from '~/components/loading-hoc'
-import { ResponsePack } from '@shippo/sdk-services/types/helpers'
+import { ResponsePacket } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 import { IUserInfo } from '@shippo/types'
 
@@ -28,7 +28,7 @@ import { getWxCode } from '~/utils'
 import { config } from '~/config'
 
 export interface RootRouteProps {
-  result: AxiosResponse<ResponsePack<IUserInfo>>[]
+  result: AxiosResponse<ResponsePacket<IUserInfo>>[]
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {

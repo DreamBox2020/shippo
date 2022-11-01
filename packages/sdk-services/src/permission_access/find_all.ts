@@ -1,10 +1,10 @@
 import { IPermissionAccess } from '@shippo/types'
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
-interface IResponseResource extends Array<IPermissionAccess & { roleAssociationCount: number }> {}
+interface IResponseResource
+  extends Array<IPermissionAccess & { roleAssociationCount: number }> {}
 
-export const find_all = () =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/permissionAccess/findAll',
-    method: 'POST',
-  })
+export const find_all = createAPI<void, IResponseResource>({
+  url: '/permissionAccess/findAll',
+  method: 'POST',
+})

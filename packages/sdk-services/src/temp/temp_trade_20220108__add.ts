@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   trade1: string
@@ -7,9 +7,12 @@ interface IRequestResource {
   phone: string
 }
 
-export const temp_trade_20220108__add = (data: IRequestResource) =>
-  request.request<ResponsePack>({
-    url: '/temp/temp_trade_20220108/add',
-    method: 'POST',
-    data,
-  })
+interface IResponseResource {}
+
+export const temp_trade_20220108__add = createAPI<
+  IRequestResource,
+  IResponseResource
+>({
+  url: '/temp/temp_trade_20220108/add',
+  method: 'POST',
+})

@@ -1,13 +1,13 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   phone?: string
   email?: string
 }
 
-export const send = (data: IRequestResource) =>
-  request.request<ResponsePack>({
-    url: '/captcha/send',
-    method: 'POST',
-    data,
-  })
+interface IResponseResource {}
+
+export const send = createAPI<IRequestResource, IResponseResource>({
+  url: '/captcha/send',
+  method: 'POST',
+})

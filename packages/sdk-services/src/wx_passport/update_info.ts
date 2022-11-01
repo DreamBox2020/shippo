@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   code: string
@@ -6,9 +6,7 @@ interface IRequestResource {
 
 interface IResponseResource {}
 
-export const update_info = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/wxPassport/updateInfo',
-    method: 'POST',
-    data,
-  })
+export const update_info = createAPI<IRequestResource, IResponseResource>({
+  url: '/wxPassport/updateInfo',
+  method: 'POST',
+})

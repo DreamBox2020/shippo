@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   id: number
@@ -7,9 +7,7 @@ interface IRequestResource {
 
 interface IResponseResource {}
 
-export const update_top = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/wxComment/updateTop',
-    method: 'POST',
-    data
-  })
+export const update_top = createAPI<IRequestResource, IResponseResource>({
+  url: '/wxComment/updateTop',
+  method: 'POST',
+})

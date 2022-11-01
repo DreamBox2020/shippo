@@ -1,11 +1,9 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 import { IWxPassport } from '@shippo/types'
 
 interface IResponseResource extends IWxPassport {}
 
-export const find = () =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/wxPassport/find',
-    method: 'POST',
-    data: {},
-  })
+export const find = createAPI<void, IResponseResource>({
+  url: '/wxPassport/find',
+  method: 'POST',
+})

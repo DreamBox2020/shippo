@@ -23,6 +23,6 @@ export const services = {
   wxComment,
   wxPassport,
   use: (config?: HttpRequestConfig) => {
-    request.http = request.create(config)
+    request.instance = request.create(config)
   },
 }

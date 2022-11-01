@@ -1,11 +1,19 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, {
+  AxiosStatic,
+  AxiosInstance,
+  AxiosRequestConfig,
+  CreateAxiosDefaults,
+  AxiosResponse,
+} from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
-export type Http = AxiosInstance
-export type HttpRequestConfig = AxiosRequestConfig
-export type HttpResponse<T = any> = AxiosResponse<T>
+export type HttpStatic = AxiosStatic
+export type HttpInstance = AxiosInstance
+export type HttpRequestConfig<D = any> = AxiosRequestConfig<D>
+export type CreateHttpDefaults<D = any> = CreateAxiosDefaults<D>
+export type HttpResponse<T = any, D = any> = AxiosResponse<T, D>
 
-export interface RequestPack<T = string> {
+export interface RequestPacket<T = string> {
   passport: string
   session: string
   resource: T
@@ -13,7 +21,7 @@ export interface RequestPack<T = string> {
   other: null
 }
 
-export interface ResponsePack<T = string> {
+export interface ResponsePacket<T = string> {
   code: number
   message: string
   success: boolean
@@ -23,19 +31,24 @@ export interface ResponsePack<T = string> {
   other: null
 }
 
+export const http: HttpStatic = axios
+
 export class Request {
-  public http: Http
-  public constructor(config?: HttpRequestConfig) {
-    this.http = this.create(config)
+  public instance: HttpInstance
+
+  public constructor(config?: CreateHttpDefaults) {
+    this.instance = this.create(config)
   }
-  public create(config?: HttpRequestConfig) {
-    const http = axios.create(config)
-    this.init(http)
-    return http
+
+  public create(config?: CreateHttpDefaults) {
+    const instance = http.create(config)
+    this.init(instance)
+    return instance
   }
-  public init(http: Http) {
+
+  public init(http: HttpInstance) {
     http.interceptors.request.use(
-      request => {
+      (request) => {
         if (request.data === undefined) {
           request.data = {}
         }
@@ -48,18 +61,19 @@ export class Request {
             session: uuidv4(),
             resource: JSON.stringify(request.data),
             sign: '',
-            other: null
+            other: null,
           }
         }
         return request
       },
-      error => {
+      (error) => {
+        console.error(error)
         return Promise.reject(error)
       }
     )
 
     http.interceptors.response.use(
-      (response: HttpResponse<ResponsePack>) => {
+      (response: HttpResponse<ResponsePacket>) => {
         if (
           response.data &&
           Object.prototype.toString.call(response.data) === '[object Object]'
@@ -71,19 +85,30 @@ export class Request {
           try {
             response.data.resource = JSON.parse(response.data.resource)
           } catch (error) {
-            console.error(response.data)
             console.error(error)
+            console.error(response.data)
             return Promise.reject(response)
           }
         }
         return response
       },
-      error => {
+      (error) => {
+        console.error(error)
         return Promise.reject(error)
       }
     )
   }
-  public request<T = any>(config: HttpRequestConfig) {
-    return this.http.request<T, HttpResponse<T>>(config)
+
+  public request<
+    Req = any,
+    Resp = any,
+    ReqPacket = RequestPacket,
+    RespPacket = ResponsePacket<Resp>
+  >(config: HttpRequestConfig<Req>) {
+    return this.instance.request<
+      RespPacket,
+      HttpResponse<RespPacket, ReqPacket>,
+      Req
+    >(config)
   }
 }

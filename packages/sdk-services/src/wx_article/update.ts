@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 import { IWxArticle } from '@shippo/types'
 
 interface IRequestResource {
@@ -8,9 +8,7 @@ interface IRequestResource {
 
 interface IResponseResource extends IWxArticle {}
 
-export const update = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/wxArticle/update',
-    method: 'POST',
-    data,
-  })
+export const update = createAPI<IRequestResource, IResponseResource>({
+  url: '/wxArticle/update',
+  method: 'POST',
+})
