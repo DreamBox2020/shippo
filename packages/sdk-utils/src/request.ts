@@ -7,11 +7,11 @@ import axios, {
 } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
-export type HttpStatic = AxiosStatic
-export type HttpInstance = AxiosInstance
-export type HttpRequestConfig<D = any> = AxiosRequestConfig<D>
-export type CreateHttpDefaults<D = any> = CreateAxiosDefaults<D>
-export type HttpResponse<T = any, D = any> = AxiosResponse<T, D>
+export interface HttpStatic extends AxiosStatic {}
+export interface HttpInstance extends AxiosInstance {}
+export interface HttpRequestConfig<D = any> extends AxiosRequestConfig<D> {}
+export interface CreateHttpDefaults<D = any> extends CreateAxiosDefaults<D> {}
+export interface HttpResponse<T = any, D = any> extends AxiosResponse<T, D> {}
 
 export interface RequestPacket<T = string> {
   passport: string
