@@ -1,0 +1,10 @@
+/node_modules
+/dist
+/es
+/lib
+/types
+
+#
+yarn.lock
+yarn-error.log
+pnpm-lock.yaml
