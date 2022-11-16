@@ -1,16 +1,9 @@
-export enum ENV {
-  local = 'local',
-  development = 'development',
-  production = 'production'
-}
+import local from './local.config'
+import development from './development.config'
+import production from './production.config'
+import { ENV, IConfig } from './define'
 
-export interface IConfig {
-  ENV: ENV
-  BASE_API: string
-  OFFIACCOUNT_APP_ID: string
-}
-
-export const defineConfig = (config: IConfig): IConfig => config
+export * from './define'
 
 export class Config implements IConfig {
   public readonly ENV: ENV
@@ -37,5 +30,18 @@ export class Config implements IConfig {
 
   public isMiniProgram(): boolean {
     return window.navigator.userAgent.includes('miniProgram')
+  }
+
+  public static init(env: ENV) {
+    switch (env) {
+      case ENV.local:
+        return new Config(local)
+      case ENV.development:
+        return new Config(development)
+      case ENV.production:
+        return new Config(production)
+      default:
+        throw new Error('Unknown env')
+    }
   }
 }

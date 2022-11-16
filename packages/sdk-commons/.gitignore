@@ -8,3 +8,6 @@
 yarn.lock
 yarn-error.log
 pnpm-lock.yaml
+
+#
+src/config/*.config.ts
