@@ -10,7 +10,7 @@ export interface PermissionProps {
   children: ReactElement
 }
 
-export const Permission: React.FC<PermissionProps> = props => {
+export const Permission: React.FC<PermissionProps> = (props) => {
   const userInfo = useSelector(userGetters.infoGetter())
   const history = useNavigate()
   const location = useLocation()
@@ -19,8 +19,8 @@ export const Permission: React.FC<PermissionProps> = props => {
     return hasAccess(
       `sys_mobile:${props.accessRule}`,
       userInfo.access
-        .filter(i => i.accessType === 'resource')
-        .map(i => i.accessRule)
+        .filter((i) => i.accessType === 'resource')
+        .map((i) => i.accessRule)
     )
   }, [userInfo.access, props.accessRule])
 
@@ -29,13 +29,13 @@ export const Permission: React.FC<PermissionProps> = props => {
       if (userInfo.uid > 0) {
         Toast.show({
           icon: 'fail',
-          content: '权限不足'
+          content: '权限不足',
         })
         history('/', { replace: true })
       } else {
         Toast.show({
           icon: 'fail',
-          content: '请登录后访问'
+          content: '请登录后访问',
         })
         history('/passport', { replace: true })
       }
@@ -46,4 +46,8 @@ export const Permission: React.FC<PermissionProps> = props => {
     return props.children
   }
   return null
+}
+
+export const withPermission = (accessRule: string, element: ReactElement) => {
+  return <Permission accessRule={accessRule}>{element}</Permission>
 }
