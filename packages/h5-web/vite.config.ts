@@ -13,6 +13,7 @@ export default defineConfig({
   },
   plugins: [eslint(), react()],
   server: {
+    port: 3003,
     host: '0.0.0.0',
     proxy: {
       '/v1': {
