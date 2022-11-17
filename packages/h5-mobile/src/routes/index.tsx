@@ -1,4 +1,5 @@
 import { RouteObject } from 'react-router-dom'
+import { albumRoute } from './route/album'
 import { discoverRoute } from './route/discover'
 import { homeRoute } from './route/home'
 import { myRoute } from './route/my'
@@ -18,6 +19,7 @@ export const routes: RouteObject[] = [
   spaceRoute,
   tempRoute,
   wxRoute,
+  albumRoute,
   route404,
 ].map((_) => _.toRouteObject())
 
