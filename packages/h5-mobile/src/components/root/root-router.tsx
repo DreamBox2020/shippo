@@ -26,6 +26,7 @@ import { userActions, userGetters } from '@shippo/sdk-stores'
 
 import { getWxCode } from '~/utils'
 import { config } from '~/config'
+import LayoutFull from '~/layouts/full'
 
 export interface RootRouteProps {
   result: AxiosResponse<ResponsePack<IUserInfo>>[]
@@ -80,6 +81,19 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         ></Route>
       </Route>
       <Route
+        path="/dynamic"
+        element={
+          <Permission accessRule="/dynamic">
+            <LayoutHome />
+          </Permission>
+        }
+      >
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/dynamic')))}
+        ></Route>
+      </Route>
+      <Route
         path="/my"
         element={
           <Permission accessRule="/my">
@@ -101,6 +115,27 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
         }
       >
         <Route path="" element={<PageSetting />}></Route>
+      </Route>
+      <Route
+        path="/album"
+        element={
+          <Permission accessRule="/album">
+            <LayoutFull />
+          </Permission>
+        }
+      >
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/album')))}
+        ></Route>
+        <Route
+          path="create"
+          element={withLoading(lazy(() => import('~/pages/album/create')))}
+        ></Route>
+        <Route
+          path=":id"
+          element={withLoading(lazy(() => import('~/pages/album/list')))}
+        ></Route>
       </Route>
       <Route
         path="/space/:uid"

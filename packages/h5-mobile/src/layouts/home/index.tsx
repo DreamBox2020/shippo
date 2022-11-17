@@ -36,6 +36,11 @@ const tabBarItems: Array<tabBarItem> = [
     icon: 'faxian',
   },
   {
+    path: '/dynamic',
+    title: '动态',
+    icon: 'faxian',
+  },
+  {
     path: '/my',
     title: '我',
     icon: 'wode',

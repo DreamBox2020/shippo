@@ -5,7 +5,11 @@ import { Header } from '~/components/header'
 import { Main } from '~/components/main'
 import { WhiteSpace } from '~/components/white-space'
 import { UserInfoCard } from './components/user-info-card'
-import { BellOutlined, ProfileOutlined, SettingOutlined } from '@ant-design/icons'
+import {
+  BellOutlined,
+  PictureOutlined,
+  SettingOutlined,
+} from '@ant-design/icons'
 import { useNavigate } from 'react-router'
 
 export const My = () => {
@@ -32,10 +36,16 @@ export const My = () => {
           <List.Item prefix={<BellOutlined />} onClick={() => {}}>
             通知
           </List.Item>
-          <List.Item prefix={<ProfileOutlined />} onClick={() => {}}>
-            我的作品
+          <List.Item
+            prefix={<PictureOutlined />}
+            onClick={() => history('/album')}
+          >
+            我的相簿
           </List.Item>
-          <List.Item prefix={<SettingOutlined />} onClick={() => history('/setting')}>
+          <List.Item
+            prefix={<SettingOutlined />}
+            onClick={() => history('/setting')}
+          >
             设置
           </List.Item>
         </List>

@@ -10,8 +10,14 @@ const StyledMain = styled.main`
   height: 100%;
 `
 
-export const Main: React.FC<PropsWithChildren<{}>> = (props) => {
-  return <StyledMain>{props.children}</StyledMain>
+interface MainProps {
+  style?: React.CSSProperties
+  className?: string
+}
+
+export const Main: React.FC<PropsWithChildren<MainProps>> = (props) => {
+  const { children, ...rest } = props
+  return <StyledMain {...rest}>{children}</StyledMain>
 }
 
 export default Main
