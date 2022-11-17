@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   id: number
@@ -8,9 +8,7 @@ interface IRequestResource {
 
 interface IResponseResource {}
 
-export const update = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/role/update',
-    method: 'POST',
-    data,
-  })
+export const update = createAPI<IRequestResource, IResponseResource>({
+  url: '/role/update',
+  method: 'POST',
+})

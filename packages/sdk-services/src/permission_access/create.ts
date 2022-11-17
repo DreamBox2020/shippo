@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   accessRule: string
@@ -8,9 +8,7 @@ interface IRequestResource {
 
 interface IResponseResource {}
 
-export const create = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/permissionAccess/create',
-    method: 'POST',
-    data,
-  })
+export const create = createAPI<IRequestResource, IResponseResource>({
+  url: '/permissionAccess/create',
+  method: 'POST',
+})

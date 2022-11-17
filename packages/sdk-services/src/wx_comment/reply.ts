@@ -1,5 +1,5 @@
 import { IWxComment } from '@shippo/types'
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   content: string
@@ -8,9 +8,7 @@ interface IRequestResource {
 
 interface IResponseResource extends IWxComment {}
 
-export const reply = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/wxComment/reply',
-    method: 'POST',
-    data
-  })
+export const reply = createAPI<IRequestResource, IResponseResource>({
+  url: '/wxComment/reply',
+  method: 'POST',
+})

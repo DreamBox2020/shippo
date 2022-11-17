@@ -22,7 +22,7 @@ const StyledList = styled(List)`
   }
 `
 
-export const PagePassport = () => {
+const Component = () => {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch()
@@ -232,4 +232,6 @@ const withOnlyNotLogon = (CurrentComponent: React.ComponentType) => () => {
   return <CurrentComponent />
 }
 
-export default withOnlyNotLogon(PagePassport)
+export const PagePassport = withOnlyNotLogon(Component)
+
+export default PagePassport

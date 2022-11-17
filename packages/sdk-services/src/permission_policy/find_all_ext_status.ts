@@ -1,15 +1,17 @@
 import { IPermissionPolicy } from '@shippo/types'
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   id: number
 }
 
-interface IResponseResource extends Array<IPermissionPolicy & { status: boolean }> {}
+interface IResponseResource
+  extends Array<IPermissionPolicy & { status: boolean }> {}
 
-export const find_all_ext_status = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/permissionPolicy/findAllExtStatus',
-    method: 'POST',
-    data,
-  })
+export const find_all_ext_status = createAPI<
+  IRequestResource,
+  IResponseResource
+>({
+  url: '/permissionPolicy/findAllExtStatus',
+  method: 'POST',
+})

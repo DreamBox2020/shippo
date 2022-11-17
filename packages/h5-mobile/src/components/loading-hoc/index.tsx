@@ -1,5 +1,5 @@
-import { Space, SpinLoading } from 'antd-mobile'
-import React, { Suspense, useEffect, useState } from 'react'
+import { SpinLoading } from 'antd-mobile'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 
 export const Loading: React.FC = () => {
   return (
@@ -24,7 +24,11 @@ export const withLoading = (CurrentComponent: React.ComponentType) => {
 }
 
 export const withFetchLoading =
-  (CurrentComponent: React.ComponentType<any>, requests: () => Promise<any>[]) => () => {
+  (
+    CurrentComponent: React.ComponentType<any>,
+    requests: () => Promise<any>[]
+  ) =>
+  () => {
     const [result, setResult] = useState<any[] | null>(null)
 
     useEffect(() => {
@@ -33,5 +37,16 @@ export const withFetchLoading =
 
     return result ? <CurrentComponent result={result} /> : <Loading />
   }
+
+export type factory = () => Promise<{ default: React.ComponentType<any> }>
+
+export const loadable = (factory: factory, fallback?: React.ReactNode) => {
+  const CurrentComponent = lazy(factory)
+  return (
+    <Suspense fallback={fallback || <Loading />}>
+      <CurrentComponent />
+    </Suspense>
+  )
+}
 
 export default Loading

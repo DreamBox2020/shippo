@@ -1,10 +1,9 @@
 import { IRole } from '@shippo/types'
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IResponseResource extends Array<IRole> {}
 
-export const find_all = () =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/role/findAll',
-    method: 'POST',
-  })
+export const find_all = createAPI<void, IResponseResource>({
+  url: '/role/findAll',
+  method: 'POST',
+})

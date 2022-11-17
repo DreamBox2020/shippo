@@ -1,11 +1,9 @@
 import { IUserInfo } from '@shippo/types'
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IResponseResource extends IUserInfo {}
 
-export const logout = () =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/user/logout',
-    method: 'POST',
-    data: {},
-  })
+export const logout = createAPI<void, IResponseResource>({
+  url: '/user/logout',
+  method: 'POST',
+})

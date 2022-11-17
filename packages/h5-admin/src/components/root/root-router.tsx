@@ -4,7 +4,7 @@ import React, { lazy } from 'react'
 import { useLocation } from 'react-router'
 import { Routes, Route, Navigate, useNavigate, Outlet } from 'react-router-dom'
 import { withFetchLoading, withLoading } from '~/components/loading-hoc'
-import { ResponsePack } from '@shippo/sdk-services/types/helpers'
+import { ResponsePacket } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 import { message } from 'antd'
 
@@ -16,7 +16,7 @@ import { Page_passport } from '~/pages/passport'
 
 export interface RootRouteProps {
   result: AxiosResponse<
-    ResponsePack<{
+    ResponsePacket<{
       passport: string
       uid: number
     }>
@@ -55,15 +55,23 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
       </Route>
       <Route path="/transform" element={<Transform />}></Route>
       <Route path="/dashboard" element={<Home />}>
-        <Route path="" element={withLoading(lazy(() => import('~/pages/dashboard')))}></Route>
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/dashboard')))}
+        ></Route>
       </Route>
       <Route path="/users" element={<Home />}>
-        <Route path="" element={withLoading(lazy(() => import('~/pages/users')))}></Route>
+        <Route
+          path=""
+          element={withLoading(lazy(() => import('~/pages/users')))}
+        ></Route>
       </Route>
       <Route path="/temp/*" element={<Home />}>
         <Route
           path="temp_trade_20220108"
-          element={withLoading(lazy(() => import('~/pages/temp/temp_trade_20220108')))}
+          element={withLoading(
+            lazy(() => import('~/pages/temp/temp_trade_20220108'))
+          )}
         ></Route>
       </Route>
       <Route path="/permission/*" element={<Home />}>
@@ -85,6 +93,8 @@ const Component: React.FC<RootRouteProps> = ({ result }) => {
   )
 }
 
-export const RootRoute = withFetchLoading(Component, () => [services.passport.create({})])
+export const RootRoute = withFetchLoading(Component, () => [
+  services.passport.create({}),
+])
 
 export default RootRoute

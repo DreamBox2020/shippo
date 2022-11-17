@@ -6,7 +6,7 @@ import Loading, {
   withFetchLoading,
   withLoading,
 } from '~/components/loading-hoc'
-import { ResponsePack } from '@shippo/sdk-services/types/helpers'
+import { ResponsePacket } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
 import { IUserInfo } from '@shippo/types'
 
@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userActions, userGetters } from '@shippo/sdk-stores'
 
 export interface RootRouteProps {
-  result: AxiosResponse<ResponsePack<IUserInfo>>[]
+  result: AxiosResponse<ResponsePacket<IUserInfo>>[]
 }
 
 const Component: React.FC<RootRouteProps> = ({ result }) => {

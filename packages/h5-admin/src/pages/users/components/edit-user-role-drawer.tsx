@@ -9,8 +9,8 @@ const __defaultUserExtRoleName = __userExtRoleName()
 const columns = [
   {
     title: '角色名称',
-    dataIndex: 'userName',
-    key: 'userName',
+    dataIndex: 'roleName',
+    key: 'roleName',
   },
   {
     title: '描述',
@@ -27,10 +27,10 @@ export interface EditUserRoleDrawerProps {
   onClose?: (user: IUserExtRoleName) => void
 }
 
-const Component: React.ForwardRefRenderFunction<EditUserRoleDrawerRef, EditUserRoleDrawerProps> = (
-  props,
-  ref
-) => {
+const Component: React.ForwardRefRenderFunction<
+  EditUserRoleDrawerRef,
+  EditUserRoleDrawerProps
+> = (props, ref) => {
   const { onClose } = props
   const [user, setUser] = useState<IUserExtRoleName>(__defaultUserExtRoleName)
   const [dataSource, setDataSource] = useState<IRole[]>([])

@@ -1,12 +1,12 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   email?: string
 }
 
-export const create = (data: IRequestResource) =>
-  request.request<ResponsePack>({
-    url: '/user/create',
-    method: 'POST',
-    data,
-  })
+interface IResponseResource {}
+
+export const create = createAPI<IRequestResource, IResponseResource>({
+  url: '/user/create',
+  method: 'POST',
+})

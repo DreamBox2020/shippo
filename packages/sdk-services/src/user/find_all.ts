@@ -1,5 +1,5 @@
 import { IPagination, IUserExtRoleName } from '@shippo/types'
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource extends Partial<IPagination> {
   id?: number
@@ -12,9 +12,7 @@ interface IResponseResource extends Required<IPagination> {
   items: IUserExtRoleName[]
 }
 
-export const find_all = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/user/findAll',
-    method: 'POST',
-    data,
-  })
+export const find_all = createAPI<IRequestResource, IResponseResource>({
+  url: '/user/findAll',
+  method: 'POST',
+})

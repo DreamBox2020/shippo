@@ -1,4 +1,4 @@
-import { request, ResponsePack } from '../helpers'
+import { createAPI } from '../helpers'
 
 interface IRequestResource {
   list: string[]
@@ -6,9 +6,10 @@ interface IRequestResource {
 
 interface IResponseResource extends Array<string> {}
 
-export const temp_trade_20220108__find_no_exist = (data: IRequestResource) =>
-  request.request<ResponsePack<IResponseResource>>({
-    url: '/temp/temp_trade_20220108/findNoExist',
-    method: 'POST',
-    data,
-  })
+export const temp_trade_20220108__find_no_exist = createAPI<
+  IRequestResource,
+  IResponseResource
+>({
+  url: '/temp/temp_trade_20220108/findNoExist',
+  method: 'POST',
+})
