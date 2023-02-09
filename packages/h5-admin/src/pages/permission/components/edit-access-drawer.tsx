@@ -1,7 +1,13 @@
-import { useImperativeHandle, useState, useCallback, useMemo, forwardRef } from 'react'
+import {
+  useImperativeHandle,
+  useState,
+  useCallback,
+  useMemo,
+  forwardRef,
+} from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message } from 'antd'
 import { services } from '@shippo/sdk-services'
-import { IPermissionAccess, __permissionAccess } from '@shippo/types'
+import { IPermissionAccess, __permissionAccess } from '@shippo/sdk-types'
 
 const __defaultAccess = __permissionAccess()
 
@@ -13,10 +19,10 @@ export interface EditAccessDrawerProps {
   onClose?: () => void
 }
 
-const Component: React.ForwardRefRenderFunction<EditAccessDrawerRef, EditAccessDrawerProps> = (
-  props,
-  ref
-) => {
+const Component: React.ForwardRefRenderFunction<
+  EditAccessDrawerRef,
+  EditAccessDrawerProps
+> = (props, ref) => {
   const { onClose } = props
   const [access, setAccess] = useState<IPermissionAccess>(__defaultAccess)
 
@@ -107,7 +113,10 @@ const Component: React.ForwardRefRenderFunction<EditAccessDrawerRef, EditAccessD
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="描述" rules={[{ required: true, message: '请输入描述' }]}>
+            <Form.Item
+              label="描述"
+              rules={[{ required: true, message: '请输入描述' }]}
+            >
               <Input
                 placeholder="请输入描述"
                 value={access.remark}

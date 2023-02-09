@@ -1,5 +1,5 @@
 import { createAPI } from '../helpers'
-import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
+import { IWxArticleExtOffiaccountNickname } from '@shippo/sdk-types'
 
 interface IRequestResource {
   id: number

@@ -1,4 +1,4 @@
-import { IWxCommentExtReplyList } from '@shippo/types'
+import { IWxCommentExtReplyList } from '@shippo/sdk-types'
 import { createAPI } from '../helpers'
 
 interface IRequestResource {

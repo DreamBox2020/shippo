@@ -2,11 +2,11 @@ import {
   IWxArticleExtOffiaccountNickname,
   IWxCommentExt,
   IWxCommentExtReplyList,
-} from '@shippo/types'
+} from '../sdk-types/types'
 
 import { userGetters } from '@shippo/sdk-stores'
 import { List, Image, ActionSheet, Toast, Badge } from 'antd-mobile'
-import { UserOutline,StarFill,StarOutline } from 'antd-mobile-icons'
+import { UserOutline, StarFill, StarOutline } from 'antd-mobile-icons'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { StyledCommentItem, StyledList, StyledReplyList } from './comment-list'
@@ -37,10 +37,12 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
 
   const load = useCallback(() => {
     if (props.article.id) {
-      services.wxComment.admin__find_by_article({ articleId: props.article.id }).then((hr) => {
-        console.log(hr.data.resource)
-        setCommentList(hr.data.resource)
-      })
+      services.wxComment
+        .admin__find_by_article({ articleId: props.article.id })
+        .then((hr) => {
+          console.log(hr.data.resource)
+          setCommentList(hr.data.resource)
+        })
     }
   }, [props.article.id])
 
@@ -53,13 +55,13 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
       {
         text: '删除留言',
         key: 'del',
-        onClick:async () => {
+        onClick: async () => {
           try {
-            const hr = await services.wxComment.del({id:currentCommentId})
-            if(hr.data.success){
+            const hr = await services.wxComment.del({ id: currentCommentId })
+            if (hr.data.success) {
               Toast.show({
                 icon: 'success',
-                content: '删除成功'
+                content: '删除成功',
               })
               load()
             }
@@ -67,9 +69,9 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
             console.error(error)
             Toast.show({
               icon: 'success',
-              content: '删除失败'
+              content: '删除失败',
             })
-          } finally{
+          } finally {
             setSheetVisible(false)
           }
         },
@@ -81,48 +83,61 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
   const commentContentClickHndler = useCallback((comment: IWxCommentExt) => {
     if (comment.wxPassportId === 0) {
       setCurrentCommentId(comment.id)
-      setSheetVisible(true)    }
+      setSheetVisible(true)
+    }
   }, [])
 
   // 精选评论
-  const updateElected = useCallback(async (commentId: number, elected: boolean) => {
-    try {
-      const hr = await services.wxComment.update_elected({ id: commentId, isElected:elected?1:0 })
-      if (hr.data.success) {
-        Toast.show({
-          icon: 'success',
-          content: '修改成功',
+  const updateElected = useCallback(
+    async (commentId: number, elected: boolean) => {
+      try {
+        const hr = await services.wxComment.update_elected({
+          id: commentId,
+          isElected: elected ? 1 : 0,
         })
-        load()
+        if (hr.data.success) {
+          Toast.show({
+            icon: 'success',
+            content: '修改成功',
+          })
+          load()
+        }
+      } catch (error) {
+        console.error(error)
+        Toast.show({
+          icon: 'fail',
+          content: '修改失败',
+        })
       }
-    } catch (error) {
-      console.error(error)
-      Toast.show({
-        icon: 'fail',
-        content: '修改失败',
-      })
-    }
-  }, [load])
+    },
+    [load]
+  )
 
   // 置顶评论
-  const updateTop = useCallback(async (commentId: number, top: boolean) => { 
-    try {
-      const hr = await services.wxComment.update_top({ id: commentId, isTop:top?1:0 })
-      if (hr.data.success) {
-        Toast.show({
-          icon: 'success',
-          content: '修改成功',
+  const updateTop = useCallback(
+    async (commentId: number, top: boolean) => {
+      try {
+        const hr = await services.wxComment.update_top({
+          id: commentId,
+          isTop: top ? 1 : 0,
         })
-        load()
+        if (hr.data.success) {
+          Toast.show({
+            icon: 'success',
+            content: '修改成功',
+          })
+          load()
+        }
+      } catch (error) {
+        console.error(error)
+        Toast.show({
+          icon: 'fail',
+          content: '修改失败',
+        })
       }
-    } catch (error) {
-      console.error(error)
-      Toast.show({
-        icon: 'fail',
-        content: '修改失败',
-      })
-    }
-  } , [load])
+    },
+    [load]
+  )
 
   return (
     <div>
@@ -146,20 +161,42 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
                     height={40}
                   />
                 }
-                extra={c1.isElected ? <StarFill onClick={()=>updateElected(c1.id,!c1.isElected)} />  :<StarOutline  onClick={()=>updateElected(c1.id,!c1.isElected)} />}
-                >
+                extra={
+                  c1.isElected ? (
+                    <StarFill
+                      onClick={() => updateElected(c1.id, !c1.isElected)}
+                    />
+                  ) : (
+                    <StarOutline
+                      onClick={() => updateElected(c1.id, !c1.isElected)}
+                    />
+                  )
+                }
+              >
                 <StyledCommentItem>
-                   <div className="nickname">
-                    <span style={{ verticalAlign: 'middle' }}>{c1.nickname}</span>
+                  <div className="nickname">
+                    <span style={{ verticalAlign: 'middle' }}>
+                      {c1.nickname}
+                    </span>
                     {c1.isTop ? <Badge content="置顶" /> : null}
-                  </div>                 
-                   <p className="content" onClick={() => commentContentClickHndler(c1)}>
+                  </div>
+                  <p
+                    className="content"
+                    onClick={() => commentContentClickHndler(c1)}
+                  >
                     {c1.content}
                   </p>
                   <p className="action-wrap">
-                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
+                    <span className="comment-time">
+                      {formatTimeStr(c1.createdAt)}
+                    </span>
                     <span className="action-like">赞&nbsp;{c1.likeNum}</span>
-                    <span className="action-top" onClick={()=>updateTop(c1.id,!c1.isTop)}>{c1.isTop ? '取消置顶' : '置顶'}</span>
+                    <span
+                      className="action-top"
+                      onClick={() => updateTop(c1.id, !c1.isTop)}
+                    >
+                      {c1.isTop ? '取消置顶' : '置顶'}
+                    </span>
                     <span
                       className="action-reply"
                       onClick={() => {
@@ -186,10 +223,24 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
                             height={24}
                           />
                         }
-                        extra={c2.isElected ? <StarFill onClick={()=>updateElected(c2.id,!c2.isElected)} />  :<StarOutline  onClick={()=>updateElected(c2.id,!c2.isElected)} />}
-                        >
+                        extra={
+                          c2.isElected ? (
+                            <StarFill
+                              onClick={() =>
+                                updateElected(c2.id, !c2.isElected)
+                              }
+                            />
+                          ) : (
+                            <StarOutline
+                              onClick={() =>
+                                updateElected(c2.id, !c2.isElected)
+                              }
+                            />
+                          )
+                        }
+                      >
                         <StyledCommentItem>
-                        <div className="nickname">
+                          <div className="nickname">
                             {c2.nickname || (
                               <span>
                                 作者
@@ -197,12 +248,19 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
                               </span>
                             )}
                           </div>
-                          <p className="content" onClick={() => commentContentClickHndler(c2)}>
+                          <p
+                            className="content"
+                            onClick={() => commentContentClickHndler(c2)}
+                          >
                             {c2.content}
                           </p>
                           <p className="action-wrap">
-                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
-                            <span className="action-like">赞&nbsp;{c2.likeNum}</span>
+                            <span className="comment-time">
+                              {formatTimeStr(c2.createdAt)}
+                            </span>
+                            <span className="action-like">
+                              赞&nbsp;{c2.likeNum}
+                            </span>
                           </p>
                         </StyledCommentItem>
                       </List.Item>

@@ -5,13 +5,16 @@ import { ColumnsType } from 'antd/lib/table'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { services } from '@shippo/sdk-services'
-import { IPermissionPolicy } from '@shippo/types'
+import { IPermissionPolicy } from '@shippo/sdk-types'
 
 import {
   EditPolicyAccessDrawer,
   EditPolicyAccessDrawerRef,
 } from './components/edit-policy-access-drawe'
-import { EditPolicyDrawer, EditPolicyDrawerRef } from './components/edit-policy-drawer'
+import {
+  EditPolicyDrawer,
+  EditPolicyDrawerRef,
+} from './components/edit-policy-drawer'
 const { confirm } = Modal
 
 export const Page_permission_policy: React.FC = () => {
@@ -71,7 +74,10 @@ export const Page_permission_policy: React.FC = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Button type="link" onClick={() => editPolicyDrawerRef.current?.open(record)}>
+          <Button
+            type="link"
+            onClick={() => editPolicyDrawerRef.current?.open(record)}
+          >
             修改
           </Button>
           <Button
@@ -82,7 +88,10 @@ export const Page_permission_policy: React.FC = () => {
           >
             删除
           </Button>
-          <Button type="link" onClick={() => editPolicyAccessDrawerRef.current?.open(record)}>
+          <Button
+            type="link"
+            onClick={() => editPolicyAccessDrawerRef.current?.open(record)}
+          >
             访问规则配置
           </Button>
         </Space>
@@ -105,10 +114,16 @@ export const Page_permission_policy: React.FC = () => {
 
   return (
     <div>
-      <EditPolicyDrawer ref={editPolicyDrawerRef} onClose={() => updateTable()} />
+      <EditPolicyDrawer
+        ref={editPolicyDrawerRef}
+        onClose={() => updateTable()}
+      />
       <EditPolicyAccessDrawer ref={editPolicyAccessDrawerRef} />
       <Space size="middle">
-        <Button type="primary" onClick={() => editPolicyDrawerRef.current?.open()}>
+        <Button
+          type="primary"
+          onClick={() => editPolicyDrawerRef.current?.open()}
+        >
           新增权限策略
         </Button>
       </Space>

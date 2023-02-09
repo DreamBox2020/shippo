@@ -1,7 +1,20 @@
-import { IWxArticleExtOffiaccountNickname, IWxCommentExt } from '@shippo/types'
+import {
+  IWxArticleExtOffiaccountNickname,
+  IWxCommentExt,
+} from '../sdk-types/types'
 
 import { userGetters } from '@shippo/sdk-stores'
-import { Dialog, Button, List, Divider, Image, Toast, Empty, ActionSheet, Badge } from 'antd-mobile'
+import {
+  Dialog,
+  Button,
+  List,
+  Divider,
+  Image,
+  Toast,
+  Empty,
+  ActionSheet,
+  Badge,
+} from 'antd-mobile'
 import { ExclamationOutline, LikeOutline, UserOutline } from 'antd-mobile-icons'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -12,7 +25,7 @@ import avatar from '~/assets/avatar.png'
 import notavatar from '~/assets/notavatar.jpg'
 import type { Action } from 'antd-mobile/es/components/action-sheet'
 
-import { IWxCommentExtReplyList } from '@shippo/types'
+import { IWxCommentExtReplyList } from '../sdk-types/types'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { config } from '~/config'
 import { useLocation, useNavigate } from 'react-router'
@@ -73,7 +86,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
   const userInfo = useSelector(userGetters.infoGetter())
 
   // 当前选中评论
-  const [currentCommentId,setCurrentCommentId] = useState(0)
+  const [currentCommentId, setCurrentCommentId] = useState(0)
 
   // 删除评论面板 是否可见
   const [sheetVisible, setSheetVisible] = useState(false)
@@ -85,16 +98,20 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
   const [commentList, setCommentList] = useState<IWxCommentExtReplyList[]>([])
 
   // 精选评论列表
-  const [electedCommentList, setElectedCommentList] = useState<IWxCommentExtReplyList[]>([])
+  const [electedCommentList, setElectedCommentList] = useState<
+    IWxCommentExtReplyList[]
+  >([])
 
   const load = useCallback(() => {
     if (props.article.id) {
-      services.wxComment.find_by_article({ articleId: props.article.id }).then((hr) => {
-        console.log(hr.data.resource)
-        setElectedCommentList(hr.data.resource)
-      })
+      services.wxComment
+        .find_by_article({ articleId: props.article.id })
+        .then((hr) => {
+          console.log(hr.data.resource)
+          setElectedCommentList(hr.data.resource)
+        })
 
-      if(userInfo.uid>0){
+      if (userInfo.uid > 0) {
         services.wxComment
           .find_by_wx_passport_and_article({ articleId: props.article.id })
           .then((hr) => {
@@ -103,7 +120,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
           })
       }
     }
-  }, [props.article.id,userInfo.uid])
+  }, [props.article.id, userInfo.uid])
 
   useEffect(() => {
     load()
@@ -114,13 +131,13 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
       {
         text: '删除留言',
         key: 'del',
-        onClick:async () => {
+        onClick: async () => {
           try {
-            const hr = await services.wxComment.del({id:currentCommentId})
-            if(hr.data.success){
+            const hr = await services.wxComment.del({ id: currentCommentId })
+            if (hr.data.success) {
               Toast.show({
                 icon: 'success',
-                content: '删除成功'
+                content: '删除成功',
               })
               load()
             }
@@ -128,9 +145,9 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
             console.error(error)
             Toast.show({
               icon: 'success',
-              content: '删除失败'
+              content: '删除失败',
             })
-          } finally{
+          } finally {
             setSheetVisible(false)
           }
         },
@@ -176,7 +193,9 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
                   config.OFFIACCOUNT_APP_ID +
                   '&redirect_uri=' +
-                  encodeURIComponent(window.location.href.replace('wxCode','oldWxCode')) +
+                  encodeURIComponent(
+                    window.location.href.replace('wxCode', 'oldWxCode')
+                  ) +
                   '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
               )
             },
@@ -200,7 +219,10 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 content: '请先登录',
               })
               console.log(location)
-              navigate('/passport?channel=wx&redirect=' + encodeURIComponent(location.pathname+location.search))
+              navigate(
+                '/passport?channel=wx&redirect=' +
+                  encodeURIComponent(location.pathname + location.search)
+              )
               return
             }
 
@@ -220,7 +242,9 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
       <CommentDialog ref={commentDialogRef} onConfirm={load} />
 
       <StyledList header="我的留言">
-        {commentList.length ? null : <Empty description={userInfo.uid>0?"暂无数据":"请登录"} />}
+        {commentList.length ? null : (
+          <Empty description={userInfo.uid > 0 ? '暂无数据' : '请登录'} />
+        )}
 
         {commentList.map((c1) => {
           return (
@@ -240,12 +264,17 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
               >
                 <StyledCommentItem>
                   <div className="nickname">{c1.nickname}</div>
-                  <p className="content" onClick={() => commentContentClickHndler(c1)}>
+                  <p
+                    className="content"
+                    onClick={() => commentContentClickHndler(c1)}
+                  >
                     {c1.content}
                   </p>
 
                   <p className="action-wrap">
-                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
+                    <span className="comment-time">
+                      {formatTimeStr(c1.createdAt)}
+                    </span>
                     <span
                       className="action-reply"
                       onClick={() => {
@@ -283,11 +312,16 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                               </span>
                             )}
                           </div>
-                          <p className="content" onClick={() => commentContentClickHndler(c2)}>
+                          <p
+                            className="content"
+                            onClick={() => commentContentClickHndler(c2)}
+                          >
                             {c2.content}
                           </p>
                           <p className="action-wrap">
-                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
+                            <span className="comment-time">
+                              {formatTimeStr(c2.createdAt)}
+                            </span>
                           </p>
                         </StyledCommentItem>
                       </List.Item>
@@ -311,7 +345,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 key={c1.id}
                 prefix={
                   <Image
-                    src={c1.avatarUrl  || notavatar}
+                    src={c1.avatarUrl || notavatar}
                     style={{ borderRadius: 5 }}
                     fit="cover"
                     width={40}
@@ -327,12 +361,16 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
               >
                 <StyledCommentItem>
                   <div className="nickname">
-                    <span style={{ verticalAlign: 'middle' }}>{c1.nickname}</span>
+                    <span style={{ verticalAlign: 'middle' }}>
+                      {c1.nickname}
+                    </span>
                     {c1.isTop ? <Badge content="置顶" /> : null}
                   </div>
                   <p className="content">{c1.content}</p>
                   <p className="action-wrap">
-                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
+                    <span className="comment-time">
+                      {formatTimeStr(c1.createdAt)}
+                    </span>
                   </p>
                 </StyledCommentItem>
               </List.Item>
@@ -369,7 +407,9 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                           </div>
                           <p className="content">{c2.content}</p>
                           <p className="action-wrap">
-                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
+                            <span className="comment-time">
+                              {formatTimeStr(c2.createdAt)}
+                            </span>
                           </p>
                         </StyledCommentItem>
                       </List.Item>

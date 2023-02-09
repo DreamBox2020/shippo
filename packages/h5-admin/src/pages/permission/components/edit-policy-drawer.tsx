@@ -1,7 +1,12 @@
-import React, { useImperativeHandle, useState, useCallback, useMemo } from 'react'
+import React, {
+  useImperativeHandle,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message } from 'antd'
 import { services } from '@shippo/sdk-services'
-import { IPermissionPolicy, __permissionPolicy } from '@shippo/types'
+import { IPermissionPolicy, __permissionPolicy } from '@shippo/sdk-types'
 
 const __defaultPolicy = __permissionPolicy()
 
@@ -13,10 +18,10 @@ export interface EditPolicyDrawerProps {
   onClose?: () => void
 }
 
-const Component: React.ForwardRefRenderFunction<EditPolicyDrawerRef, EditPolicyDrawerProps> = (
-  props,
-  ref
-) => {
+const Component: React.ForwardRefRenderFunction<
+  EditPolicyDrawerRef,
+  EditPolicyDrawerProps
+> = (props, ref) => {
   const { onClose } = props
   const [policy, setPolicy] = useState<IPermissionPolicy>(__defaultPolicy)
 
@@ -105,7 +110,10 @@ const Component: React.ForwardRefRenderFunction<EditPolicyDrawerRef, EditPolicyD
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="描述" rules={[{ required: true, message: '请输入描述' }]}>
+            <Form.Item
+              label="描述"
+              rules={[{ required: true, message: '请输入描述' }]}
+            >
               <Input
                 placeholder="请输入描述"
                 value={policy.remark}

@@ -5,8 +5,11 @@ import { ColumnsType } from 'antd/lib/table'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { services } from '@shippo/sdk-services'
-import { IPermissionAccess } from '@shippo/types'
-import { EditAccessDrawer, EditAccessDrawerRef } from './components/edit-access-drawer'
+import { IPermissionAccess } from '@shippo/sdk-types'
+import {
+  EditAccessDrawer,
+  EditAccessDrawerRef,
+} from './components/edit-access-drawer'
 const { confirm } = Modal
 
 export const Page_permission_access: React.FC = () => {
@@ -106,9 +109,15 @@ export const Page_permission_access: React.FC = () => {
 
   return (
     <div>
-      <EditAccessDrawer ref={editAccessDrawerRef} onClose={() => updateTable()} />
+      <EditAccessDrawer
+        ref={editAccessDrawerRef}
+        onClose={() => updateTable()}
+      />
       <Space size="middle">
-        <Button type="primary" onClick={() => editAccessDrawerRef.current?.open()}>
+        <Button
+          type="primary"
+          onClick={() => editAccessDrawerRef.current?.open()}
+        >
           新增访问规则
         </Button>
       </Space>

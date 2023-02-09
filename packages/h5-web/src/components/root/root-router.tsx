@@ -8,7 +8,7 @@ import Loading, {
 } from '~/components/loading-hoc'
 import { ResponsePacket } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
-import { IUserInfo } from '@shippo/types'
+import { IUserInfo } from '@shippo/sdk-types'
 
 import LayoutHome from '~/layouts/home'
 import LayoutPassport from '~/layouts/passport'

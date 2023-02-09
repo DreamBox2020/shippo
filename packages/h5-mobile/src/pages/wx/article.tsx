@@ -16,7 +16,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { Action } from 'antd-mobile/es/components/action-sheet'
 import { useSearchParams } from 'react-router-dom'
 import { services } from '@shippo/sdk-services'
-import { __wxArticleExtOffiaccountNickname } from '@shippo/types'
+import { __wxArticleExtOffiaccountNickname } from '../sdk-types/types'
 
 import { userGetters } from '@shippo/sdk-stores'
 import { useSelector } from 'react-redux'

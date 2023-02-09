@@ -1,18 +1,18 @@
 {
-  "name": "@shippo/types",
+  "name": "@shippo/sdk-types",
   "version": "0.1.0",
   "private": true,
-  "description": "types",
+  "description": "sdk-types",
   "keywords": [
-    "types"
+    "sdk-types"
   ],
   "homepage": "https://github.com/DreamBox2020/shippo",
   "repository": "https://github.com/DreamBox2020/shippo.git",
   "bugs": "https://github.com/DreamBox2020/shippo/issues",
   "author": "kazura233 <kazira233@gmail.com>",
   "license": "MIT",
-  "main": "lib/types.js",
-  "module": "es/types.js",
+  "main": "lib/sdk-types.js",
+  "module": "es/sdk-types.js",
   "types": "types/index.d.ts",
   "files": [
     "dist",

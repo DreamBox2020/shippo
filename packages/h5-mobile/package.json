@@ -19,7 +19,7 @@
     "@shippo/sdk-services": "^0.1.0",
     "@shippo/sdk-stores": "^0.1.0",
     "@shippo/sdk-utils": "^0.1.0",
-    "@shippo/types": "^0.1.0",
+    "@shippo/sdk-types": "^0.1.0",
     "ahooks": "^3.5.1",
     "antd-mobile": "^5.13.0",
     "antd-mobile-icons": "^0.3.0",

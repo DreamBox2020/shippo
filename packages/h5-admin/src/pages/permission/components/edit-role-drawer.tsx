@@ -1,7 +1,12 @@
-import React, { useImperativeHandle, useState, useCallback, useMemo } from 'react'
+import React, {
+  useImperativeHandle,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react'
 import { Drawer, Space, Button, Form, Row, Col, Input, message } from 'antd'
 import { services } from '@shippo/sdk-services'
-import { IRole, __role } from '@shippo/types'
+import { IRole, __role } from '@shippo/sdk-types'
 
 const __defaultRole = __role()
 
@@ -13,10 +18,10 @@ export interface EditRoleDrawerProps {
   onClose?: () => void
 }
 
-const Component: React.ForwardRefRenderFunction<EditRoleDrawerRef, EditRoleDrawerProps> = (
-  props,
-  ref
-) => {
+const Component: React.ForwardRefRenderFunction<
+  EditRoleDrawerRef,
+  EditRoleDrawerProps
+> = (props, ref) => {
   const { onClose } = props
   const [role, setRole] = useState<IRole>(__defaultRole)
 
@@ -67,7 +72,10 @@ const Component: React.ForwardRefRenderFunction<EditRoleDrawerRef, EditRoleDrawe
         message.success('失败')
       }
     } else {
-      const hr = await services.role.create({ roleName: role.roleName, remark: role.remark })
+      const hr = await services.role.create({
+        roleName: role.roleName,
+        remark: role.remark,
+      })
       if (hr.data.success) {
         message.success('成功')
         closeDrawer()
@@ -88,7 +96,10 @@ const Component: React.ForwardRefRenderFunction<EditRoleDrawerRef, EditRoleDrawe
       <Form layout="vertical" requiredMark={false}>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="角色名称" rules={[{ required: true, message: '请输入角色名称' }]}>
+            <Form.Item
+              label="角色名称"
+              rules={[{ required: true, message: '请输入角色名称' }]}
+            >
               <Input
                 placeholder="请输入角色名称"
                 value={role.roleName}
@@ -99,7 +110,10 @@ const Component: React.ForwardRefRenderFunction<EditRoleDrawerRef, EditRoleDrawe
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="描述" rules={[{ required: true, message: '请输入描述' }]}>
+            <Form.Item
+              label="描述"
+              rules={[{ required: true, message: '请输入描述' }]}
+            >
               <Input
                 placeholder="请输入描述"
                 value={role.remark}

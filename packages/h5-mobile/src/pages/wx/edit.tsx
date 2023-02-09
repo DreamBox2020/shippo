@@ -8,11 +8,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { WhiteSpace } from '~/components/white-space'
 import { StyledList } from '.'
 import { services } from '@shippo/sdk-services'
-import { __wxArticleExtOffiaccountNickname } from '@shippo/types'
+import { __wxArticleExtOffiaccountNickname } from '../sdk-types/types'
 
 import { config } from '~/config'
 
-const __defaultWxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname()
+const __defaultWxArticleExtOffiaccountNickname =
+  __wxArticleExtOffiaccountNickname()
 
 export const WxEditPage = () => {
   const location = useLocation()
@@ -52,14 +53,14 @@ export const WxEditPage = () => {
     } catch (error) {
       Toast.show({
         icon: 'fail',
-        content: (error as any).data.message
+        content: (error as any).data.message,
       })
     }
   }, [articleId, url, searchParams, setSearchParams, navigate])
 
   useEffect(() => {
     if (articleId) {
-      services.wxArticle.find({ id: articleId }).then(hr => {
+      services.wxArticle.find({ id: articleId }).then((hr) => {
         setArticle(hr.data.resource)
       })
     }
@@ -73,7 +74,7 @@ export const WxEditPage = () => {
           lineHeight: '45px',
           backgroundColor: '#fff',
           textAlign: 'center',
-          fontSize: '18px'
+          fontSize: '18px',
         }}
       >
         <NavBar onBack={() => navigate(-1)}>编辑</NavBar>
@@ -86,7 +87,7 @@ export const WxEditPage = () => {
                 placeholder="请输入文章链接"
                 clearable
                 value={url}
-                onChange={value => setUrl(value)}
+                onChange={(value) => setUrl(value)}
               />
             </Form.Item>
           </Form>

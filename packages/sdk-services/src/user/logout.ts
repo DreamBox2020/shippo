@@ -1,4 +1,4 @@
-import { IUserInfo } from '@shippo/types'
+import { IUserInfo } from '@shippo/sdk-types'
 import { createAPI } from '../helpers'
 
 interface IResponseResource extends IUserInfo {}

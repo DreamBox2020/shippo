@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUserInfo, __userInfo } from '@shippo/types'
+import { IUserInfo, __userInfo } from '@shippo/sdk-types'
 export const createDefaultInfo = __userInfo
 
 export interface IUserStore {
@@ -7,7 +7,7 @@ export interface IUserStore {
 }
 
 const initialState: IUserStore = {
-  info: createDefaultInfo()
+  info: createDefaultInfo(),
 }
 
 export const userSlice = createSlice({
@@ -16,8 +16,8 @@ export const userSlice = createSlice({
   reducers: {
     userUpdateInfo: (state, action: PayloadAction<IUserStore['info']>) => {
       state.info = action.payload
-    }
-  }
+    },
+  },
 })
 
 export const userActions = userSlice.actions

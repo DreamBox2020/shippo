@@ -3,7 +3,7 @@ import {
   IPermissionPolicy,
   IPermissionAccess,
   __permissionPolicy,
-} from '@shippo/types'
+} from '@shippo/sdk-types'
 
 import {
   Drawer,

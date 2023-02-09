@@ -1,5 +1,5 @@
 import { services } from '@shippo/sdk-services'
-import { IRole, IUserExtRoleName, __userExtRoleName } from '@shippo/types'
+import { IRole, IUserExtRoleName, __userExtRoleName } from '@shippo/sdk-types'
 
 import { Drawer, Space, Button, Form, Table } from 'antd'
 import React, { useImperativeHandle, useState, useCallback } from 'react'

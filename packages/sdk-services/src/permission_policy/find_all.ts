@@ -1,4 +1,4 @@
-import { IPermissionPolicy } from '@shippo/types'
+import { IPermissionPolicy } from '@shippo/sdk-types'
 import { createAPI } from '../helpers'
 
 interface IResponseResource

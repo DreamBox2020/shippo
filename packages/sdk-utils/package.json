@@ -29,7 +29,7 @@
   "peerDependencies": {},
   "dependencies": {
     "@babel/runtime": "^7.18.6",
-    "@shippo/types": "^0.1.0",
+    "@shippo/sdk-types": "^0.1.0",
     "@types/uuid": "^8.3.1",
     "axios": "^1.1.3",
     "moment": "^2.29.1",

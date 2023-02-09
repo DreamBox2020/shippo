@@ -1,4 +1,4 @@
-import { IPermissionAccess } from '@shippo/types'
+import { IPermissionAccess } from '@shippo/sdk-types'
 import { createAPI } from '../helpers'
 
 interface IResponseResource

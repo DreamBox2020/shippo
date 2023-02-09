@@ -1,5 +1,5 @@
 import { services } from '@shippo/sdk-services'
-import { IPermissionPolicy, IRole, __role } from '@shippo/types'
+import { IPermissionPolicy, IRole, __role } from '@shippo/sdk-types'
 
 import {
   Drawer,
@@ -14,7 +14,13 @@ import {
   message,
   Table,
 } from 'antd'
-import React, { useEffect, useImperativeHandle, useState, useCallback, useMemo } from 'react'
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react'
 
 const __defaultRole = __role()
 
@@ -55,10 +61,16 @@ const Component: React.ForwardRefRenderFunction<
     return {
       // 打开抽屉
       open: (role: IRole) => {
-        services.permissionPolicy.find_all_ext_status({ id: role.id }).then((hr) => {
-          setDataSource(hr.data.resource)
-          setSelectedRowKeys(hr.data.resource.filter((item) => item.status).map((item) => item.id))
-        })
+        services.permissionPolicy
+          .find_all_ext_status({ id: role.id })
+          .then((hr) => {
+            setDataSource(hr.data.resource)
+            setSelectedRowKeys(
+              hr.data.resource
+                .filter((item) => item.status)
+                .map((item) => item.id)
+            )
+          })
         setRole(role)
         setVisible(true)
       },

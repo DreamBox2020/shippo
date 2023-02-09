@@ -1,5 +1,5 @@
 import { createAPI } from '../helpers'
-import { IWxArticle } from '@shippo/types'
+import { IWxArticle } from '@shippo/sdk-types'
 
 interface IRequestResource {
   url: string

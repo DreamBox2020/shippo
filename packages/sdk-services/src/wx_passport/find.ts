@@ -1,5 +1,5 @@
 import { createAPI } from '../helpers'
-import { IWxPassport } from '@shippo/types'
+import { IWxPassport } from '@shippo/sdk-types'
 
 interface IResponseResource extends IWxPassport {}
 

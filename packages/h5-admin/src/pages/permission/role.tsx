@@ -5,10 +5,16 @@ import { ColumnsType } from 'antd/lib/table'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { services } from '@shippo/sdk-services'
-import { IRole } from '@shippo/types'
+import { IRole } from '@shippo/sdk-types'
 
-import { EditRoleDrawer, EditRoleDrawerRef } from './components/edit-role-drawer'
-import { EditRolePolicyDrawer, EditRolePolicyDrawerRef } from './components/edit-role-policy-drawer'
+import {
+  EditRoleDrawer,
+  EditRoleDrawerRef,
+} from './components/edit-role-drawer'
+import {
+  EditRolePolicyDrawer,
+  EditRolePolicyDrawerRef,
+} from './components/edit-role-policy-drawer'
 const { confirm } = Modal
 
 export const Page_permission_role: React.FC = () => {
@@ -112,7 +118,10 @@ export const Page_permission_role: React.FC = () => {
       <EditRoleDrawer ref={editRoleDrawerRef} onClose={() => updateTable()} />
       <EditRolePolicyDrawer ref={editRolePolicyDrawerRef} />
       <Space size="middle">
-        <Button type="primary" onClick={() => editRoleDrawerRef.current?.open()}>
+        <Button
+          type="primary"
+          onClick={() => editRoleDrawerRef.current?.open()}
+        >
           新增角色
         </Button>
       </Space>

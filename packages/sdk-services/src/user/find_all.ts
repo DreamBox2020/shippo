@@ -1,4 +1,4 @@
-import { IPagination, IUserExtRoleName } from '@shippo/types'
+import { IPagination, IUserExtRoleName } from '@shippo/sdk-types'
 import { createAPI } from '../helpers'
 
 interface IRequestResource extends Partial<IPagination> {

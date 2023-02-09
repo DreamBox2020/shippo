@@ -1,5 +1,5 @@
 import { services } from '@shippo/sdk-services'
-import { IWxArticleExtOffiaccountNickname } from '@shippo/types'
+import { IWxArticleExtOffiaccountNickname } from '../sdk-types/types'
 
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { List, Image, Button } from 'antd-mobile'
@@ -14,7 +14,9 @@ import { StyledList } from '.'
 export const WxManagePage = () => {
   const navigate = useNavigate()
 
-  const [articleAll, setArticleAll] = useState<IWxArticleExtOffiaccountNickname[]>([])
+  const [articleAll, setArticleAll] = useState<
+    IWxArticleExtOffiaccountNickname[]
+  >([])
 
   const articles = useMemo(() => {
     return articleAll.filter((v) => v.url)
@@ -45,7 +47,12 @@ export const WxManagePage = () => {
       </Header>
       <Main>
         <div style={{ padding: '20px 10px 10px 10px' }}>
-          <Button block color="primary" size="middle" onClick={() => navigate('/wx/edit')}>
+          <Button
+            block
+            color="primary"
+            size="middle"
+            onClick={() => navigate('/wx/edit')}
+          >
             发表
           </Button>
         </div>
@@ -55,7 +62,9 @@ export const WxManagePage = () => {
             <List.Item
               key={v.id}
               clickable
-              description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
+              description={`${v.offiaccountNickname} ${formatTimeStr(
+                v.createdAt
+              )}`}
               onClick={() => {
                 navigate('/wx/edit?article_id=' + v.id)
               }}
@@ -78,7 +87,9 @@ export const WxManagePage = () => {
                   height={60}
                 />
               }
-              description={`${v.offiaccountNickname} ${formatTimeStr(v.createdAt)}`}
+              description={`${v.offiaccountNickname} ${formatTimeStr(
+                v.createdAt
+              )}`}
               onClick={() => navigate(`/wx/article/${v.id}?channel=manage`)}
             >
               {v.title}

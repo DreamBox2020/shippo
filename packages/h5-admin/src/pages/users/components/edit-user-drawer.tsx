@@ -1,10 +1,29 @@
-import React, { useImperativeHandle, useState, useCallback, useMemo, useRef } from 'react'
-import { Drawer, Space, Button, Form, Row, Col, Input, message, Avatar } from 'antd'
+import React, {
+  useImperativeHandle,
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react'
+import {
+  Drawer,
+  Space,
+  Button,
+  Form,
+  Row,
+  Col,
+  Input,
+  message,
+  Avatar,
+} from 'antd'
 import { services } from '@shippo/sdk-services'
-import { IUserExtRoleName, __userExtRoleName } from '@shippo/types'
+import { IUserExtRoleName, __userExtRoleName } from '@shippo/sdk-types'
 
 import { UserOutlined } from '@ant-design/icons'
-import { EditUserRoleDrawer, EditUserRoleDrawerRef } from './edit-user-role-drawer'
+import {
+  EditUserRoleDrawer,
+  EditUserRoleDrawerRef,
+} from './edit-user-role-drawer'
 
 const __defaultUserExtRoleName = __userExtRoleName()
 
@@ -16,10 +35,10 @@ export interface EditUserDrawerProps {
   onClose?: () => void
 }
 
-const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawerProps> = (
-  props,
-  ref
-) => {
+const Component: React.ForwardRefRenderFunction<
+  EditUserDrawerRef,
+  EditUserDrawerProps
+> = (props, ref) => {
   const { onClose } = props
   const [user, setUser] = useState<IUserExtRoleName>(__defaultUserExtRoleName)
 
@@ -89,11 +108,17 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
       visible={visible}
       bodyStyle={{ paddingBottom: 80 }}
     >
-      <EditUserRoleDrawer ref={editUserRoleDrawerRef} onClose={(u) => setUser(u)} />
+      <EditUserRoleDrawer
+        ref={editUserRoleDrawerRef}
+        onClose={(u) => setUser(u)}
+      />
       <Form layout="vertical" requiredMark={false}>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="手机号" rules={[{ required: true, message: '请输入手机号' }]}>
+            <Form.Item
+              label="手机号"
+              rules={[{ required: true, message: '请输入手机号' }]}
+            >
               <Input
                 placeholder="请输入手机号"
                 value={user.phone}
@@ -105,7 +130,10 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="邮箱" rules={[{ required: true, message: '请输入邮箱' }]}>
+            <Form.Item
+              label="邮箱"
+              rules={[{ required: true, message: '请输入邮箱' }]}
+            >
               <Input
                 placeholder="请输入邮箱"
                 value={user.email}
@@ -117,7 +145,10 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="昵称" rules={[{ required: true, message: '请输入昵称' }]}>
+            <Form.Item
+              label="昵称"
+              rules={[{ required: true, message: '请输入昵称' }]}
+            >
               <Input
                 placeholder="请输入昵称"
                 value={user.nickname}
@@ -134,7 +165,10 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="经验" rules={[{ required: true, message: '请输入经验' }]}>
+            <Form.Item
+              label="经验"
+              rules={[{ required: true, message: '请输入经验' }]}
+            >
               <Input
                 placeholder="请输入经验"
                 value={user.exp}
@@ -146,7 +180,10 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="硬币" rules={[{ required: true, message: '请输入硬币' }]}>
+            <Form.Item
+              label="硬币"
+              rules={[{ required: true, message: '请输入硬币' }]}
+            >
               <Input
                 placeholder="请输入硬币"
                 value={user.coin}
@@ -160,7 +197,10 @@ const Component: React.ForwardRefRenderFunction<EditUserDrawerRef, EditUserDrawe
           <Col span={12}>
             <Form.Item label="角色名称">
               <span style={{ padding: '0 10px' }}>{user.roleName}</span>
-              <Button type="link" onClick={() => editUserRoleDrawerRef.current?.open(user)}>
+              <Button
+                type="link"
+                onClick={() => editUserRoleDrawerRef.current?.open(user)}
+              >
                 编辑用户角色
               </Button>
             </Form.Item>

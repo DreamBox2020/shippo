@@ -1,4 +1,4 @@
-import { IRole } from '@shippo/types'
+import { IRole } from '@shippo/sdk-types'
 import { createAPI } from '../helpers'
 
 interface IResponseResource extends Array<IRole> {}

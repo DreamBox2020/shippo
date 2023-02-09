@@ -4,7 +4,7 @@ import { useRoutes } from 'react-router-dom'
 import { Loading, withFetchLoading } from '~/components/loading-hoc'
 import { ResponsePacket } from '@shippo/sdk-services/types/helpers'
 import { services } from '@shippo/sdk-services'
-import { IUserInfo } from '@shippo/types'
+import { IUserInfo } from '../sdk-types/types'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { userActions, userGetters } from '@shippo/sdk-stores'

@@ -1,4 +1,4 @@
-import { IWxComment } from '@shippo/types'
+import { IWxComment } from '@shippo/sdk-types'
 import { createAPI } from '../helpers'
 
 interface IRequestResource {
