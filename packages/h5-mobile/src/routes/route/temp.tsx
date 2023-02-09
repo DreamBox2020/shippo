@@ -1,9 +1,16 @@
 import { Route, LazyRoute } from '../helpers'
-import { LayoutHome } from '~/layouts/home'
+import { LayoutTemp } from '~/layouts/temp'
 
-export const tempRoute = new Route('/temp/*', <LayoutHome />).childrenRoute(
-  new LazyRoute(
-    'temp_trade_20220108',
-    () => import('~/pages/temp/temp_trade_20220108')
-  ).withPermission('/temp/temp_trade_20220108')
-)
+export const tempRoute = new Route('/temp/*', <LayoutTemp />)
+  .childrenRoute(
+    new LazyRoute(
+      'temp_trade_20220108',
+      () => import('~/pages/temp/temp_trade_20220108')
+    ).withPermission('/temp/temp_trade_20220108')
+  )
+  .childrenRoute(
+    new LazyRoute(
+      'temp_express_20220914',
+      () => import('~/pages/temp/temp_express_20220914')
+    ).withPermission('/temp/temp_express_20220914')
+  )
