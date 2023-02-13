@@ -1,4 +1,6 @@
-import { List, Input, Button } from 'antd-mobile'
+import { services } from '@shippo/sdk-services'
+import { checkQQ, checkPhone } from '@shippo/sdk-utils'
+import { List, Input, Button, Toast, Dialog } from 'antd-mobile'
 import { useState } from 'react'
 import Container from '~/components/container'
 import Header from '~/components/header'
@@ -10,7 +12,42 @@ export const Page_temp_express_20220914 = () => {
   const [qq, setQQ] = useState('')
   const [phone, setPhone] = useState('')
 
-  const find = () => {}
+  const find = async () => {
+    if (!checkQQ(qq)) {
+      Toast.show({
+        icon: 'fail',
+        content: 'QQ格式不正确',
+      })
+      return
+    }
+
+    if (!checkPhone(phone)) {
+      Toast.show({
+        icon: 'fail',
+        content: '手机号格式不正确',
+      })
+      return
+    }
+
+    const { data } = await services.temp.temp_express_20220914__findByQQAndPhone({
+      qq,
+      phone,
+    })
+
+    const tradeList = data.resource
+
+    if (!tradeList.length) {
+      Toast.show({
+        icon: 'fail',
+        content: '没有查到任何数据',
+      })
+      return
+    }
+
+    Dialog.alert({
+      content: '订单号：' + tradeList.map((_) => _.tradeId).join('\n'),
+    })
+  }
 
   return (
     <Container direction="vertical">
@@ -29,20 +66,10 @@ export const Page_temp_express_20220914 = () => {
       <Main>
         <List>
           <List.Item prefix="QQ号">
-            <Input
-              placeholder="请输入QQ号"
-              clearable
-              value={qq}
-              onChange={setQQ}
-            />
+            <Input placeholder="请输入QQ号" clearable value={qq} onChange={setQQ} />
           </List.Item>
           <List.Item prefix="手机号">
-            <Input
-              placeholder="请输入手机号"
-              clearable
-              value={phone}
-              onChange={setPhone}
-            />
+            <Input placeholder="请输入手机号" clearable value={phone} onChange={setPhone} />
           </List.Item>
           <List.Item
             style={{
