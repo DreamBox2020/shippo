@@ -8,12 +8,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { WhiteSpace } from '~/components/white-space'
 import { StyledList } from '.'
 import { services } from '@shippo/sdk-services'
-import { __wxArticleExtOffiaccountNickname } from '../sdk-types/types'
+import { __wxArticleExtOffiaccountNickname } from '@shippo/sdk-types'
 
 import { config } from '~/config'
 
-const __defaultWxArticleExtOffiaccountNickname =
-  __wxArticleExtOffiaccountNickname()
+const __defaultWxArticleExtOffiaccountNickname = __wxArticleExtOffiaccountNickname()
 
 export const WxEditPage = () => {
   const location = useLocation()
@@ -22,9 +21,7 @@ export const WxEditPage = () => {
   const [url, setUrl] = useState('')
 
   // 从服务器获取的文章信息
-  const [article, setArticle] = useState(
-    __defaultWxArticleExtOffiaccountNickname
-  )
+  const [article, setArticle] = useState(__defaultWxArticleExtOffiaccountNickname)
 
   const [searchParams, setSearchParams] = useSearchParams()
 

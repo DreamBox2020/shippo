@@ -1,6 +1,6 @@
 import { services } from '@shippo/sdk-services'
 import { userGetters } from '@shippo/sdk-stores'
-import { __wxPassport } from '../sdk-types/types'
+import { __wxPassport } from '@shippo/sdk-types'
 import { List, Image, Toast, Modal } from 'antd-mobile'
 import { ExclamationOutline } from 'antd-mobile-icons'
 import { useEffect, useState } from 'react'

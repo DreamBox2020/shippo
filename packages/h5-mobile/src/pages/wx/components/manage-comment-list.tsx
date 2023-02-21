@@ -2,7 +2,7 @@ import {
   IWxArticleExtOffiaccountNickname,
   IWxCommentExt,
   IWxCommentExtReplyList,
-} from '../sdk-types/types'
+} from '@shippo/sdk-types'
 
 import { userGetters } from '@shippo/sdk-stores'
 import { List, Image, ActionSheet, Toast, Badge } from 'antd-mobile'
@@ -37,12 +37,10 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
 
   const load = useCallback(() => {
     if (props.article.id) {
-      services.wxComment
-        .admin__find_by_article({ articleId: props.article.id })
-        .then((hr) => {
-          console.log(hr.data.resource)
-          setCommentList(hr.data.resource)
-        })
+      services.wxComment.admin__find_by_article({ articleId: props.article.id }).then((hr) => {
+        console.log(hr.data.resource)
+        setCommentList(hr.data.resource)
+      })
     }
   }, [props.article.id])
 
@@ -163,38 +161,24 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
                 }
                 extra={
                   c1.isElected ? (
-                    <StarFill
-                      onClick={() => updateElected(c1.id, !c1.isElected)}
-                    />
+                    <StarFill onClick={() => updateElected(c1.id, !c1.isElected)} />
                   ) : (
-                    <StarOutline
-                      onClick={() => updateElected(c1.id, !c1.isElected)}
-                    />
+                    <StarOutline onClick={() => updateElected(c1.id, !c1.isElected)} />
                   )
                 }
               >
                 <StyledCommentItem>
                   <div className="nickname">
-                    <span style={{ verticalAlign: 'middle' }}>
-                      {c1.nickname}
-                    </span>
+                    <span style={{ verticalAlign: 'middle' }}>{c1.nickname}</span>
                     {c1.isTop ? <Badge content="置顶" /> : null}
                   </div>
-                  <p
-                    className="content"
-                    onClick={() => commentContentClickHndler(c1)}
-                  >
+                  <p className="content" onClick={() => commentContentClickHndler(c1)}>
                     {c1.content}
                   </p>
                   <p className="action-wrap">
-                    <span className="comment-time">
-                      {formatTimeStr(c1.createdAt)}
-                    </span>
+                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
                     <span className="action-like">赞&nbsp;{c1.likeNum}</span>
-                    <span
-                      className="action-top"
-                      onClick={() => updateTop(c1.id, !c1.isTop)}
-                    >
+                    <span className="action-top" onClick={() => updateTop(c1.id, !c1.isTop)}>
                       {c1.isTop ? '取消置顶' : '置顶'}
                     </span>
                     <span
@@ -225,17 +209,9 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
                         }
                         extra={
                           c2.isElected ? (
-                            <StarFill
-                              onClick={() =>
-                                updateElected(c2.id, !c2.isElected)
-                              }
-                            />
+                            <StarFill onClick={() => updateElected(c2.id, !c2.isElected)} />
                           ) : (
-                            <StarOutline
-                              onClick={() =>
-                                updateElected(c2.id, !c2.isElected)
-                              }
-                            />
+                            <StarOutline onClick={() => updateElected(c2.id, !c2.isElected)} />
                           )
                         }
                       >
@@ -248,19 +224,12 @@ export const ManageCommentList: React.FC<ManageCommentListProps> = (props) => {
                               </span>
                             )}
                           </div>
-                          <p
-                            className="content"
-                            onClick={() => commentContentClickHndler(c2)}
-                          >
+                          <p className="content" onClick={() => commentContentClickHndler(c2)}>
                             {c2.content}
                           </p>
                           <p className="action-wrap">
-                            <span className="comment-time">
-                              {formatTimeStr(c2.createdAt)}
-                            </span>
-                            <span className="action-like">
-                              赞&nbsp;{c2.likeNum}
-                            </span>
+                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
+                            <span className="action-like">赞&nbsp;{c2.likeNum}</span>
                           </p>
                         </StyledCommentItem>
                       </List.Item>

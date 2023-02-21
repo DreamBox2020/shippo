@@ -1,4 +1,4 @@
-import { IWxArticleExtOffiaccountNickname, IWxCommentExt } from '../sdk-types/types'
+import { IWxArticleExtOffiaccountNickname, IWxCommentExt } from '@shippo/sdk-types'
 
 import { userGetters } from '@shippo/sdk-stores'
 import { Dialog, Button, List, Divider, Image, Toast, Empty, ActionSheet, Badge } from 'antd-mobile'
@@ -12,7 +12,7 @@ import avatar from '~/assets/avatar.png'
 import notavatar from '~/assets/notavatar.jpg'
 import type { Action } from 'antd-mobile/es/components/action-sheet'
 
-import { IWxCommentExtReplyList } from '../sdk-types/types'
+import { IWxCommentExtReplyList } from '@shippo/sdk-types'
 import { formatTimeStr } from '@shippo/sdk-utils'
 import { config } from '~/config'
 import { useLocation, useNavigate } from 'react-router'
