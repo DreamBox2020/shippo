@@ -1,25 +1,12 @@
-import {
-  IWxArticleExtOffiaccountNickname,
-  IWxCommentExt,
-} from '../sdk-types/types'
+import { IWxArticleExtOffiaccountNickname, IWxCommentExt } from '../sdk-types/types'
 
 import { userGetters } from '@shippo/sdk-stores'
-import {
-  Dialog,
-  Button,
-  List,
-  Divider,
-  Image,
-  Toast,
-  Empty,
-  ActionSheet,
-  Badge,
-} from 'antd-mobile'
+import { Dialog, Button, List, Divider, Image, Toast, Empty, ActionSheet, Badge } from 'antd-mobile'
 import { ExclamationOutline, LikeOutline, UserOutline } from 'antd-mobile-icons'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { CommentDialog, CommentDialogRef } from './comment-dialog'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { services } from '@shippo/sdk-services'
 import avatar from '~/assets/avatar.png'
 import notavatar from '~/assets/notavatar.jpg'
@@ -98,18 +85,14 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
   const [commentList, setCommentList] = useState<IWxCommentExtReplyList[]>([])
 
   // 精选评论列表
-  const [electedCommentList, setElectedCommentList] = useState<
-    IWxCommentExtReplyList[]
-  >([])
+  const [electedCommentList, setElectedCommentList] = useState<IWxCommentExtReplyList[]>([])
 
   const load = useCallback(() => {
     if (props.article.id) {
-      services.wxComment
-        .find_by_article({ articleId: props.article.id })
-        .then((hr) => {
-          console.log(hr.data.resource)
-          setElectedCommentList(hr.data.resource)
-        })
+      services.wxComment.find_by_article({ articleId: props.article.id }).then((hr) => {
+        console.log(hr.data.resource)
+        setElectedCommentList(hr.data.resource)
+      })
 
       if (userInfo.uid > 0) {
         services.wxComment
@@ -193,9 +176,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
                   config.OFFIACCOUNT_APP_ID +
                   '&redirect_uri=' +
-                  encodeURIComponent(
-                    window.location.href.replace('wxCode', 'oldWxCode')
-                  ) +
+                  encodeURIComponent(window.location.href.replace('wxCode', 'oldWxCode')) +
                   '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
               )
             },
@@ -264,17 +245,12 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
               >
                 <StyledCommentItem>
                   <div className="nickname">{c1.nickname}</div>
-                  <p
-                    className="content"
-                    onClick={() => commentContentClickHndler(c1)}
-                  >
+                  <p className="content" onClick={() => commentContentClickHndler(c1)}>
                     {c1.content}
                   </p>
 
                   <p className="action-wrap">
-                    <span className="comment-time">
-                      {formatTimeStr(c1.createdAt)}
-                    </span>
+                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
                     <span
                       className="action-reply"
                       onClick={() => {
@@ -312,16 +288,11 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                               </span>
                             )}
                           </div>
-                          <p
-                            className="content"
-                            onClick={() => commentContentClickHndler(c2)}
-                          >
+                          <p className="content" onClick={() => commentContentClickHndler(c2)}>
                             {c2.content}
                           </p>
                           <p className="action-wrap">
-                            <span className="comment-time">
-                              {formatTimeStr(c2.createdAt)}
-                            </span>
+                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
                           </p>
                         </StyledCommentItem>
                       </List.Item>
@@ -361,16 +332,12 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
               >
                 <StyledCommentItem>
                   <div className="nickname">
-                    <span style={{ verticalAlign: 'middle' }}>
-                      {c1.nickname}
-                    </span>
+                    <span style={{ verticalAlign: 'middle' }}>{c1.nickname}</span>
                     {c1.isTop ? <Badge content="置顶" /> : null}
                   </div>
                   <p className="content">{c1.content}</p>
                   <p className="action-wrap">
-                    <span className="comment-time">
-                      {formatTimeStr(c1.createdAt)}
-                    </span>
+                    <span className="comment-time">{formatTimeStr(c1.createdAt)}</span>
                   </p>
                 </StyledCommentItem>
               </List.Item>
@@ -407,9 +374,7 @@ export const CommentList: React.FC<CommentListProps> = (props) => {
                           </div>
                           <p className="content">{c2.content}</p>
                           <p className="action-wrap">
-                            <span className="comment-time">
-                              {formatTimeStr(c2.createdAt)}
-                            </span>
+                            <span className="comment-time">{formatTimeStr(c2.createdAt)}</span>
                           </p>
                         </StyledCommentItem>
                       </List.Item>

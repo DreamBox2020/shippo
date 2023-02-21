@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const StyledAside = styled.aside`
   overflow: auto;

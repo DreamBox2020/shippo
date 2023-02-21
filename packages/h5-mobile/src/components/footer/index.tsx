@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const StyledFooter = styled.footer`
   box-sizing: border-box;

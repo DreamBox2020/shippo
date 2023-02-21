@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 type direction = 'vertical' | 'horizontal'
 
@@ -11,8 +11,7 @@ const StyledContainer = styled.section`
   box-sizing: border-box;
   min-width: 0;
   height: 100%;
-  ${({ isColumn }: { isColumn: boolean }) =>
-    isColumn ? 'flex-direction: column;' : ''}
+  ${({ isColumn }: { isColumn: boolean }) => (isColumn ? 'flex-direction: column;' : '')}
 `
 
 export interface IContainerProps {
@@ -21,9 +20,7 @@ export interface IContainerProps {
   className?: string
 }
 
-export const Container: React.FC<PropsWithChildren<IContainerProps>> = (
-  props
-) => {
+export const Container: React.FC<PropsWithChildren<IContainerProps>> = (props) => {
   const { direction, children, ...rest } = props
   return (
     <StyledContainer isColumn={direction === 'vertical'} {...rest}>

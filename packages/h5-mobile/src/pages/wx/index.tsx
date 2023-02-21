@@ -1,5 +1,5 @@
 import { List, Image, Empty } from 'antd-mobile'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
@@ -56,9 +56,7 @@ export const WxPage = () => {
 
   const navigate = useNavigate()
 
-  const [articleList, setArticleList] = useState<
-    IWxArticleExtOffiaccountNickname[]
-  >([])
+  const [articleList, setArticleList] = useState<IWxArticleExtOffiaccountNickname[]>([])
 
   // useEffect(() => {
   //   services.wxArticle.find_all().then((hr) => {
@@ -116,9 +114,7 @@ export const WxPage = () => {
                   height={60}
                 />
               }
-              description={`${article.offiaccountNickname} ${formatTimeStr(
-                article.createdAt
-              )}`}
+              description={`${article.offiaccountNickname} ${formatTimeStr(article.createdAt)}`}
               onClick={() => onClick(article)}
               // onClick={() =>
               //   window.wx.miniProgram.navigateTo({

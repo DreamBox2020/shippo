@@ -1,10 +1,6 @@
 import { Layout, Menu } from 'antd'
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
-import styled from 'styled-components'
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
+import styled from '@emotion/styled'
 import { useState } from 'react'
 import { Dropdown } from 'antd'
 import { useNavigate, useLocation, Outlet } from 'react-router'
@@ -147,9 +143,7 @@ export const Home = () => {
                 label: '临时页面',
                 key: '/temp',
                 icon: <UserOutlined />,
-                children: [
-                  { label: '手办活动', key: '/temp/temp_trade_20220108' },
-                ],
+                children: [{ label: '手办活动', key: '/temp/temp_trade_20220108' }],
               },
             ]}
           />

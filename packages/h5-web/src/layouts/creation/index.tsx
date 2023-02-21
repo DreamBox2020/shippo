@@ -1,17 +1,5 @@
 import React from 'react'
-import {
-  Layout,
-  Menu,
-  Input,
-  Tabs,
-  Card,
-  List,
-  Avatar,
-  Affix,
-  Button,
-  Space,
-  Dropdown,
-} from 'antd'
+import { Layout, Menu, Input, Tabs, Card, List, Avatar, Affix, Button, Space, Dropdown } from 'antd'
 import {
   MailOutlined,
   AppstoreOutlined,
@@ -27,7 +15,7 @@ import {
 } from '@ant-design/icons'
 import { useState } from 'react'
 import type { MenuClickEventHandler } from 'rc-menu/es/interface'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { Tinymce } from '~/components/tinymce'
 import { type } from 'os'
 
@@ -102,9 +90,7 @@ export const CreationLayout: React.FC = () => {
             Shippo 创作中心
           </div>
           <div style={{ flex: '1 1 0%' }}>
-            <span
-              style={{ fontSize: '16px', margin: '0 30px', color: '#757575' }}
-            >
+            <span style={{ fontSize: '16px', margin: '0 30px', color: '#757575' }}>
               <CrownOutlined style={{ marginRight: '5px' }} />
               主页
             </span>
@@ -166,10 +152,7 @@ export const CreationLayout: React.FC = () => {
         </Sider>
         <Content>
           <div style={{ padding: '30px 50px' }}>
-            <StyledTabs
-              defaultActiveKey="1"
-              style={{ backgroundColor: '#fff' }}
-            >
+            <StyledTabs defaultActiveKey="1" style={{ backgroundColor: '#fff' }}>
               <TabPane tab="文章管理" key="1">
                 <Tinymce></Tinymce>
               </TabPane>

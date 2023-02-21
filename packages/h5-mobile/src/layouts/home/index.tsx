@@ -6,7 +6,7 @@ import { Icon } from '~/components/icon'
 import { Container } from '~/components/container'
 import { Main } from '~/components/main'
 import { Footer } from '~/components/footer'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { useLocation, Outlet } from 'react-router'
 
 const StyledTabBar = styled(TabBar)`
@@ -68,16 +68,9 @@ export const LayoutHome = () => {
         <Outlet />
       </Main>
       <Footer height="50px" style={{ backgroundColor: '#fff' }}>
-        <StyledTabBar
-          activeKey={selectedTab}
-          onChange={(activeKey) => onPress(activeKey)}
-        >
+        <StyledTabBar activeKey={selectedTab} onChange={(activeKey) => onPress(activeKey)}>
           {tabBarItems.map((item) => (
-            <TabBar.Item
-              title={item.title}
-              key={item.path}
-              icon={<Icon type={item.icon} />}
-            />
+            <TabBar.Item title={item.title} key={item.path} icon={<Icon type={item.icon} />} />
           ))}
         </StyledTabBar>
       </Footer>

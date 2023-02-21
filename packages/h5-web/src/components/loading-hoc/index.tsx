@@ -1,6 +1,6 @@
 import { Spin } from 'antd'
 import React, { Suspense, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const StyledSpin = styled(Spin)`
   position: absolute;

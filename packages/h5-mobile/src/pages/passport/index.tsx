@@ -6,7 +6,7 @@ import { checkPhone, checkQQEmail, checkSmsCode } from '@shippo/sdk-utils'
 import Container from '~/components/container'
 import Header from '~/components/header'
 import Main from '~/components/main'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { userActions, userGetters } from '@shippo/sdk-stores'
@@ -15,9 +15,7 @@ import { useLimitLock } from '~/hooks/use-limit-lock'
 import { useSearchParams } from 'react-router-dom'
 
 const StyledList = styled(List)`
-  > .adm-list-inner
-    > .adm-list-item:not(:first-child)
-    > .adm-list-item-content {
+  > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
     border-bottom: unset;
   }
 `
@@ -190,10 +188,7 @@ const Component = () => {
               onChange={(value) => setPhone(value)}
             />
           </List.Item>
-          <List.Item
-            prefix="短信验证码"
-            extra={<span onClick={handleSmsSend}>发送验证码</span>}
-          >
+          <List.Item prefix="短信验证码" extra={<span onClick={handleSmsSend}>发送验证码</span>}>
             <Input
               placeholder="请输入验证码"
               clearable

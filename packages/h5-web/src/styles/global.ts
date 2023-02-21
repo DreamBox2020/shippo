@@ -1,7 +1,7 @@
-import { css, createGlobalStyle } from 'styled-components'
+import { Global, css } from '@emotion/react'
 import 'antd/dist/antd.css'
 
-const style = css`
+const styles = css`
   * {
     margin: 0;
     padding: 0;
@@ -43,6 +43,4 @@ const style = css`
   }
 `
 
-export const GlobalStyle = createGlobalStyle`
-  ${style}
-`
+export const GlobalStyle = () => <Global styles={styles} />
