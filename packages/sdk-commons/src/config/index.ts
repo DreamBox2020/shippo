@@ -29,7 +29,7 @@ export class Config implements IConfig {
   }
 
   public isMiniProgram(): boolean {
-    return window.navigator.userAgent.includes('miniProgram')
+    return window.navigator.userAgent.toLowerCase().includes('miniprogram')
   }
 
   public static init(env: ENV) {
