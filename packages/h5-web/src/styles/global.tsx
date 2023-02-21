@@ -1,5 +1,5 @@
 import { Global, css } from '@emotion/react'
-import 'antd/dist/antd.css'
+import 'antd/dist/reset.css'
 
 const styles = css`
   * {

@@ -1,5 +1,4 @@
 import { Global, css } from '@emotion/react'
-// import 'antd-mobile/dist/antd-mobile.min.css'
 
 const styles = css`
   * {
