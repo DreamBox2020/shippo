@@ -15,9 +15,9 @@ import { useLimitLock } from '~/hooks/use-limit-lock'
 import { useSearchParams } from 'react-router-dom'
 
 const StyledList = styled(List)`
-  > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
+  /* > .adm-list-inner > .adm-list-item:not(:first-child) > .adm-list-item-content {
     border-bottom: unset;
-  }
+  } */
 `
 
 const Component = () => {
