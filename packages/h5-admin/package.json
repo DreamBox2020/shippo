@@ -3,8 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "cross-env VITE_ENV=local vite",
+    "dev:dev": "cross-env VITE_ENV=development vite",
+    "dev:prod": "cross-env VITE_ENV=production vite",
+    "build:local": "cross-env VITE_ENV=local tsc && vite build",
+    "build:dev": "tsc && cross-env VITE_ENV=development vite build",
+    "build:prod": "tsc && cross-env VITE_ENV=production vite build",
     "preview": "vite preview"
   },
   "dependencies": {
