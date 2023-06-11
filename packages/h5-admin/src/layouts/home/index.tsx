@@ -34,7 +34,7 @@ const StyledLogo = styled.div`
 `
 
 const StyledSider = styled(Sider)`
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: 0;
   height: 100%;
