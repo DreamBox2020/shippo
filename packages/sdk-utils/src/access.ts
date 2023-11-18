@@ -16,7 +16,20 @@ export const hasAccess = (rule: string, access: string[]): boolean => {
   })
 }
 
-function keyMatch2(key1: string, key2: string): boolean {
+export function keyMatch(key1: string, key2: string): boolean {
+  const pos: number = key2.indexOf('*')
+  if (pos === -1) {
+    return key1 === key2
+  }
+
+  if (key1.length > pos) {
+    return key1.slice(0, pos) === key2.slice(0, pos)
+  }
+
+  return key1 === key2.slice(0, pos)
+}
+
+export function keyMatch2(key1: string, key2: string): boolean {
   key2 = key2.replace(/\/\*/g, '/.*')
 
   const regexp = new RegExp(/(.*):[^/]+(.*)/g)
